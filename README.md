@@ -19,7 +19,7 @@
 - **about** - As a user I want to be able to access the about page and check the developer team. 
 - **sign up** - As a user I want to sign up on the web page so that I can upload a photo of the plant I want to identify.
 - **login** - As a user I want to be able to log in on the web page so that I can get back to my account.
-- **logout** - As a user I want to be able to log out from the web page so that I can make sure no one will access my account
+- **Logout** - As a user I want to be able to log out from the web page so that I can make sure no one will access my account
 - **AddPlant** - As a user I want to add a photo to identify the plant.
 - **Plant Details** - As a user I want to be able to see the details of the plant.
 - **profile page/ garden** - As a user I want to see my profile and see all the plants I've uploaded and I want to be able name my garden, give it a description, change my garden background and change my profile pic.               
