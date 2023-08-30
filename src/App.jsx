@@ -1,21 +1,34 @@
 import './App.css'
-import Navbar from './Components/Navbar'
+import TopNavbar from './Components/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
 import SignUpPage from './Pages/SignUpPage'
 import LoginPage from './Pages/LoginPage'
+import UserCard from './Components/UserCard'
+import OptionListbox from './Components/Listbox'
+import PlantDetailsPage from './Pages/PlantDetailsPage'
+import AddPlantPage from './Pages/AddPlantPage'
+import GardenPage from './Pages/GardenPage'
+import AboutPage from './Pages/AboutPage'
 
 function App() {
 
   return (
     <div>
-     <Navbar/>
+     <TopNavbar/>
+     <div>
       <h1>Plant Finder and Virtual Garden App</h1>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/plants/add" element={<AddPlantPage />} />
+        <Route path="/plants/:plantId" element={<PlantDetailsPage />} />
+        <Route path="/garden" element={<GardenPage />} />
+        <Route path="/about" element={<AboutPage />} />
+
       </Routes>
+      </div>
     </div>
   )
 }
