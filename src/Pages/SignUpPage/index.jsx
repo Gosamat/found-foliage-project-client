@@ -23,7 +23,6 @@ function SignupPage() {
     .catch((error) => {
         setErrorMessage(error.response.data.message);
       });
-
   }
 
   return (

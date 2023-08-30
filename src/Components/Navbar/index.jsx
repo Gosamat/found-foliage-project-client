@@ -1,6 +1,7 @@
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button} from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../Context/Auth.Context';
+import { useContext } from "react";
 
 
 function TopNavbar() {
@@ -25,6 +26,11 @@ function TopNavbar() {
         <NavbarItem>
           <Link color="foreground" to={"/garden"}>
             Garden
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" to={"/plants/add"}>
+            Add Plant
           </Link>
         </NavbarItem>
       </NavbarContent>
