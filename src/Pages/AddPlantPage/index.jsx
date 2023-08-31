@@ -3,13 +3,15 @@ import { useState } from "react";
 import axios from "axios";
 
 const PLANTNET_KEY = "2b10VpTk0sBhhNvolJI73EN";
-const TREFFLE_KEY = "Rlx_rV2GsFgrREw2qDx2viNV54c6WPXoe1LXqtTkXzM";
+const PERENUAL_KEY = "sk-LWNZ64d4a282ae0b61825";
 
 function AddPlantPage() {
-  const [plant, setPlant] = useState({});
+  const [plant, setPlant] = useState(null);
   const [image, setimage] = useState("");
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
     console.log(image);
     axios
       .get(
@@ -18,16 +20,20 @@ function AddPlantPage() {
       .then((res) => {
         const plantName =
           res.data.results[0].species.scientificNameWithoutAuthor;
-          console.log(res.data);
-
+          console.log(res.data.results[0])
+        console.log(plantName);
         axios
           .get(
-            `https://trefle.io/api/v1/plants/search?token=${TREFFLE_KEY}&q=${plantName}`
+            `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${plantName}`
           )
           .then((res) => {
-            const plantInfo = res.data[0];
+            const plantInfo = res.data.data[0];
             setPlant(plantInfo);
+            console.log(plantInfo);
           });
+      })
+      .catch((err) => {
+        console.log("error while fetching plant info: ", err);
       });
   };
 
@@ -41,7 +47,13 @@ function AddPlantPage() {
         </form>
       </div>
       <div>
-
+        {plant && 
+        <div>
+        <h1>{plant.common_name}</h1>
+        <h3>{plant.cycle}</h3>
+        <h3>{plant.sunlight}</h3>
+        <h3>{plant.watering}</h3>
+        </div>}
       </div>
     </div>
   );
