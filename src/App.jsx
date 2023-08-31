@@ -16,7 +16,6 @@ function App() {
   return (
     <div>
      <TopNavbar/>
-     <div>
       <h1>Plant Finder and Virtual Garden App</h1>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -28,7 +27,6 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
 
       </Routes>
-      </div>
     </div>
   )
 }
