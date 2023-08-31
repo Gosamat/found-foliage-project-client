@@ -19,10 +19,10 @@ function App() {
       <h1>Plant Finder and Virtual Garden App</h1>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/plants/add" element={<AddPlantPage />} />
-        <Route path="/plants/:plantId" element={<PlantDetailsPage />} />
+        <Route path="/auth/signup" element={<SignUpPage />} />
+        <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/plant/add" element={<AddPlantPage />} />
+        <Route path="/garden/:plantId" element={<PlantDetailsPage />} />
         <Route path="/garden" element={<GardenPage />} />
         <Route path="/about" element={<AboutPage />} />
 

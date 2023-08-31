@@ -4,6 +4,7 @@ import { AuthContext } from '../../Context/Auth.Context';
 import { useContext } from "react";
 
 
+
 function TopNavbar() {
   const {isLoggedIn, user, logOutUser} = useContext(AuthContext);
 
@@ -29,21 +30,33 @@ function TopNavbar() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" to={"/plants/add"}>
+          <Link color="foreground" to={"/plant/add"}>
             Add Plant
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
+      {isLoggedIn?
+        <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link to={"/login"}>Login</Link>
+          <Link to={"/garden"}>{user.username} Profile</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" to={"/signup"} variant="flat">
+          <Button as={Link} color="primary" onClick={logOutUser} variant="flat">
+Logout          </Button>
+        </NavbarItem>
+      </NavbarContent>
+      :
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden lg:flex">
+          <Link to={"/auth/login"}>Login</Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Button as={Link} color="primary" to={"/auth/signup"} variant="flat">
             Sign Up
           </Button>
         </NavbarItem>
       </NavbarContent>
+      }
     </Navbar>
   )
 }

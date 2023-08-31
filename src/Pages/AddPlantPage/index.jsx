@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import {
   Modal,
@@ -10,18 +10,33 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
+import {Spinner} from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../Context/Auth.Context';
+
+
 
 
 const PLANTNET_KEY = "2b10VpTk0sBhhNvolJI73EN";
 const PERENUAL_KEY = "sk-LWNZ64d4a282ae0b61825";
+const API_URL = "http://localhost:5005"
 
 function AddPlantPage() {
-  const [plant, setPlant] = useState(null);
+  const {isLoggedIn, user, logOutUser} = useContext(AuthContext);
+  const [commonName, setCommonName] = useState("");
+  const [scientificName, setScientificName] = useState("");
+  const [cycle, setCycle] = useState("");
+  const [sunlight, setSunlight] = useState("");
+  const [watering, setWatering] = useState("");
   const [image, setimage] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [fetching, setFetching] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  const handleSubmit = (e) => {
+
+  const navigate = useNavigate();
+
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
     console.log(image);
@@ -32,22 +47,48 @@ function AddPlantPage() {
       .then((res) => {
         const plantName =
           res.data.results[0].species.scientificNameWithoutAuthor;
+          const firstWord = res.data.results[0].species.scientificNameWithoutAuthor.split(" ")[0];
         console.log(res.data.results[0]);
-        console.log(plantName);
+        console.log(plantName); //REMOVE LATER
         axios
           .get(
-            `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${plantName}`
+            `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
           )
           .then((res) => {
             const plantInfo = res.data.data[0];
-            setPlant(plantInfo);
-            console.log(plantInfo);
+            if(plantInfo === undefined) {
+              setNotFound(true);
+              console.log("plant not found");
+            } else {
+            console.log(plantInfo); //REMOVE LATER
+            setScientificName(plantInfo.scientific_name)
+            setCommonName(plantInfo.common_name);
+            setCycle(plantInfo.cycle);
+            setSunlight(plantInfo.sunlight);
+            setWatering(plantInfo.watering);
             setFetching(false);
-          });
+      }});
       })
       .catch((err) => {
         console.log("error while fetching plant info: ", err);
       });
+  };
+
+  const handlePlantSubmit = async (e)=> {
+    const storedToken = localStorage.getItem("authToken")
+    
+    const newPlant ={commonName, cycle, sunlight, watering, imgUrl: image}; //Need to fix the scientific name as it received an array, screwing up the post request
+    console.log(newPlant); //DELETE LATER
+    try{
+       await axios.post(`${API_URL}/plant/add`, newPlant, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        });
+       console.log("plant added successfully")
+      navigate("/");
+    }
+    catch(error){
+      console.log(error);
+    }
   };
 
   return (
@@ -56,7 +97,7 @@ function AddPlantPage() {
       <div>
         <form
           onSubmit={(e) => {
-            handleSubmit(e);
+            handleFormSubmit(e);
             setFetching(true);
           }}
         >
@@ -67,7 +108,10 @@ function AddPlantPage() {
         </form>
       </div>
 
-      {fetching && image ? <h1>Loading...</h1>: (
+      {fetching && image 
+      ?       
+      <Spinner label="Success" color="success" labelColor="success"/>
+      : (
         <Modal
           backdrop="opaque"
           isOpen={isOpen}
@@ -109,21 +153,21 @@ function AddPlantPage() {
                   Modal Title
                 </ModalHeader>
                 <ModalBody>
-                  {plant && (
+                  {commonName && (
                     <div>
-                      <h1>{plant.common_name}</h1>
-                      <h3>{plant.cycle}</h3>
-                      <h3>{plant.sunlight}</h3>
-                      <h3>{plant.watering}</h3>
+                      <h1>{commonName}</h1>
+                      <h3>{scientificName}</h3>
+                      <h3>{sunlight}</h3>
+                      <h3>{watering}</h3>
                     </div>
                   )}
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
+  <Button color="danger" variant="light" onPress={() => navigate("/")}>
+                    Not add
                   </Button>
-                  <Button color="primary" onPress={onClose}>
-                    Action
+                  <Button color="primary" onPress={handlePlantSubmit}>
+                    Add
                   </Button>
                 </ModalFooter>
               </>

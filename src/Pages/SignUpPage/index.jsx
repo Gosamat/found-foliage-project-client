@@ -7,7 +7,7 @@ const API_URL = "http://localhost:5005";
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(undefined);
 
@@ -15,10 +15,10 @@ function SignupPage() {
 
   const handlesubmit = (e)=>{
     e.preventDefault();
-    const requestBody = {name, email, password};
+    const requestBody = {username, email, password};
     axios.post(`${API_URL}/auth/signup`, requestBody)
     .then(() => {
-        navigate("/login");
+        navigate("/auth/login");
       })
     .catch((error) => {
         setErrorMessage(error.response.data.message);
@@ -50,12 +50,12 @@ function SignupPage() {
         </label>
 
         <label>
-          Name:
+          username:
           <input
-            type="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            type="username"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           ></input>
         </label>
         <button>Sign up</button>
