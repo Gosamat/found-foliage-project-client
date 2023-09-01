@@ -18,7 +18,6 @@ function App() {
   return (
     <div className='page-container'>
      <TopNavbar/>
-      {/*<h1>Plant Finder and Virtual Garden App</h1>*/}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth/signup" element={<IsAnon><SignUpPage /></IsAnon>} />

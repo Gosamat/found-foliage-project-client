@@ -15,7 +15,9 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { Link } from 'react-router-dom';
-
+const boxShadowStyle = {
+  boxShadow: '15px 15px 0px rgba(0, 0, 0, 0.05)',
+};
 
 
 function AboutPage() {
@@ -25,53 +27,54 @@ function AboutPage() {
       <div className="text-container">
         {/* Lorem Ipsum text */}
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
       </div>
-      <div className="flex">
-        <div className="w-1/2 p-4">
-          <div className="card-container">
-            {/* Card 1 */}
-            <Card className="py-2 flex-col">
-              <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                <p className="text-tiny uppercase font-bold">Developers</p>
-                <small className="text-default-500">IronHack Students</small>
-                <h4 className="font-bold text-large">Gonçalo Matias</h4>
-              </CardHeader>
-              <CardBody className="overflow-visible py-2">
-                <Link to="https://github.com/Gosamat">
+      <div className="card-container">
+        {/* Card 1 */}
+        <div className="w-1/2 p-4 flex justify-center items-center ">
+          <Card className="py-2 flex-col shadow-squared" style={boxShadowStyle}>
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Developers</p>
+              <small className="text-default-500">IronHack Students</small>
+              <h4 className="font-bold text-large">Gonçalo Matias</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible py-2">
+              <Link to="https://github.com/Gosamat">
+                <div className="flex justify-center">
                   <Image
                     alt="Card background"
                     className="object-cover rounded-xl image-hover"
                     src="https://avatars.githubusercontent.com/u/61824985?v=4"
                     width={270}
                   />
-                </Link>
-              </CardBody>
-            </Card>
-          </div>
+                </div>
+              </Link>
+            </CardBody>
+          </Card>
         </div>
-        <div className="w-1/2 p-4">
-          <div className="card-container">
-            {/* Card 2 */}
-            <Card className="py-2 flex-col">
-              <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                <p className="text-tiny uppercase font-bold">Developers</p>
-                <small className="text-default-500">IronHack Students</small>
-                <h4 className="font-bold text-large">Mariana Marques</h4>
-              </CardHeader>
-              <CardBody className="overflow-visible py-2">
-                <Link to="https://github.com/mfilipa97">
+
+        {/* Card 2 */}
+        <div className="w-1/2 p-4 flex justify-center items-center">
+          <Card className="py-2 flex-col shadow-squared" style={boxShadowStyle}>
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">Developers</p>
+              <small className="text-default-500">IronHack Students</small>
+              <h4 className="font-bold text-large">Mariana Marques</h4>
+            </CardHeader>
+            <CardBody className="overflow-visible py-2">
+              <Link to="https://github.com/mfilipa97">
+                <div className="flex justify-center">
                   <Image
                     alt="Card background"
                     className="object-cover rounded-xl image-hover"
                     src="https://avatars.githubusercontent.com/u/113607909?v=4"
                     width={270}
                   />
-                </Link>
-              </CardBody>
-            </Card>
-          </div>
+                </div>
+              </Link>
+            </CardBody>
+          </Card>
         </div>
       </div>
     </div>
