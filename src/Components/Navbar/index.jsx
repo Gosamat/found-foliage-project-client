@@ -11,7 +11,8 @@ function TopNavbar() {
   return (
     <Navbar>
       <NavbarBrand>
-        <p className="font-bold text-inherit">Plant website</p>
+        <img src="https://res.cloudinary.com/ghostly/image/upload/v1693570491/FoundFoliage/icon_ekml2z.png" width={50} />
+        <p className="font-bold text-inherit">Found Foliage</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
