@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import {
   Modal,
@@ -13,6 +13,8 @@ import {
 import {Spinner} from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../Context/Auth.Context';
+import {CircularProgress} from "@nextui-org/react";
+
 
 
 
@@ -30,14 +32,17 @@ function AddPlantPage() {
   const [watering, setWatering] = useState("");
   const [image, setimage] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [fetching, setFetching] = useState(true);
+  const [fetching, setFetching] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [value, setValue] = React.useState(0);
 
 
   const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setFetching(true);
+    setValue(0);
 
     console.log(image);
     axios
@@ -67,6 +72,8 @@ function AddPlantPage() {
             setSunlight(plantInfo.sunlight);
             setWatering(plantInfo.watering);
             setFetching(false);
+            setValue(100);
+            onOpen();
       }});
       })
       .catch((err) => {
@@ -91,6 +98,14 @@ function AddPlantPage() {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValue((v) => (v >= 100 ? 0 : v + 10));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       <h1>Add Plant Page</h1>
@@ -102,7 +117,7 @@ function AddPlantPage() {
           }}
         >
           <input type="text" onChange={(e) => setimage(e.target.value)} />
-          <Button type="submit" onPress={onOpen}>
+          <Button type="submit">
             Submit
           </Button>
         </form>
@@ -110,7 +125,13 @@ function AddPlantPage() {
 
       {fetching && image 
       ?       
-      <Spinner label="Success" color="success" labelColor="success"/>
+      <CircularProgress
+      aria-label="Loading..."
+      size="lg"
+      value={value}
+      color="warning"
+      showValueLabel={true}
+    />
       : (
         <Modal
           backdrop="opaque"
