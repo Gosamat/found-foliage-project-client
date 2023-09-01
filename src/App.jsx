@@ -16,7 +16,7 @@ import EditPlantPage from './Pages/EditPlantPage'
 function App() {
 
   return (
-    <div>
+    <div className='page-container'>
      <TopNavbar/>
       {/*<h1>Plant Finder and Virtual Garden App</h1>*/}
       <Routes>

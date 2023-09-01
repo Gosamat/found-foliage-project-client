@@ -2,6 +2,7 @@ import {Navbar, NavbarBrand, NavbarContent, NavbarItem, DropdownItem, DropdownTr
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../Context/Auth.Context';
 import { useContext } from "react";
+import {Tooltip} from "@nextui-org/react";
 
 
 
@@ -9,16 +10,16 @@ function TopNavbar() {
   const {isLoggedIn, user, logOutUser} = useContext(AuthContext);
 
   return (
-    <Navbar>
+    <Navbar className="rounded-full opacity-75
+
+">
       <NavbarBrand>
-        <p className="font-bold text-inherit">Plant website</p>
+      <Link to={"/"} className="flex items-center"> 
+      <img src="https://res.cloudinary.com/ghostly/image/upload/v1693570491/FoundFoliage/icon_ekml2z.png" width={"50px"}/>
+      <p className="font-bold text-inherit">Found Foliage</p> 
+      </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" to={"/"}>
-            Homepage
-          </Link>
-        </NavbarItem>
         <NavbarItem isActive>
           <Link to={"/about"} aria-current="page">
             About
@@ -38,7 +39,9 @@ function TopNavbar() {
       {isLoggedIn?
         <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
+        <Tooltip content="Click to check your garden">
           <Link to={"/garden"}>{user.username} Profile</Link>
+          </Tooltip>
         </NavbarItem>
         <NavbarItem>
           <Button as={Link} color="primary" onClick={logOutUser} variant="flat">
