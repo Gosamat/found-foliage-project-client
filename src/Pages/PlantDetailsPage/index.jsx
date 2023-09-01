@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useState, useEffect } from 'react';
 
 
 function PlantDetailsPage() {
@@ -28,7 +29,7 @@ function PlantDetailsPage() {
         <p>Description: {plant.cycle}</p>
         <Link to="/garden">Back to Garden</Link>
       </div>}
-      
+
     </div>
   )
 }

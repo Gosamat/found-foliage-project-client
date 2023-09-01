@@ -11,6 +11,7 @@ import GardenPage from './Pages/GardenPage'
 import AboutPage from './Pages/AboutPage'
 import IsAnon from "./Components/IsAnon"
 import IsPrivate from "./Components/IsPrivate"
+import EditPlantPage from './Pages/EditPlantPage'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/auth/login" element={<IsAnon><LoginPage /></IsAnon>} />
         <Route path="/plant/add" element={<IsPrivate><AddPlantPage /></IsPrivate>} />
         <Route path="/garden/:plantId" element={<IsPrivate><PlantDetailsPage /></IsPrivate>} />
+        <Route path="/garden/:plantId/edit" element={<IsPrivate><EditPlantPage /></IsPrivate>} />
         <Route path="/garden" element={<IsPrivate><GardenPage /></IsPrivate>} />
         <Route path="/about" element={<AboutPage />} />
 
