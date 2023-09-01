@@ -73,11 +73,12 @@ function GardenPage() {
   return (
     <div>
       <h1>GardenPage</h1>
+      <div className="flex-wrap flex flex-row">
       {garden &&
         garden.plants.map((plant) => {
           return (
             <Card
-              className="py-4 border-none"
+              className="py-2 border-none"
               key={plant._id}
               isFooterBlurred
               radius="lg"
@@ -89,7 +90,7 @@ function GardenPage() {
                 <small className="text-default-500">
                   {plant.scientificName}
                 </small>
-                <h4 className="font-bold text-large">{plant.sunlight}</h4>
+                {/* <h4 className="font-bold text-large">{plant.sunlight}</h4> */}
               </CardHeader>
               <CardBody className="overflow-visible py-2">
                 <Image
@@ -98,7 +99,7 @@ function GardenPage() {
                   src={plant.imgUrl}
                   width={270}
                 />
-                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
+                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_10px)] shadow-small ml-1 z-10">
                   <p className="text-tiny text-white/80">Available soon.</p>
 
                   {/* drop menu */}
@@ -162,6 +163,7 @@ function GardenPage() {
             </Card>
           );
         })}
+        </div>
     </div>
   );
 }
