@@ -89,7 +89,7 @@ function AddPlantPage() {
         headers: { Authorization: `Bearer ${storedToken}` },
       });
       console.log("plant added successfully");
-      navigate("/");
+      navigate("/garden");
     } catch (error) {
       console.log(error);
     }

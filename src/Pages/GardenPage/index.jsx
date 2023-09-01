@@ -73,34 +73,23 @@ function GardenPage() {
   return (
     <div>
       <h1>GardenPage</h1>
-      <div className="flex-wrap flex flex-row">
+      <div className="flex-wrap flex flex-row p-10">
       {garden &&
         garden.plants.map((plant) => {
           return (
             <Card
-              className="py-2 border-none"
+              className="border-none m-1 w-56 "
               key={plant._id}
               isFooterBlurred
-              radius="lg"
+              radius="lg" 
             >
-              <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                <p className="text-tiny uppercase font-bold">
-                  {plant.commonName}
-                </p>
-                <small className="text-default-500">
-                  {plant.scientificName}
-                </small>
-                {/* <h4 className="font-bold text-large">{plant.sunlight}</h4> */}
-              </CardHeader>
-              <CardBody className="overflow-visible py-2">
                 <Image
                   alt="Card background"
-                  className="object-cover rounded-xl"
+                  className="object-cover rounded-xl h-100 p-2"
                   src={plant.imgUrl}
-                  width={270}
                 />
-                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_10px)] shadow-small ml-1 z-10">
-                  <p className="text-tiny text-white/80">Available soon.</p>
+              <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
+                  <p className="text-tiny text-white/80">{plant.commonName}</p>
 
                   {/* drop menu */}
                   <Dropdown>
@@ -159,7 +148,6 @@ function GardenPage() {
                     </DropdownMenu>
                   </Dropdown>
                 </CardFooter>
-              </CardBody>
             </Card>
           );
         })}
