@@ -1,5 +1,5 @@
 import {useContext} from 'react'; 
-import { AuthContext } from '../../Context/auth.context';
+import { AuthContext } from '../../Context/Auth.Context';
 import {Navigate} from 'react-router-dom';
 function IsAnon({children}) {
     const {isLoggedIn, isLoading} = useContext(AuthContext);

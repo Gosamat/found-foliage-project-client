@@ -5,11 +5,12 @@ import HomePage from './Pages/HomePage'
 import SignUpPage from './Pages/SignUpPage'
 import LoginPage from './Pages/LoginPage'
 import UserCard from './Components/UserCard'
-import OptionListbox from './Components/Listbox'
 import PlantDetailsPage from './Pages/PlantDetailsPage'
 import AddPlantPage from './Pages/AddPlantPage'
 import GardenPage from './Pages/GardenPage'
 import AboutPage from './Pages/AboutPage'
+import IsAnon from "./Components/IsAnon"
+import IsPrivate from "./Components/IsPrivate"
 
 function App() {
 
@@ -19,11 +20,11 @@ function App() {
       <h1>Plant Finder and Virtual Garden App</h1>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/auth/signup" element={<SignUpPage />} />
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/plant/add" element={<AddPlantPage />} />
-        <Route path="/garden/:plantId" element={<PlantDetailsPage />} />
-        <Route path="/garden" element={<GardenPage />} />
+        <Route path="/auth/signup" element={<IsAnon><SignUpPage /></IsAnon>} />
+        <Route path="/auth/login" element={<IsAnon><LoginPage /></IsAnon>} />
+        <Route path="/plant/add" element={<IsPrivate><AddPlantPage /></IsPrivate>} />
+        <Route path="/garden/:plantId" element={<IsPrivate><PlantDetailsPage /></IsPrivate>} />
+        <Route path="/garden" element={<IsPrivate><GardenPage /></IsPrivate>} />
         <Route path="/about" element={<AboutPage />} />
 
       </Routes>
