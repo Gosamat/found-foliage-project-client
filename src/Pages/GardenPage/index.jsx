@@ -16,11 +16,26 @@ import {
   DropdownItem,
   cn,
   useDisclosure,
+  Avatar, Chip
 } from "@nextui-org/react";
+import { Select, SelectItem } from "@nextui-org/react";
+
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Checkbox,
+  Input,
+  Link,
+} from "@nextui-org/react";
+
 import { AddNoteIcon } from "../../Components/Listbox/dropmenu/AddNoteIcon";
 import { CopyDocumentIcon } from "../../Components/Listbox/dropmenu/CopyDocumentIcon";
 import { EditDocumentIcon } from "../../Components/Listbox/dropmenu/EditDocumentIcon";
 import { DeleteDocumentIcon } from "../../Components/Listbox/dropmenu/DeleteDocumentIcon";
+
 import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:5005";
 const iconClasses =
@@ -28,9 +43,15 @@ const iconClasses =
 
 function GardenPage() {
   const [garden, setGarden] = useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const navigate = useNavigate();
+  const [values, setValues] = useState(new Set([]));
+  
+
+  const handleSelectionChange = (e) => {
+    setValues(new Set(e.target.value.split(",")));
+  };
 
   const fetchPlants = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -70,37 +91,103 @@ function GardenPage() {
       );
   }
 
+  function createSection (){
+    const section = {
+      title: sectionTitle,
+      plants: sectionPlants
+    }
+    const storedToken = localStorage.getItem("authToken");
+    axios.post(`${API_URL}/garden/section/create`, section, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      }).then(()=> navigate("/garden")).catch(err => console.log(err));
+
+  }
+
   return (
     <div>
       <h1>GardenPage</h1>
-      <div className="flex-wrap flex flex-row">
-      {garden &&
-        garden.plants.map((plant) => {
-          return (
-            <Card
-              className="py-2 border-none"
-              key={plant._id}
-              isFooterBlurred
-              radius="lg"
-            >
-              <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                <p className="text-tiny uppercase font-bold">
-                  {plant.commonName}
-                </p>
-                <small className="text-default-500">
-                  {plant.scientificName}
-                </small>
-                {/* <h4 className="font-bold text-large">{plant.sunlight}</h4> */}
-              </CardHeader>
-              <CardBody className="overflow-visible py-2">
+      <div>
+        <Button onPress={onOpen} color="primary">
+          Add a section
+        </Button>
+        <Modal
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          placement="top-center"
+        >
+                  <form onSubmit={()=>createSection()}>
+
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Log in
+                </ModalHeader>
+                <ModalBody>
+                  <Input
+                    autoFocus
+                    type="text"
+                    name="sectionTitle"  
+                                      placeholder="Section Name"
+                    required="true"
+                    variant="bordered"
+                  />
+                  {garden && <div className="flex w-full max-w-xs flex-col gap-2">
+                    <Select
+                      selectionMode="multiple"
+                      name="sectionPlants"  
+                      placeholder="Select plants to add"
+                      selectedKeys={values}
+                      className="max-w-xs"
+                      onChange={handleSelectionChange}
+                    >
+                      {garden.plants.map((plant) => (
+                        <SelectItem key={plant._id} value={plant.commonName}>
+                        <div className="flex gap-2 items-center">
+                        <Avatar className="flex-shrink-0" size="sm" src={plant.imgUrl} />
+                        <div className="flex flex-col">
+                        <span className="text-small">{plant.commonName}</span>
+                        </div>
+                        </div>
+
+                        </SelectItem>
+                      ))}
+                    </Select>
+                    <p className="text-small text-default-500">
+                      Selected: {Array.from(values).join(", ")}
+                    </p>
+                  </div>
+                  }
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary" onPress={onClose}>
+                    Sign in
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+           
+          </ModalContent>
+          </form>
+        </Modal>
+      </div>
+      <div className="flex-wrap flex flex-row p-10">
+        {garden &&
+          garden.plants.map((plant) => {
+            return (
+              <Card
+                className="border-none m-1 w-56 "
+                key={plant._id}
+                isFooterBlurred
+                radius="lg"
+              >
                 <Image
                   alt="Card background"
-                  className="object-cover rounded-xl"
+                  className="object-cover rounded-xl h-100 p-2"
                   src={plant.imgUrl}
-                  width={270}
                 />
-                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_10px)] shadow-small ml-1 z-10">
-                  <p className="text-tiny text-white/80">Available soon.</p>
+                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
+                  <p className="text-tiny text-white/80">{plant.commonName}</p>
 
                   {/* drop menu */}
                   <Dropdown>
@@ -159,11 +246,10 @@ function GardenPage() {
                     </DropdownMenu>
                   </Dropdown>
                 </CardFooter>
-              </CardBody>
-            </Card>
-          );
-        })}
-        </div>
+              </Card>
+            );
+          })}
+      </div>
     </div>
   );
 }
