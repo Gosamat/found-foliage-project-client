@@ -17,6 +17,28 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.about-page {
+  margin: 20px auto; /* Add margin to create space between the text and the navbar */
+  padding: 20px; /* Add some padding for spacing within the text container */
+  /* Add any other styling you want for the text container */
+}
+.image-hover:hover {
+  transform: scale(1.1); /* Increase the scale on hover (adjust as needed) */
+  transition: transform 0.2s ease; /* Add a smooth transition */
+}
+
+.text-container {
+    width: 90%;/* Set a maximum width as needed */
+    margin: 0 auto; /* Center-align the text container */
+    padding: 20px; /* Add some padding for spacing */
+    /* Add any other styling you want for the text container */
+  }
+  .card-container {
+    width: 100%; /* Make sure the card container takes up the remaining width */
+    display: flex; /* Use flex to align cards horizontally */
+    justify-content: center /* Add space between the cards */
+    /* Add any other styling you want for the card container */
+  }
 
 a {
   font-weight: 500;
