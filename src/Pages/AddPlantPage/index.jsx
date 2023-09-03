@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import {
   Modal,
@@ -10,7 +10,6 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { Spinner } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth.Context";
 import { CircularProgress } from "@nextui-org/react";
@@ -20,7 +19,6 @@ const PERENUAL_KEY = "sk-LWNZ64d4a282ae0b61825";
 const API_URL = "http://localhost:5005";
 
 function AddPlantPage() {
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const [commonName, setCommonName] = useState("");
   const [scientificName, setScientificName] = useState("");
   const [cycle, setCycle] = useState("");
@@ -31,16 +29,50 @@ function AddPlantPage() {
   const [fetching, setFetching] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [value, setValue] = React.useState(0);
+  const inputRef = useRef(null);
+  const [file, setFile]= useState(null);
+  const formData = new FormData();
+
+
+
+  const handleClick = () => {
+    inputRef.current.click();
+  };
 
   const navigate = useNavigate();
 
-  const handleFormSubmit = (e) => {
+
+  const uploadImage = (files) => {
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "ayjz2x5r");
+
+   /*  axios
+      .post(
+        "https://api.cloudinary.com/v1_1/foundfoliage/image/upload",
+        formData
+      )
+      .then((response) => {
+        setimage(response.data.url);
+
+  }); */
+};
+
+  const handleFormSubmit =  (e) => {
     e.preventDefault();
     setFetching(true);
-    setValue(0);
-    
+    setValue(0);    
+    uploadImage(file);
 
     console.log(image);
+
+    axios
+      .post(
+        "https://api.cloudinary.com/v1_1/foundfoliage/image/upload",
+        formData
+      )
+      .then((response) => {
+        setimage(response.data.url);
+    
     axios
       .get(
         `https://my-api.plantnet.org/v2/identify/all?images=${image}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
@@ -63,10 +95,10 @@ function AddPlantPage() {
               console.log("plant not found");
             } else {
               console.log(plantInfo); //REMOVE LATER
-              setScientificName(plantInfo.scientific_name);
+              setScientificName(plantInfo.scientific_name[0]);
               setCommonName(plantInfo.common_name);
               setCycle(plantInfo.cycle);
-              setSunlight(plantInfo.sunlight);
+              setSunlight(plantInfo.sunlight[0]);
               setWatering(plantInfo.watering);
               setFetching(false);
               setValue(100);
@@ -77,12 +109,20 @@ function AddPlantPage() {
       .catch((err) => {
         console.log("error while fetching plant info: ", err);
       });
-  };
+});
+};
 
   const handlePlantSubmit = async (e) => {
     const storedToken = localStorage.getItem("authToken");
 
-    const newPlant = { commonName, cycle, sunlight, watering, imgUrl: image }; //Need to fix the scientific name as it received an array, screwing up the post request
+    const newPlant = {
+      commonName,
+      scientificName,
+      cycle,
+      sunlight,
+      watering,
+      imgUrl: image,
+    }; //Need to fix the scientific name as it received an array, screwing up the post request
     console.log(newPlant); //DELETE LATER
     try {
       await axios.post(`${API_URL}/plant/add`, newPlant, {
@@ -104,7 +144,7 @@ function AddPlantPage() {
   }, []);
 
   return (
-    <section className={fetching && image ? "cursor-wait": ""}>
+    <section className={fetching && image ? "cursor-wait" : ""}>
       <h1>Add Plant Page</h1>
       <div>
         <form
@@ -113,8 +153,26 @@ function AddPlantPage() {
             setFetching(true);
           }}
         >
-          <input type="text" onChange={(e) => setimage(e.target.value)} />
-          <Button className={fetching && image ? "cursor-wait": ""} type="submit">Submit</Button>
+          <input
+            style={{ display: "none" }}
+            ref={inputRef}
+            type="file"
+            onChange={(e) => {
+              uploadImage(e.target.files);
+            }}
+          />
+          <Button
+            className={
+              fetching && image ? "cursor-wait h-72 w-96" : " h-72  w-96"
+            }
+            type="submit"
+            onClick={handleClick}
+          >
+            <img
+              className="  w-56"
+              src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png"
+            />
+          </Button>
         </form>
         {fetching && image ? (
           <CircularProgress
@@ -162,15 +220,22 @@ function AddPlantPage() {
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
-                    Modal Title
+                    <h2 className="text-2xl">{commonName}</h2>
                   </ModalHeader>
-                  <ModalBody>
+                  {commonName && <img className="m-5 rounded-lg" src={image} />}
+                  <ModalBody className="py-0 pb-5">
                     {commonName && (
                       <div>
-                        <h1>{commonName}</h1>
-                        <h3>{scientificName}</h3>
-                        <h3>{sunlight}</h3>
-                        <h3>{watering}</h3>
+                        <h2>
+                          <b>Scientific name:</b> {scientificName}
+                        </h2>
+                        <h3>
+                          <b>sunlight level:</b> {sunlight}
+                        </h3>
+                        <h3>
+                          {" "}
+                          <b>Watering frequency:</b> {watering}
+                        </h3>
                       </div>
                     )}
                   </ModalBody>
@@ -178,12 +243,12 @@ function AddPlantPage() {
                     <Button
                       color="danger"
                       variant="light"
-                      onPress={() => navigate("/")}
+                      onPress={() => navigate("/plant/add")}
                     >
-                      Not add
+                      Cancel
                     </Button>
                     <Button color="primary" onPress={handlePlantSubmit}>
-                      Add
+                      Add to Garden?
                     </Button>
                   </ModalFooter>
                 </>

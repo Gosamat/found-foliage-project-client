@@ -284,7 +284,7 @@ function GardenPage() {
                             {plant.notes === "" ? "New note" : "Change note"}
                           </DropdownItem>
                           <DropdownItem
-                            onPress={() => openEditName(plant)}
+                            onPress={() => openEditName(selectedPlant)}
                             key="name"
                             description="Edit plant name"
                             startContent={
