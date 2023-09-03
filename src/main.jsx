@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { NextUIProvider } from "@nextui-org/react";
 import { AuthProviderWrapper } from "./Context/Auth.Context.jsx";
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
