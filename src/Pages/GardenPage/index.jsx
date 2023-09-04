@@ -17,7 +17,6 @@ import {
   cn,
   useDisclosure,
   Avatar,
-  Chip,
   Tooltip,
 } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
@@ -38,6 +37,7 @@ import { CopyDocumentIcon } from "../../Components/Listbox/dropmenu/CopyDocument
 import { EditDocumentIcon } from "../../Components/Listbox/dropmenu/EditDocumentIcon";
 import { DeleteDocumentIcon } from "../../Components/Listbox/dropmenu/DeleteDocumentIcon";
 import EditNameModal from "../../Components/EditNameModal";
+import DeleteGardenModal from "../../Components/DeleteGardenModal";
 
 import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:5005";
@@ -49,6 +49,8 @@ function GardenPage() {
   const [garden, setGarden] = useState(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedPlant, setSelectedPlant] = useState(null); // Define selectedPlant
+  const [openModal, setOpenModal] = useState(null); // State to track the open modal
+
 
   const navigate = useNavigate();
   const [values, setValues] = useState(new Set([]));
@@ -57,11 +59,21 @@ function GardenPage() {
     setValues(new Set(e.target.value.split(",")));
   };
 
-  // Function to open the edit Name modal
+   // Function to open a specific modal
+   const openSpecificModal = (modalIdentifier) => {
+    setOpenModal(modalIdentifier);
+  };
+
+  // Function to close the currently open modal
+  const closeCurrentModal = () => {
+    setOpenModal(null);
+  };
+
+/*   // Function to open the edit Name modal
   const openEditName = (plant) => {
     setSelectedPlant(plant); // Set selectedPlant
     setIsEditNameModalOpen(true);
-  };
+  }; */
 
   const fetchPlants = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -71,7 +83,7 @@ function GardenPage() {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {
-        setGarden(response.data);
+        setGarden(response.data[0]);
       })
       .catch((error) =>
         console.log(
@@ -149,6 +161,7 @@ function GardenPage() {
   return (
     <div>
       <h1>GardenPage</h1>
+      <div className="noise-texture" ></div>
       <div>
         <Button onPress={onOpen} color="primary">
           Add a section
@@ -160,6 +173,12 @@ function GardenPage() {
             selectedPlant={selectedPlant} // Pass selectedPlant
           />
         )}
+        <Button onPress={() => openSpecificModal("deleteGardenModal")}>Delete Garden</Button>
+        <DeleteGardenModal
+        isOpen={openModal === "deleteGardenModal"} // Check if this modal should be open
+        onClose={closeCurrentModal} // Close the current modal
+        identifier="deleteGardenModal" // Unique identifier/key for this modal
+      />
         <Modal
           isOpen={isOpen}
           onOpenChange={onOpenChange}

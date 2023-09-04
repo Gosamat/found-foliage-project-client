@@ -24,6 +24,8 @@ function AboutPage() {
   return (
     <div className='about-page'>
       <h1>About Page</h1>
+      <div className="noise-texture" ></div>
+
       <div className="text-container">
         {/* Lorem Ipsum text */}
         <p>

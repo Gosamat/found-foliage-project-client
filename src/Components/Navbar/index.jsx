@@ -18,7 +18,7 @@ function TopNavbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   return (
-    <Navbar>
+    <Navbar className="mt-5 mx-7 w-auto rounded-full">
         <NavbarBrand>
         <Link color="foreground" href={"/"}>
           <img

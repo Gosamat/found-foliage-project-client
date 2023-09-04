@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import {
   Modal,
@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth.Context";
 import { CircularProgress } from "@nextui-org/react";
+import WebcamImage from "../../Components/WebcamCapture";
 
 const PLANTNET_KEY = "2b10VpTk0sBhhNvolJI73EN";
 const PERENUAL_KEY = "sk-LWNZ64d4a282ae0b61825";
@@ -30,10 +31,14 @@ function AddPlantPage() {
   const [notFound, setNotFound] = useState(false);
   const [value, setValue] = React.useState(0);
   const inputRef = useRef(null);
-  const [file, setFile]= useState(null);
+  const [file, setFile] = useState(null);
   const formData = new FormData();
+  const [capturedImage, setCapturedImage] = useState(null);
 
-
+  // Callback function to receive the captured image from WebcamImage
+  const handleImageCapture = (imageSrc) => {
+    setCapturedImage(imageSrc);
+  };
 
   const handleClick = () => {
     inputRef.current.click();
@@ -41,126 +46,55 @@ function AddPlantPage() {
 
   const navigate = useNavigate();
 
-
-  const uploadImage = (files) => {
-    formData.append("file", files[0]);
-    formData.append("upload_preset", "ayjz2x5r");
-
-   /*  axios
-      .post(
-        "https://api.cloudinary.com/v1_1/foundfoliage/image/upload",
-        formData
-      )
-      .then((response) => {
-        setimage(response.data.url);
-
-  }); */
-};
-
-/*   const handleFormSubmit =   async (e) => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     setFetching(true);
-    setValue(0);    
-    formData.append("file", e.target.files[0]);
-    formData.append("upload_preset", "ayjz2x5r");
+    setValue(0);
 
-    console.log("image logged: ", image);
+    try {
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      formData.append("upload_preset", "ayjz2x5r");
 
-    axios
-      .post(
+      const cloudinaryResponse = await axios.post(
         "https://api.cloudinary.com/v1_1/foundfoliage/image/upload",
         formData
-      )
-      .then((response) => {
-        setimage(response.data.url);
-    
-    axios
-      .get(
-        `https://my-api.plantnet.org/v2/identify/all?images=${image}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
-      )
-      .then((res) => {
-        const plantName =
-          res.data.results[0].species.scientificNameWithoutAuthor;
-        const firstWord =
-          res.data.results[0].species.scientificNameWithoutAuthor.split(" ")[0];
-        console.log(res.data.results[0]);
-        console.log(plantName); //REMOVE LATER
-        axios
-          .get(
-            `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
-          )
-          .then((res) => {
-            const plantInfo = res.data.data[0];
-            if (plantInfo === undefined) {
-              setNotFound(true);
-              console.log("plant not found");
-            } else {
-              console.log(plantInfo); //REMOVE LATER
-              setScientificName(plantInfo.scientific_name[0]);
-              setCommonName(plantInfo.common_name);
-              setCycle(plantInfo.cycle);
-              setSunlight(plantInfo.sunlight[0]);
-              setWatering(plantInfo.watering);
-              setFetching(false);
-              setValue(100);
-              onOpen();
-            }
-          });
-      })
-      .catch((err) => {
-        console.log("error while fetching plant info: ", err);
-      });
-});
-}; */
+      );
 
-const handleFormSubmit = async (e) => {
-  e.preventDefault();
-  setFetching(true);
-  setValue(0);
+      const imageUrl = cloudinaryResponse.data.url;
+      setimage(imageUrl);
 
-  try {
-    const formData = new FormData();
-    formData.append("file", e.target.files[0]);
-    formData.append("upload_preset", "ayjz2x5r");
+      const plantnetResponse = await axios.get(
+        `https://my-api.plantnet.org/v2/identify/all?images=${imageUrl}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
+      );
 
-    const cloudinaryResponse = await axios.post(
-      "https://api.cloudinary.com/v1_1/foundfoliage/image/upload",
-      formData
-    );
+      const plantName =
+        plantnetResponse.data.results[0].species.scientificNameWithoutAuthor;
+      const firstWord = plantName.split(" ")[0];
 
-    const imageUrl = cloudinaryResponse.data.url;
-    setimage(imageUrl);
+      const perenualResponse = await axios.get(
+        `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
+      );
 
-    const plantnetResponse = await axios.get(
-      `https://my-api.plantnet.org/v2/identify/all?images=${imageUrl}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
-    );
-
-    const plantName =
-      plantnetResponse.data.results[0].species.scientificNameWithoutAuthor;
-    const firstWord = plantName.split(" ")[0];
-
-    const perenualResponse = await axios.get(
-      `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
-    );
-
-    const plantInfo = perenualResponse.data.data[0];
-    if (plantInfo === undefined) {
-      setNotFound(true);
-      console.log("Plant not found");
-    } else {
-      console.log(plantInfo);
-      setScientificName(plantInfo.scientific_name[0]);
-      setCommonName(plantInfo.common_name);
-      setCycle(plantInfo.cycle);
-      setSunlight(plantInfo.sunlight[0]);
-      setWatering(plantInfo.watering);
-      setFetching(false);
-      setValue(100);
-      onOpen();
+      const plantInfo = perenualResponse.data.data[0];
+      if (plantInfo === undefined) {
+        setNotFound(true);
+        console.log("Plant not found");
+      } else {
+        console.log(plantInfo);
+        setScientificName(plantInfo.scientific_name[0]);
+        setCommonName(plantInfo.common_name);
+        setCycle(plantInfo.cycle);
+        setSunlight(plantInfo.sunlight);
+        setWatering(plantInfo.watering);
+        setFetching(false);
+        setValue(100);
+        onOpen();
+      }
+    } catch (error) {
+      console.log("Error while processing the form:", error);
     }
-  } catch (error) {
-    console.log("Error while processing the form:", error);
-  }
-};
+  };
 
   const handlePlantSubmit = async (e) => {
     const storedToken = localStorage.getItem("authToken");
@@ -172,7 +106,7 @@ const handleFormSubmit = async (e) => {
       sunlight,
       watering,
       imgUrl: image,
-    }; //Need to fix the scientific name as it received an array, screwing up the post request
+    }; 
     console.log(newPlant); //DELETE LATER
     try {
       await axios.post(`${API_URL}/plant/add`, newPlant, {
@@ -194,35 +128,19 @@ const handleFormSubmit = async (e) => {
   }, []);
 
   return (
-    <section className={fetching && image ? "cursor-wait" : ""}>
-      <h1>Add Plant Page</h1>
-      <div>
-          <input
-            style={{ display: "none" }}
-            ref={inputRef}
-            type="file"
-            onChange={(e) => {
-              handleFormSubmit(e);
-            }}
-          />
-          <Button
-            className={
-              fetching && image ? "cursor-wait h-72 w-96" : " h-72  w-96"
-            }
-            onClick={handleClick}
-          >
-            <img
-              className="  w-56"
-              src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png"
-            />
-          </Button>
-        {fetching && image ? (
+    <section
+      className={
+        fetching && image ? "cursor-wait add-plant-page " : "add-plant-page"
+      }
+    >
+    {fetching && image ? (
           <CircularProgress
             aria-label="Loading..."
             size="lg"
             value={value}
             color="warning"
             showValueLabel={true}
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
           />
         ) : (
           <Modal
@@ -298,7 +216,43 @@ const handleFormSubmit = async (e) => {
             </ModalContent>
           </Modal>
         )}
+      <div className="noise-texture"></div>
+      <div className="add-plant-container">
+      <div className="add-plant-text">
+        <h1>Find your new plant and add it to your garden</h1>
+        <p className=" w-96">Simply upload an image or take a photo and we'll run it through our system so you can grab its card and add it to your own virtual garden!</p>
+        </div>
+        <div className="add-plant-buttons flex flex-row align-middle">
+        <input
+          style={{ display: "none" }}
+          ref={inputRef}
+          type="file"
+          onChange={(e) => {
+            handleFormSubmit(e);
+          }}
+        />
+        <Button
+          className={fetching && image ? "cursor-wait h-72 w-96" : " h-11 rounded-full shadow-lg"}
+          onClick={handleClick}
+          color="success"
+          endContent={
+            <img
+              className=" w-4 "
+              src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png"
+            />
+          }
+        >
+          Upload Image
+        </Button>
+       {/*  <WebcamImage
+          onImageCapture={handleImageCapture}
+          onChange={(e) => {
+            handleFormSubmit(e);
+          }}
+        /> */}
+        </div>
       </div>
+      <img className="add-page-img" src="https://res.cloudinary.com/foundfoliage/image/upload/v1693818615/k9pbxax87yunrgrbeejp.png" />
     </section>
   );
 }
