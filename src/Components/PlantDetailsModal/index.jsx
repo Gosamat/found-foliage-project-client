@@ -7,15 +7,18 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Input,
 } from "@nextui-org/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const API_URL = "http://localhost:5005";
 
 
-function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
+function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
   const { onOpen, onOpenChange } = useDisclosure();
+  const [plantName, setPlantName] = useState("");
 
   const navigate = useNavigate();
 
@@ -29,11 +32,11 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
   }, [isOpen]);
 
 
-  const deleteGarden = ()=>{
+  const UpdatePlantName = ()=>{
     const storedToken = localStorage.getItem("authToken");
+    const updatedPlant = {commonName: plantName};
 
-
-    axios.delete(`${API_URL}/garden/delete`,  {
+    axios.put(`${API_URL}/garden/${selectedPlant._id}/edit`, updatedPlant,{
         headers: { Authorization: `Bearer ${storedToken}` },
       }). then(() => {
         onClose();
@@ -77,17 +80,25 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Are you sure you want to delete your garden?</ModalHeader>
-           
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  No
-                </Button>
-                <Button color="primary" onPress={
-                deleteGarden}>
-                  Yes
-                </Button>
-              </ModalFooter>
+            <ModalHeader className="flex flex-col gap-1">{selectedPlant.commonName}</ModalHeader>
+            <ModalBody>
+            <img
+          alt="Card background"
+          className="object-cover rounded-xl"
+          src={selectedPlant.imgUrl}
+          width={570}
+          height={570}
+        />
+        <h3>Scientific name: {selectedPlant.scientificName}</h3>
+        <h3>Sunlight: {selectedPlant.sunlight}</h3>
+        <h3>Watering:{selectedPlant.watering} </h3>
+            </ModalBody>
+            <ModalFooter>
+            
+              <Button color="primary" onPress={onClose}>
+                close
+              </Button>
+            </ModalFooter>
             </>
           )}
         </ModalContent>
@@ -96,4 +107,4 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
   );
 }
 
-export default DeleteGardenModal;
+export default PlantDetailsModal;
