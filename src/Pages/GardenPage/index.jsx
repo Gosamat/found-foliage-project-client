@@ -79,7 +79,6 @@ function GardenPage() {
 
   const fetchPlants = () => {
     const storedToken = localStorage.getItem("authToken");
-     console.log(storedToken)
 
     axios
       .get(`${API_URL}/garden`, {
@@ -116,37 +115,6 @@ function GardenPage() {
           error
         )
       );
-  }
-
-  function changeName(name) {
-    const storedToken = localStorage.getItem("authToken");
-    const updatePlant = { commonName: updatedName };
-    axios
-      .put(`${API_URL}/garden/${plantId}/edit`, updatePlant)
-      .then(() => navigate(`/garden`))
-      .catch((err) => console.log(err));
-  }
-
-  function changeImage(image) {
-    const storedToken = localStorage.getItem("authToken");
-    if (updatedImage !== "") {
-      const updatePlant = { imgUrl: updatedImage };
-      axios
-        .put(`${API_URL}/garden/${plantId}/edit`, updatePlant)
-        .then(() => navigate(`/garden`))
-        .catch((err) => console.log(err));
-    } else {
-      navigate(`/garden`);
-    }
-  }
-
-  function changeNotes(notes) {
-    const storedToken = localStorage.getItem("authToken");
-    const updatePlant = { notes: updatedNotes };
-    axios
-      .put(`${API_URL}/garden/${plantId}/edit`, updatePlant)
-      .then(() => navigate(`/garden`))
-      .catch((err) => console.log(err));
   }
 
   function createSection() {

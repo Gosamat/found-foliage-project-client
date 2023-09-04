@@ -508,6 +508,9 @@ button:focus-visible {
 
   padding-top: 3rem;
   margin-left: 5rem;
+  width: 20rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .add-plant-page p {

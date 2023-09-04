@@ -11,9 +11,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Context/Auth.Context";
 import { CircularProgress } from "@nextui-org/react";
-import WebcamImage from "../../Components/WebcamCapture";
+import WebcamCaptureModal from "../../Components/WebcamCaptureModal";
 
 const PLANTNET_KEY = "2b10VpTk0sBhhNvolJI73EN";
 const PERENUAL_KEY = "sk-LWNZ64d4a282ae0b61825";
@@ -31,15 +30,27 @@ function AddPlantPage() {
   const [notFound, setNotFound] = useState(false);
   const [value, setValue] = React.useState(0);
   const inputRef = useRef(null);
-  const [file, setFile] = useState(null);
   const formData = new FormData();
-  const [capturedImage, setCapturedImage] = useState(null);
   const [premiumPlant, setPremiumPlant] = useState(false);
+  const [openModal, setOpenModal] = useState(null); // State to track the open modal
 
-  // Callback function to receive the captured image from WebcamImage
+
+/*   // Callback function to receive the captured image from WebcamImage
   const handleImageCapture = (imageSrc) => {
     setCapturedImage(imageSrc);
+  }; */
+
+
+   // Function to open a specific modal
+   const openSpecificModal = (modalIdentifier) => {
+    setOpenModal(modalIdentifier);
   };
+
+  // Function to close the currently open modal
+  const closeCurrentModal = () => {
+    setOpenModal(null);
+  };
+
 
   const handleClick = () => {
     inputRef.current.click();
@@ -47,7 +58,77 @@ function AddPlantPage() {
 
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (e) => {
+  const handlePhotoSubmit = async (img) => {
+    setFetching(true);
+    setValue(0);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", img);
+      formData.append("upload_preset", "ayjz2x5r");
+      closeCurrentModal();
+      console.log(formData)
+
+      const cloudinaryResponse = await axios.post(
+        "https://api.cloudinary.com/v1_1/foundfoliage/image/upload",
+        formData
+      );
+
+      const imageUrl = cloudinaryResponse.data.url;
+      setimage(imageUrl);
+
+      const plantnetResponse = await axios.get(
+        `https://my-api.plantnet.org/v2/identify/all?images=${imageUrl}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
+      );
+
+      const plantName =
+        plantnetResponse.data.results[0].species.scientificNameWithoutAuthor;
+      const firstWord = plantName.split(" ")[0];
+
+      const perenualResponse = await axios.get(
+        `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
+      );
+
+      const plantInfo = perenualResponse.data.data[0];
+      if (plantInfo === undefined) {
+        setNotFound(true);
+        console.log("Plant not found");
+        setNotFound(true);
+        setFetching(false);
+        setValue(100);
+      } else if(plantInfo.watering === "Upgrade Plans To Premium/Supreme - https://perenual.com/subscription-api-pricing. I'm sorry"){
+        setPremiumPlant(true);
+        console.log("Premium plant");
+        setFetching(false);
+        setValue(100);
+
+      }
+      else {
+        console.log(plantInfo);
+        setScientificName(plantInfo.scientific_name[0]);
+        setCommonName(plantInfo.common_name);
+        setCycle(plantInfo.cycle);
+        if (typeof plantInfo.sunlight === 'string') {
+        setSunlight(plantInfo.sunlight);}
+        else{
+          setSunlight(plantInfo.sunlight[0])
+        }
+        setWatering(plantInfo.watering);
+        setFetching(false);
+        setValue(100);
+        onOpen();
+      }
+    } catch (error) {
+      console.log("Error while processing the form:", error);
+      setNotFound(true);
+      console.log("Plant not found");
+      setFetching(false);
+      setValue(100);
+      return;
+    }
+  };
+
+  const handleFileSubmit = async (e) => {
     e.preventDefault();
     setFetching(true);
     setValue(0);
@@ -148,6 +229,12 @@ function AddPlantPage() {
         fetching && image ? "cursor-wait add-plant-page " : "add-plant-page"
       }
     >
+    <WebcamCaptureModal
+        isOpen={openModal === "WebcamCaptureModal"} // Check if this modal should be open
+        onClose={closeCurrentModal} // Close the current modal
+        identifier="WebcamCaptureModal" // Unique identifier/key for this modal
+        handlePhotoSubmit={handlePhotoSubmit}     
+         />
     {fetching && image ? (
           <CircularProgress
             aria-label="Loading..."
@@ -243,11 +330,11 @@ function AddPlantPage() {
           ref={inputRef}
           type="file"
           onChange={(e) => {
-            handleFormSubmit(e);
+            handleFileSubmit(e);
           }}
         />
         <Button
-          className={fetching && image ? "cursor-wait h-72 w-96" : " h-11 rounded-full shadow-lg"}
+          className={fetching && image ? "cursor-wait  h-11 rounded-full shadow-lg" : " h-11 rounded-full shadow-lg"}
           onClick={handleClick}
           color="success"
           endContent={
@@ -258,6 +345,19 @@ function AddPlantPage() {
           }
         >
           Upload Image
+        </Button>
+        <Button
+          className={fetching && image ? "cursor-wait  h-11 rounded-full shadow-lg" : " h-11 rounded-full shadow-lg"}
+          onClick={() => openSpecificModal("WebcamCaptureModal")}
+          color="success"
+          endContent={
+            <img
+              className=" w-4 "
+              src="https://cdn-icons-png.flaticon.com/512/4184/4184373.png"
+            />
+          }
+        >
+          Take a Photo
         </Button>
        {/*  <WebcamImage
           onImageCapture={handleImageCapture}
