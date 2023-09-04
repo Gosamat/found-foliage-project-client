@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Carousel from '../../Components/CardContainer';
+import React, { useEffect, useState } from "react";
+import Carousel from "../../Components/CardContainer';
 import{ Card, CardFooter, } from "@nextui-org/react";
-import CardContainer from '../../Components/CardContainer';
-
+import CardContainer from '../../Components/CardContainer";
 
 function HomePage() {
   const [scrolled, setScrolled] = useState(false);
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,21 +15,23 @@ function HomePage() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
     <section>
-    <div className='homepagebox'> 
-      <div className={`homepagetop ${scrolled ? 'scroll-active' : ''}`}>
-        <div className="background-overlay"></div> {/* Add this overlay */}
-        <h1>Found</h1>
-        <h1>Foliage</h1>
-      </div>
+          <div className="noise-texture" style={{height: "120rem"}}></div>
+
+      <div className="homepagebox">
+        <div className={`homepagetop ${scrolled ? "scroll-active" : ""}`}>
+          <div className="background-overlay"></div> {/* Add this overlay */}
+          <h1>Found</h1>
+          <h1>Foliage</h1>
+        </div>
       </div>
 
       <CardContainer>

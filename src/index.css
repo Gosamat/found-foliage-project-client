@@ -1,16 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: 'Lexend Deca', sans-serif;
+    line-height: 1.5;
+  font-weight: 300;
 
   color-scheme: light dark;
-  color: #006952;
-  background-image: url("data:image/png;base64,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");
-  background-color: #FDF8F2;
+  color: #292929;
+background-color: white;
+  
+
 
 
   font-synthesis: none;
@@ -22,17 +25,19 @@
 
 /* Homepage */
 .homepagebox {
-  padding-left: 20px; /* Add some padding for spacing within the text container */
-  padding-right: 20px;
-  padding-bottom: 20px;
-  padding-top: 20px;
-  /* Add any other styling you want for the text container */
+
+  margin-top: -90px;
+  
 }
 .homepagetop {
+  
   position: relative;
-  background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retina-wallpapers/Plants-at-a-botanical-gar-5120x2880/18443-12.jpg");
+  /* background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retina-wallpapers/Plants-at-a-botanical-gar-5120x2880/18443-12.jpg"); */
+  background: url("https://img.freepik.com/free-photo/green-leaf-texture-leaf-texture-background_501050-120.jpg?w=1800&t=st=1693825811~exp=1693826411~hmac=7356ae2042890af0f835fa11bc383714336bd24774dd655ca12d96592903d034") rgb(0, 63, 52);
   background-size: cover;
   background-position: center;
+  background-blend-mode:soft-light;
+
   height: 100vh;
   text-align: center;
   display: flex;
@@ -40,6 +45,15 @@
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+}
+.homepage-background-color {
+  background: rgba(0, 40, 25, 0.626);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .background-overlay {
@@ -387,4 +401,92 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* Add Plant page */
+
+.add-plant-page:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  
+  display: block;
+  background-image: url("https://img.freepik.com/free-photo/angel-vine-plant-light-gray-background_53876-133194.jpg?w=2000&t=st=1693818872~exp=1693819472~hmac=35d740e7cc9abe76665d96d07e6b2831f7d3f91dc634a6de222ad5048f294276");
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+
+  
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+}
+
+.add-plant-page{
+  position: relative;
+  height: 99vh;
+  overflow: hidden;
+  margin-top: -80px;
+  
+  
+}
+
+.add-plant-page h1 {
+  font-size: 4.5em;
+  width: 37rem;
+ margin-left: 5rem;
+ padding-top: 13rem;
+ padding-bottom: 2rem;
+  line-height: 1.1;
+  text-align: left;
+  font-weight: 400;
+
+  
+
+  
+}
+
+.add-plant-buttons {
+
+  padding-top: 3rem;
+  margin-left: 5rem;
+}
+
+.add-plant-page p {
+  font-size: 1.5em;
+  width: 50rem;
+  text-align: left;
+ margin-left: 5rem;
+  line-height: 1.1;
+  font-weight: 200;
+
+  
+}
+
+
+.noise-texture{
+  position: absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  background-image: url("https://res.cloudinary.com/foundfoliage/image/upload/v1693820460/vnrcmkqoigwujljdgleg.jpg");
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  opacity: 0.4;
+  z-index: -1;
+
+}
+
+.add-page-img {
+  position:fixed; 
+  bottom:0px; 
+  left:57%;
+  width: 70vh; 
+  z-index: 0; 
+  filter: contrast(150%);
 }
