@@ -65,58 +65,209 @@
 
 }
 
-
-.carousel {
+.info {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  height: 400px;
+  padding: 0px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 97%;
+  margin: 0 auto;
   position: relative;
+  overflow: hidden;
+  height: 300px;
+  margin-bottom: 20px;
+}
+/*card in homepage*/
+.cards__container {
+  display: flex; /* Use flexbox to align items horizontally */
+  justify-content: flex-start; /* Align items to the left */
+  margin: 1.875rem 0; /* Adjust the top and bottom margin as needed */
+  max-width: 100%; /* Allow the container to take full width */
+  overflow-x: scroll; /* Add horizontal scroll if necessary */
+  padding: 0 1rem; /* Add some horizontal padding if needed */
+  gap: 3.75rem;
+  flex-wrap: nowrap; /* Prevent wrapping of cards */
 }
 
-.carousel-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.text-container {
+  margin-top: -200px; /* Adjust the margin-top to bring the text closer to the card */
+  margin-right: 1rem; /* Add some space between the card and text */
 }
 
-.carousel-button {
-  background-color: #333;
-  color: #fff;
+.text-container h1 {
+  font-size: 24px; /* Adjust font size as needed */
+  margin: 0; /* Remove any margin */
+}
+
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 50%;
+}
+
+.card__thumb {
+  overflow: hidden;
+  background-color: #6a6a6a;
+  border-radius: 20px;
+}
+
+.card__thumb img {
+  transition: all 0.3s ease;
+  border-radius: 20px;
+}
+
+.card__thumb:hover img {
+  transform: scale(1.1);
+  border-radius: 20px;
+}
+
+.card__content {
+  background-color: white;
+  padding: 2.1875rem 1.25rem 3.4375rem;
+  position: relative;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.card__title {
+  color: #171717;
+  font-family: "Playfair Display", serif;
+  font-size: 2.1875rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+
+
+.card__btn {
+  background: #64a36e00;
   border: none;
-  padding: 10px 20px;
-  cursor: pointer;
+  bottom: -1.25rem;
+  left: 50%;
+  padding: 0.625rem;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  transform: translateX(-50%);
+  transition: all 0.3s ease;
 }
 
-.prev-button {
-  left: 10px;
+.card__btn:hover,
+.card__btn:focus {
+  background-color: #64a36e8e;
 }
 
-.next-button {
-  right: 10px;
+.card__btn img {
+  width: 1.25rem;
 }
 
-.carousel-button:hover {
-  background-color: #555;
+/* :: mediaqueries :: */
+@media (min-width: 37.5rem) {
+  .card {
+    grid-template-columns: auto minmax(6.25rem, 25rem) auto;
+    grid-template-rows: repeat(4, auto);
+  }
+
+  .card__thumb {
+    width: 100%;
+    max-width: 34.375rem;
+    justify-self: center;
+    grid-area: 1 / 1 / -2 / -1;
+  }
+
+  .card__content {
+    grid-area: 3 / 2 / -1 / -2;
+    padding: 2.8125rem 2.8125rem 3.4375rem;
+  }
 }
+
+@media (min-width: 56.25rem) {
+  .card {
+    grid-template-columns: auto 4.375rem minmax(6.25rem, 25rem);
+    grid-template-rows: repeat(3, auto);
+  }
+
+  .card:nth-child(even) {
+    grid-template-columns: minmax(6.25rem, 25rem) 4.375rem auto;
+  }
+
+  .card__thumb {
+    grid-area: 1 / 1 / -1 / 3;
+  }
+
+  .card:nth-child(even) .card__thumb {
+    grid-area: 1 / 2 / -1 / -1;
+  }
+
+  .card__content {
+    grid-area: 2 / 2 / -2 / -1;
+    text-align: left;
+  }
+
+  .card:nth-child(even) .card__content {
+    text-align: left;
+    grid-area: 2 / 1 / -2 / 3;
+  }
+}
+
+
+
+
+/* Adjust the margin-top to bring the info closer to the carousel */
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 20px;
+  margin-top: -20px; /* Reduce the margin to bring it closer to the carousel */
+}
+
+.info-step {
+  text-align: center;
+  flex: 1;
+  max-width: 550px;
+  margin: 20px;
+}
+
+
+.info-step h3 {
+  font-size: 2.9rem;
+  margin: 10px 0;
+  margin-right: 100px;
+  font-weight: 600;
+}
+
+.info-step p {
+  font-size: 1rem;
+  margin-right: 100px;
+}
+
+
 
 /* Additional CSS for the process section */
 .process-container {
   text-align: center;
   max-width: 97%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px;
   position: relative; /* Add this to establish a stacking context */
   overflow: hidden; /* Hide any overflowing content */
+  margin-bottom: 20px;
 }
 
 .process {
   padding: 0px;
   background-color: #f5f5f5;
   border-radius: 20px;
+  text-align: center;
+  max-width: 97%;
+  margin: 0 auto;
+  padding: 30px;
+  position: relative; /* Add this to establish a stacking context */
+  overflow: hidden; /* Hide any overflowing content */
   
 }
 .process h2 {

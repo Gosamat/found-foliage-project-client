@@ -17,6 +17,7 @@ import {
   cn,
   useDisclosure,
   Avatar,
+  User,
   Chip,
   Tooltip,
 } from "@nextui-org/react";
@@ -44,11 +45,15 @@ const API_URL = "http://localhost:5005";
 const iconClasses =
   "text-xl text-default-500 pointer-events-none flex-shrink-0";
 
+
+
 function GardenPage() {
   const [isEditNameModalOpen, setIsEditNameModalOpen] = useState(false); // State variable to control modal visibility
   const [garden, setGarden] = useState(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedPlant, setSelectedPlant] = useState(null); // Define selectedPlant
+ 
+ 
 
   const navigate = useNavigate();
   const [values, setValues] = useState(new Set([]));
@@ -62,7 +67,6 @@ function GardenPage() {
     setSelectedPlant(plant); // Set selectedPlant
     setIsEditNameModalOpen(true);
   };
-
   const fetchPlants = () => {
     const storedToken = localStorage.getItem("authToken");
 
@@ -82,6 +86,7 @@ function GardenPage() {
   };
   useEffect(() => {
     fetchPlants();
+    fetchUser();
   }, []);
 
   function deletePlant(plantId) {
@@ -145,11 +150,29 @@ function GardenPage() {
       .then(() => navigate("/garden"))
       .catch((err) => console.log(err));
   }
+  
+  
+
+
+  
+
+
+
 
   return (
     <div>
       <h1>GardenPage</h1>
       <div>
+        <div className="usersection">
+        {user && (
+        <div className="profile-section">
+        <img src={user.profilePicUrl} alt="Profile" />
+        <p>{user.username}</p>
+      </div>
+      )}
+      </div>
+        
+        
         <Button onPress={onOpen} color="primary">
           Add a section
         </Button>
@@ -244,11 +267,10 @@ function GardenPage() {
                   isFooterBlurred
                   radius="lg"
                 >
-                  <Image
-                    alt="Card background"
-                    className="object-cover rounded-xl h-100 p-2"
-                    src={plant.imgUrl}
-                  />
+                   <div
+    className="rounded-xl h-56 bg-cover bg-center"
+    style={{ backgroundImage: `url(${plant.imgUrl})` }}
+  ></div>
                   <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
                     <p className="text-tiny text-white/80">
                       {plant.commonName}
@@ -257,7 +279,7 @@ function GardenPage() {
                     {/* drop menu */}
                     <Dropdown>
                       <DropdownTrigger>
-                        <Button variant="bordered">Open Menu</Button>
+                      <Button className="bg-black/10 hover:bg-black/30 outline: none text-white/100 hover:border-transparent" variant="flat" radius="lg" size="sm">Open</Button>
                       </DropdownTrigger>
                       <DropdownMenu
                         variant="faded"

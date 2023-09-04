@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Carousel from '../../Components/Carrousel';
+import Carousel from '../../Components/CardContainer';
+import{ Card, CardFooter, } from "@nextui-org/react";
+import CardContainer from '../../Components/CardContainer';
 
 
 function HomePage() {
@@ -31,37 +33,17 @@ function HomePage() {
         <h1>Foliage</h1>
       </div>
       </div>
-      
+
+      <CardContainer>
 
 
-
-
-
-
-<div className='process-container'>
-  <section className='process'>
-    <h2>The Process</h2>
-    <div className="process-section">
-      <div className="process-step">
-      <h3>Nature's Enigma</h3>
-      <p>Discover the magic of plant recognition through the lens of your camera.</p>
-      </div>
-      <div className="process-step">
-      <Carousel/>
-      </div>
-      <div className="process-step">
-      <h3>Portal to the World of Plant Identification</h3>
-      <p>Our system processes your image.</p>
-      </div>
-    </div>
-  </section>
-</div>
-
-
-
-
-
-      <div className='process-container'>
+      </CardContainer>  
+ 
+ 
+ 
+ 
+ 
+ 
   <section className='process'>
     <h2>The Process</h2>
     <div className="process-section">
@@ -82,7 +64,7 @@ function HomePage() {
       </div>
     </div>
   </section>
-</div>
+
 
      
     </section>
