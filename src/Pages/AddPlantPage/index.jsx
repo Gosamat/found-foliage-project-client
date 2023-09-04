@@ -57,13 +57,13 @@ function AddPlantPage() {
   }); */
 };
 
-  const handleFormSubmit =  (e) => {
-    e.preventDefault();
+/*   const handleFormSubmit =   async (e) => {
     setFetching(true);
     setValue(0);    
-    uploadImage(file);
+    formData.append("file", e.target.files[0]);
+    formData.append("upload_preset", "ayjz2x5r");
 
-    console.log(image);
+    console.log("image logged: ", image);
 
     axios
       .post(
@@ -110,6 +110,56 @@ function AddPlantPage() {
         console.log("error while fetching plant info: ", err);
       });
 });
+}; */
+
+const handleFormSubmit = async (e) => {
+  e.preventDefault();
+  setFetching(true);
+  setValue(0);
+
+  try {
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    formData.append("upload_preset", "ayjz2x5r");
+
+    const cloudinaryResponse = await axios.post(
+      "https://api.cloudinary.com/v1_1/foundfoliage/image/upload",
+      formData
+    );
+
+    const imageUrl = cloudinaryResponse.data.url;
+    setimage(imageUrl);
+
+    const plantnetResponse = await axios.get(
+      `https://my-api.plantnet.org/v2/identify/all?images=${imageUrl}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
+    );
+
+    const plantName =
+      plantnetResponse.data.results[0].species.scientificNameWithoutAuthor;
+    const firstWord = plantName.split(" ")[0];
+
+    const perenualResponse = await axios.get(
+      `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
+    );
+
+    const plantInfo = perenualResponse.data.data[0];
+    if (plantInfo === undefined) {
+      setNotFound(true);
+      console.log("Plant not found");
+    } else {
+      console.log(plantInfo);
+      setScientificName(plantInfo.scientific_name[0]);
+      setCommonName(plantInfo.common_name);
+      setCycle(plantInfo.cycle);
+      setSunlight(plantInfo.sunlight[0]);
+      setWatering(plantInfo.watering);
+      setFetching(false);
+      setValue(100);
+      onOpen();
+    }
+  } catch (error) {
+    console.log("Error while processing the form:", error);
+  }
 };
 
   const handlePlantSubmit = async (e) => {
@@ -147,25 +197,18 @@ function AddPlantPage() {
     <section className={fetching && image ? "cursor-wait" : ""}>
       <h1>Add Plant Page</h1>
       <div>
-        <form
-          onSubmit={(e) => {
-            handleFormSubmit(e);
-            setFetching(true);
-          }}
-        >
           <input
             style={{ display: "none" }}
             ref={inputRef}
             type="file"
             onChange={(e) => {
-              uploadImage(e.target.files);
+              handleFormSubmit(e);
             }}
           />
           <Button
             className={
               fetching && image ? "cursor-wait h-72 w-96" : " h-72  w-96"
             }
-            type="submit"
             onClick={handleClick}
           >
             <img
@@ -173,7 +216,6 @@ function AddPlantPage() {
               src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png"
             />
           </Button>
-        </form>
         {fetching && image ? (
           <CircularProgress
             aria-label="Loading..."
