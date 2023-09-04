@@ -34,6 +34,7 @@ function AddPlantPage() {
   const [file, setFile] = useState(null);
   const formData = new FormData();
   const [capturedImage, setCapturedImage] = useState(null);
+  const [premiumPlant, setPremiumPlant] = useState(false);
 
   // Callback function to receive the captured image from WebcamImage
   const handleImageCapture = (imageSrc) => {
@@ -80,12 +81,26 @@ function AddPlantPage() {
       if (plantInfo === undefined) {
         setNotFound(true);
         console.log("Plant not found");
-      } else {
+        setNotFound(true);
+        setFetching(false);
+        setValue(100);
+      } else if(plantInfo.watering === "Upgrade Plans To Premium/Supreme - https://perenual.com/subscription-api-pricing. I'm sorry"){
+        setPremiumPlant(true);
+        console.log("Premium plant");
+        setFetching(false);
+        setValue(100);
+
+      }
+      else {
         console.log(plantInfo);
         setScientificName(plantInfo.scientific_name[0]);
         setCommonName(plantInfo.common_name);
         setCycle(plantInfo.cycle);
-        setSunlight(plantInfo.sunlight);
+        if (typeof plantInfo.sunlight === 'string') {
+        setSunlight(plantInfo.sunlight);}
+        else{
+          setSunlight(plantInfo.sunlight[0])
+        }
         setWatering(plantInfo.watering);
         setFetching(false);
         setValue(100);
@@ -140,9 +155,9 @@ function AddPlantPage() {
             value={value}
             color="warning"
             showValueLabel={true}
-            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72"
           />
-        ) : (
+        ) : notFound ? <h1>not found</h1> : premiumPlant ? <h1>Premium plant</h1> : (
           <Modal
             backdrop="opaque"
             isOpen={isOpen}

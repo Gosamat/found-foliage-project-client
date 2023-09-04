@@ -539,10 +539,10 @@ button:focus-visible {
 }
 
 .add-page-img {
-  position: fixed;
-  bottom: 0;
-  right: 0; 
-  width: 70vh;
-  z-index: 0;
+  position:fixed; 
+  bottom:0px; 
+  left:57vw;
+  width: 70vh; 
+  z-index: 0; 
   filter: contrast(150%);
 }

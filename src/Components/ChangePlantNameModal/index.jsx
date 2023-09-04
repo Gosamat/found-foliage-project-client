@@ -7,15 +7,18 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Input,
 } from "@nextui-org/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const API_URL = "http://localhost:5005";
 
 
-function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
+function ChangePlantNameModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
   const { onOpen, onOpenChange } = useDisclosure();
+  const [plantName, setPlantName] = useState("");
 
   const navigate = useNavigate();
 
@@ -29,11 +32,11 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
   }, [isOpen]);
 
 
-  const deleteGarden = ()=>{
+  const UpdatePlantName = ()=>{
     const storedToken = localStorage.getItem("authToken");
+    const updatedPlant = {commonName: plantName};
 
-
-    axios.delete(`${API_URL}/garden/delete`,  {
+    axios.put(`${API_URL}/garden/${selectedPlant._id}/edit`, updatedPlant,{
         headers: { Authorization: `Bearer ${storedToken}` },
       }). then(() => {
         onClose();
@@ -77,17 +80,27 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Are you sure you want to delete your garden?</ModalHeader>
-           
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  No
-                </Button>
-                <Button color="primary" onPress={
-                deleteGarden}>
-                  Yes
-                </Button>
-              </ModalFooter>
+            <ModalHeader className="flex flex-col gap-1">Edit Plant Name</ModalHeader>
+            <ModalBody>
+              {/* Add input fields and logic for editing the plant name */}
+              {/* You can use useState to manage the input value */}
+              <Input
+                label="Plant Name"
+                placeholder={selectedPlant.commonName}
+                type="text"
+                variant="bordered"
+                name="name"
+                onChange={(e) => setPlantName(e.target.value)}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onPress={onClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={UpdatePlantName}>
+                Change
+              </Button>
+            </ModalFooter>
             </>
           )}
         </ModalContent>
@@ -96,4 +109,4 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
   );
 }
 
-export default DeleteGardenModal;
+export default ChangePlantNameModal;

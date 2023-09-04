@@ -38,9 +38,11 @@ import { AddNoteIcon } from "../../Components/Listbox/dropmenu/AddNoteIcon";
 import { CopyDocumentIcon } from "../../Components/Listbox/dropmenu/CopyDocumentIcon";
 import { EditDocumentIcon } from "../../Components/Listbox/dropmenu/EditDocumentIcon";
 import { DeleteDocumentIcon } from "../../Components/Listbox/dropmenu/DeleteDocumentIcon";
-import EditNameModal from "../../Components/EditNameModal";
 import DeleteGardenModal from "../../Components/DeleteGardenModal";
-
+import ChangePlantNameModal from "../../Components/ChangePlantNameModal";
+import ChangePlantImageModal from "../../Components/ChangePlantImageModal";
+import PlantDetailsModal from "../../Components/PlantDetailsModal";
+import  EditNotesModal from "../../Components/EditNotesModal";
 import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:5005";
 const iconClasses =
@@ -49,11 +51,11 @@ const iconClasses =
 
 
 function GardenPage() {
-  const [isEditNameModalOpen, setIsEditNameModalOpen] = useState(false); // State variable to control modal visibility
   const [garden, setGarden] = useState(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedPlant, setSelectedPlant] = useState(null); // Define selectedPlant
   const [openModal, setOpenModal] = useState(null); // State to track the open modal
+  const [user, setUser] = useState(null);
 
 
   const navigate = useNavigate();
@@ -64,8 +66,9 @@ function GardenPage() {
   };
 
    // Function to open a specific modal
-   const openSpecificModal = (modalIdentifier) => {
+   const openSpecificModal = (modalIdentifier, plant) => {
     setOpenModal(modalIdentifier);
+    setSelectedPlant(plant); // Set selectedPlant
   };
 
   // Function to close the currently open modal
@@ -73,21 +76,18 @@ function GardenPage() {
     setOpenModal(null);
   };
 
-/*   // Function to open the edit Name modal
-  const openEditName = (plant) => {
-    setSelectedPlant(plant); // Set selectedPlant
-    setIsEditNameModalOpen(true);
-  }; */
 
   const fetchPlants = () => {
     const storedToken = localStorage.getItem("authToken");
+     console.log(storedToken)
 
     axios
       .get(`${API_URL}/garden`, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {
-        setGarden(response.data[0]);
+        setGarden(response.data.gardenPlants);
+        setUser(response.data.currentUser);
       })
       .catch((error) =>
         console.log(
@@ -96,6 +96,7 @@ function GardenPage() {
         )
       );
   };
+  
   useEffect(() => {
     fetchPlants();
   }, []);
@@ -162,34 +163,57 @@ function GardenPage() {
       .catch((err) => console.log(err));
   }
   
-  
-
-
-  
-
-
-
-
   return (
     <div>
       <h1>GardenPage</h1>
       <div className="noise-texture" ></div>
+      {user && <div> <div>
+      <img src={user.profilePicUrl} className="w-24 rounded-full" />
+        <h1>{user.username}</h1>
+        <h1>@{user.email}</h1>
+
+      </div>
+      <div>
+        Description: {garden.description}
+      </div>
       <div> 
         <Button onPress={onOpen} color="primary">
           Add a section
         </Button>
-        {isEditNameModalOpen && (
-          <EditNameModal
-            isOpen={isEditNameModalOpen}
-            onOpenChange={() => setIsEditNameModalOpen(false)}
-            selectedPlant={selectedPlant} // Pass selectedPlant
-          />
-        )}
         <Button onPress={() => openSpecificModal("deleteGardenModal")}>Delete Garden</Button>
         <DeleteGardenModal
         isOpen={openModal === "deleteGardenModal"} // Check if this modal should be open
         onClose={closeCurrentModal} // Close the current modal
         identifier="deleteGardenModal" // Unique identifier/key for this modal
+        fetchPlants={fetchPlants}
+      />
+       <ChangePlantNameModal
+        isOpen={openModal === "ChangePlantNameModal"} // Check if this modal should be open
+        onClose={closeCurrentModal} // Close the current modal
+        identifier="ChangePlantNameModal" // Unique identifier/key for this modal
+        fetchPlants={fetchPlants}
+        selectedPlant={selectedPlant} // Pass selectedPlant
+      />
+       <ChangePlantImageModal
+        isOpen={openModal === "ChangePlantImageModal"} // Check if this modal should be open
+        onClose={closeCurrentModal} // Close the current modal
+        identifier="ChangePlantImageModal" // Unique identifier/key for this modal
+        fetchPlants={fetchPlants}
+        selectedPlant={selectedPlant} // Pass selectedPlant
+      />
+          <PlantDetailsModal
+        isOpen={openModal === "PlantDetailsModal"} // Check if this modal should be open
+        onClose={closeCurrentModal} // Close the current modal
+        identifier="PlantDetailsModal" // Unique identifier/key for this modal
+        fetchPlants={fetchPlants}
+        selectedPlant={selectedPlant} // Pass selectedPlant
+      />
+<EditNotesModal
+        isOpen={openModal === "EditNotesModal"} // Check if this modal should be open
+        onClose={closeCurrentModal} // Close the current modal
+        identifier="EditNotesModal" // Unique identifier/key for this modal
+        fetchPlants={fetchPlants}
+        selectedPlant={selectedPlant} // Pass selectedPlant
       />
         <Modal
           isOpen={isOpen}
@@ -275,6 +299,7 @@ function GardenPage() {
                   isFooterBlurred
                   radius="lg"
                 >
+
                    <div
     className="rounded-xl h-56 bg-cover bg-center"
     style={{ backgroundImage: `url(${plant.imgUrl})` }}
@@ -295,7 +320,7 @@ function GardenPage() {
                       >
                         <DropdownSection title="Actions" showDivider>
                           <DropdownItem
-                            onPress={() => navigate(`/garden/${plant._id}`)}
+                          onPress={() => openSpecificModal("PlantDetailsModal", plant)}
                             key="details"
                             description="Details"
                             startContent={
@@ -305,6 +330,7 @@ function GardenPage() {
                             View Details
                           </DropdownItem>
                           <DropdownItem
+                            onPress={() => openSpecificModal("EditNotesModal", plant)}
                             key="note"
                             description="Create a note"
                             startContent={
@@ -314,7 +340,7 @@ function GardenPage() {
                             {plant.notes === "" ? "New note" : "Change note"}
                           </DropdownItem>
                           <DropdownItem
-                            onPress={() => openEditName(selectedPlant)}
+                            onPress={() => openSpecificModal("ChangePlantNameModal", plant)}
                             key="name"
                             description="Edit plant name"
                             startContent={
@@ -324,7 +350,7 @@ function GardenPage() {
                             Change Name
                           </DropdownItem>
                           <DropdownItem
-                            onPress={"kek"}
+                            onPress={() => openSpecificModal("ChangePlantImageModal", plant)}
                             key="image"
                             description="Edit plant image"
                             startContent={
@@ -358,6 +384,7 @@ function GardenPage() {
             );
           })}
       </div>
+    </div>}
     </div>
   );
 }
