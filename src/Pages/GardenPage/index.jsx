@@ -98,7 +98,6 @@ function GardenPage() {
   };
   useEffect(() => {
     fetchPlants();
-    fetchUser();
   }, []);
 
   function deletePlant(plantId) {
@@ -175,17 +174,7 @@ function GardenPage() {
     <div>
       <h1>GardenPage</h1>
       <div className="noise-texture" ></div>
-      <div>
-        <div className="usersection">
-        {user && (
-        <div className="profile-section">
-        <img src={user.profilePicUrl} alt="Profile" />
-        <p>{user.username}</p>
-      </div>
-      )}
-      </div>
-        
-        
+      <div> 
         <Button onPress={onOpen} color="primary">
           Add a section
         </Button>

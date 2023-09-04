@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Carousel from "../../Components/CardContainer';
 import{ Card, CardFooter, } from "@nextui-org/react";
-import CardContainer from '../../Components/CardContainer";
+import CardContainer from '../../Components/CardContainer';
 
 function HomePage() {
   const [scrolled, setScrolled] = useState(false);

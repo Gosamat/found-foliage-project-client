@@ -108,7 +108,8 @@ background-color: white;
 
 .text-container {
   margin-top: -200px; /* Adjust the margin-top to bring the text closer to the card */
-  margin-right: 1rem; /* Add some space between the card and text */
+  margin-right: 1rem;
+   /* Add some space between the card and text */
 }
 
 .text-container h1 {
