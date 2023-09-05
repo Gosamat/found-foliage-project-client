@@ -13,10 +13,12 @@ import IsAnon from "./Components/IsAnon"
 import IsPrivate from "./Components/IsPrivate"
 import EditPlantPage from './Pages/EditPlantPage'
 
+
 function App() {
 
+
   return (
-    <div className='page-container'>
+    <div className= "page-container text-foreground bg-background">
      <TopNavbar/>
       <Routes>
         <Route path="/" element={<HomePage />} />

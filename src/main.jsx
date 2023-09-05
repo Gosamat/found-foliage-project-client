@@ -7,12 +7,15 @@ import { NextUIProvider } from "@nextui-org/react";
 import { AuthProviderWrapper } from "./Context/Auth.Context.jsx";
 
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
       <AuthProviderWrapper>
         <NextUIProvider>
+        <main className="purple-dark text-foreground bg-background">
           <App />
+          </main>
         </NextUIProvider>
       </AuthProviderWrapper>
     </Router>

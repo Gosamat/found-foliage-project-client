@@ -32,6 +32,8 @@ function AddPlantPage() {
   const inputRef = useRef(null);
   const [premiumPlant, setPremiumPlant] = useState(false);
   const [openModal, setOpenModal] = useState(null); // State to track the open modal
+  const [premiumPlantModalOpen, setPremiumPlantModalOpen] = useState(false);
+const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
 
   /*   // Callback function to receive the captured image from WebcamImage
   const handleImageCapture = (imageSrc) => {
@@ -97,6 +99,8 @@ function AddPlantPage() {
         "Upgrade Plans To Premium/Supreme - https://perenual.com/subscription-api-pricing. I'm sorry"
       ) {
         setPremiumPlant(true);
+        setPremiumPlantModalOpen(true);
+
         console.log("Premium plant");
         setFetching(false);
         setValue(100);
@@ -157,19 +161,25 @@ function AddPlantPage() {
 
       const plantInfo = perenualResponse.data.data[0];
       if (plantInfo === undefined) {
+        setNotFoundModalOpen(true);
         setNotFound(true);
         console.log("Plant not found");
         setNotFound(true);
         setFetching(false);
         setValue(100);
+        onOpen();
+
       } else if (
         plantInfo.watering ===
         "Upgrade Plans To Premium/Supreme - https://perenual.com/subscription-api-pricing. I'm sorry"
       ) {
+        setPremiumPlantModalOpen(true);
         setPremiumPlant(true);
         console.log("Premium plant");
         setFetching(false);
         setValue(100);
+        onOpen();
+
       } else {
         console.log(plantInfo);
         setScientificName(plantInfo.scientific_name[0]);
@@ -233,7 +243,7 @@ function AddPlantPage() {
         identifier="WebcamCaptureModal" // Unique identifier/key for this modal
         handlePhotoSubmit={handlePhotoSubmit}
       />
-      
+
       <div className="noise-texture"></div>
       <div className="add-plant-container">
         <div className="add-plant-text">
@@ -244,93 +254,223 @@ function AddPlantPage() {
             garden!
           </p>
         </div>
-        {fetching && image ? (<div className=" h-full ">
-        <div className="darkened-background h-full"></div>
-        <CircularProgress
-          label="Loading..."
-          color="success"
-          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 loading-spinner"
-        />
-       
-        </div>
-      ) : notFound ? (
-        <h1>not found</h1>
-      ) : premiumPlant ? (
-        <h1>Premium plant</h1>
-      ) : (
-        <Modal
-          backdrop="opaque"
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          motionProps={{
-            variants: {
-              enter: {
-                y: 0,
-                opacity: 1,
-                transition: {
-                  duration: 0.3,
-                  ease: "easeOut",
+        
+        {fetching && image ? (
+          <div className=" h-full ">
+            <div className="darkened-background h-full"></div>
+            <CircularProgress
+              label="Loading..."
+              color="success"
+              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 loading-spinner"
+            />
+          </div>
+        ) : notFoundModalOpen ? (
+          <Modal
+            backdrop="opaque"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            motionProps={{
+              variants: {
+                enter: {
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeOut",
+                  },
+                },
+                exit: {
+                  y: -20,
+                  opacity: 0,
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeIn",
+                  },
                 },
               },
-              exit: {
-                y: -20,
-                opacity: 0,
-                transition: {
-                  duration: 0.2,
-                  ease: "easeIn",
-                },
-              },
-            },
-          }}
-          classNames={{
-            body: "py-6",
-            backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-            base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
-            header: "border-b-[1px] border-[#292f46]",
-            footer: "border-t-[1px] border-[#292f46]",
-            closeButton: "hover:bg-white/5 active:bg-white/10",
-          }}
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">
-                  <h2 className="text-2xl">{commonName}</h2>
-                </ModalHeader>
-                {commonName && <img className="m-5 rounded-lg" src={image} />}
-                <ModalBody className="py-0 pb-5">
+            }}
+            classNames={{
+              body: "py-6",
+              backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+              base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
+              header: "border-b-[1px] border-[#292f46]",
+              footer: "border-t-[1px] border-[#292f46]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
+          >
+          <div className="blurred-plant ">
+            <ModalContent>
+              {(onClose) => (
+                <>
                   {commonName && (
-                    <div>
-                      <h2>
-                        <b>Scientific name:</b> {scientificName}
-                      </h2>
-                      <h3>
-                        <b>sunlight level:</b> {sunlight}
-                      </h3>
-                      <h3>
-                        {" "}
-                        <b>Watering frequency:</b> {watering}
-                      </h3>
-                    </div>
+                    <img
+                      className="m-5 rounded-lg object-cover  h-80"
+                      src={image}
+                    />
                   )}
-                </ModalBody>
-                <ModalFooter>
-                  <Button
-                    color="danger"
-                    variant="light"
-                    onPress={onClose}
-                  >
-                    Cancel
-                  </Button>
-                  <Button color="primary" onPress={handlePlantSubmit}>
-                    Add to Garden?
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-      )}
+                  <ModalBody className="py-0 pb-5">
+                    {commonName && (
+                      <div>
+                        <h2>Seems like no plant was found</h2>
+                        <h5>
+                          Try using a different photo and we'll see what we can
+                          do 😔
+                        </h5>
+                      </div>
+                    )}
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onPress={onClose}>
+                      Try Again?
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+            </div>
+          </Modal>
+        ) : premiumPlantModalOpen ? (
+          <Modal
+            backdrop="opaque"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            motionProps={{
+              variants: {
+                enter: {
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeOut",
+                  },
+                },
+                exit: {
+                  y: -20,
+                  opacity: 0,
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeIn",
+                  },
+                },
+              },
+            }}
+            classNames={{
+              body: "py-6",
+              backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+              base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
+              header: "border-b-[1px] border-[#292f46]",
+              footer: "border-t-[1px] border-[#292f46]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
+          >
+                    <div className="blurred-plant">
+
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  {commonName && (
+                    <img
+                      className="m-5 rounded-lg object-cover  h-80"
+                      src={image}
+                    />
+                  )}
+                  <ModalBody className="py-0 pb-5">
+                    {commonName && (
+                      <div>
+                        <h2>Oops, that's a Premium Plant</h2>
+                        <h5>
+                          Those aren't available as this is simply a project for
+                          Ironhack
+                        </h5>
+                        <h5>Try a different plant!</h5>
+                      </div>
+                    )}
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onPress={onClose}>
+                      Try Again?
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+            </div>
+          </Modal>
+        ) : (
+          <Modal
+            backdrop="opaque"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            motionProps={{
+              variants: {
+                enter: {
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeOut",
+                  },
+                },
+                exit: {
+                  y: -20,
+                  opacity: 0,
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeIn",
+                  },
+                },
+              },
+            }}
+            classNames={{
+              body: "py-6",
+              backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+              base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
+              header: "border-b-[1px] border-[#292f46]",
+              footer: "border-t-[1px] border-[#292f46]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
+          >
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">
+                    <h2 className="text-2xl">{commonName}</h2>
+                  </ModalHeader>
+                  {commonName && (
+                    <img
+                      className="m-5 rounded-lg object-cover  h-80"
+                      src={image}
+                    />
+                  )}
+                  <ModalBody className="py-0 pb-5">
+                    {commonName && (
+                      <div>
+                        <h2>
+                          <b>Scientific name:</b> {scientificName}
+                        </h2>
+                        <h3>
+                          <b>sunlight level:</b> {sunlight}
+                        </h3>
+                        <h3>
+                          {" "}
+                          <b>Watering frequency:</b> {watering}
+                        </h3>
+                      </div>
+                    )}
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Cancel
+                    </Button>
+                    <Button color="primary" onPress={handlePlantSubmit}>
+                      Add to Garden?
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+        )}
         <div className="add-plant-buttons flex flex-row align-middle">
           <input
             style={{ display: "none" }}

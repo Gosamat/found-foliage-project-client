@@ -160,7 +160,7 @@ function GardenPage() {
   }
 
   return (
-    <div>
+    <div className="garden-page">
       <div className="noise-texture"></div>
       {user && (
         <>

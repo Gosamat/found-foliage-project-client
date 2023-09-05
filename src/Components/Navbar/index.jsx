@@ -52,6 +52,7 @@ const deleteProfile = (onClose)=>{
 
 useEffect(() => {
   const storedToken = localStorage.getItem("authToken");
+  if (user) {
   axios
     .get(`${API_URL}/garden`, {
       headers: { Authorization: `Bearer ${storedToken}` },
@@ -65,7 +66,7 @@ useEffect(() => {
         error
       )
     );
-}, []);
+}}, [user]);
 
 
   return (
@@ -113,6 +114,8 @@ useEffect(() => {
             Add Plant
           </Link>
         </NavbarItem>
+        <NavbarItem>
+        </NavbarItem>
       </NavbarContent>
       {isLoggedIn ? (
         <NavbarContent justify="end">
@@ -136,7 +139,7 @@ useEffect(() => {
         color="success"
         variant="flat"
       >
-      <DropdownSection showDivider>
+      <DropdownSection showDivider >
 
         <DropdownItem key="copy" onClick={()=>navigate("/garden")}>
         
