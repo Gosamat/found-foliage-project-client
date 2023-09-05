@@ -65,11 +65,11 @@ useEffect(() => {
         error
       )
     );
-});
+}, []);
 
 
   return (
-    <Navbar className="mt-5 mx-7 w-auto rounded-full">
+    <Navbar className="mt-5 mx-7 w-auto rounded-full" >
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -121,13 +121,13 @@ useEffect(() => {
       <DropdownTrigger>
         <Button 
           color="success"
-          className="capitalize rounded-full"
+          className="capitalize rounded-full px-0"
           variant="flat"
         >
-        {loggedUser && <>
-        <img src={loggedUser.profilePicUrl} className="w-7 rounded-full"/>
-        <h3>{loggedUser.username}</h3>
-        </>
+        {loggedUser && <div className="flex justify-between items-center w-max capitalize rounded-full mx-2">
+        <img src={loggedUser.profilePicUrl} className="w-7 h-7 rounded-full me-2"/>
+        <h3 className="me-2">{loggedUser.username}</h3>
+        </div>
         }
         </Button>
       </DropdownTrigger>
