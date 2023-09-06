@@ -90,13 +90,17 @@ useEffect(() => {
         </ModalContent>
       </Modal>
         <NavbarBrand>
-        <Link color="foreground" href={"/"}>
+        <RouterLink to="/">
+
+        <Link color="foreground">
           <img
             src="https://res.cloudinary.com/ghostly/image/upload/v1693570491/FoundFoliage/icon_ekml2z.png"
             width={50}
           />
           <p className="font-bold text-inherit">Found Foliage</p>
           </Link>
+          </RouterLink>
+
         </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -164,17 +168,22 @@ My Garden</DropdownItem>
       ) : (
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Link href={"/auth/login"}>Login</Link>
+          <RouterLink to="/auth/login">
+          <Link>Login</Link>
+          </RouterLink>
           </NavbarItem>
           <NavbarItem>
+          <RouterLink to="/auth/signup">
+
             <Button
               as={Link}
               color="primary"
-              href={"/auth/signup"}
               variant="flat"
             >
               Sign Up
             </Button>
+            </RouterLink>
+
           </NavbarItem>
         </NavbarContent>
       )}
