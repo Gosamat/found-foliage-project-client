@@ -218,26 +218,22 @@ if (cardList && cardList.length === 1) {
             }}
           />
           <div>
+          <div className="flex items-start">
+  <Link onPress={handleClick}>
+    <User
+      className="w-96 text-lg" // Adjust the width and font size as needed
+      name={user.username}
+      description={user.email}
+      avatarProps={{
+        src: profilePicUrl,
+        size: "2xl", // Increase the avatar size as needed
+      }}
+        />
+      </Link>
+    </div>
             <div>
-              <Link onPress={handleClick}>
-                <User
-                  className=" w-96"
-                  name={user.username}
-                  description={user.email}
-                  avatarProps={{
-                    src: profilePicUrl,
-                    size: "xl",
-                  }}
-                />
-              </Link>
-            </div>
-            <div>
-              <Button onPress={onOpen} color="primary">
-                Add a section
-              </Button>
-              <Button onPress={() => openSpecificModal("deleteGardenModal")}>
-                Delete Garden
-              </Button>
+              
+              
               <DeleteGardenModal
                 isOpen={openModal === "deleteGardenModal"} // Check if this modal should be open
                 onClose={closeCurrentModal} // Close the current modal
@@ -329,7 +325,7 @@ if (cardList && cardList.length === 1) {
                               </p>
                             </div>
                           )}
-                        </ModalBody>
+                                </ModalBody>
                         <ModalFooter>
                           <Button color="primary" onPress={onClose}>
                             Sign in
@@ -471,10 +467,18 @@ if (cardList && cardList.length === 1) {
                       
                     </Tooltip>
                     
+                    
                   );
                 })}
                 
             </div>
+            <div> <Button onPress={() => openSpecificModal("deleteGardenModal")}>
+                Delete Garden
+              </Button>
+              </div>
+              <Button onPress={onOpen} color="primary">
+                Add a section
+              </Button>
           </div>
         </>
       )}
