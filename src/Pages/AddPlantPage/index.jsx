@@ -17,7 +17,7 @@ import WebcamCaptureModal from "../../Components/WebcamCaptureModal";
 
 const PLANTNET_KEY = "2b10VpTk0sBhhNvolJI73EN";
 const PERENUAL_KEY = "sk-LWNZ64d4a282ae0b61825";
-const API_URL = "http://localhost:5005";
+const API_URL = "https://found-foliage-server.onrender.com";
 
 function AddPlantPage() {
   const [scrollBehavior, setScrollBehavior] = useState("inside");

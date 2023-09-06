@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://found-foliage-server.onrender.com";
 
 
 function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {

@@ -44,7 +44,7 @@ import ChangePlantImageModal from "../../Components/ChangePlantImageModal";
 import PlantDetailsModal from "../../Components/PlantDetailsModal";
 import EditNotesModal from "../../Components/EditNotesModal";
 import { useNavigate } from "react-router-dom";
-const API_URL = "http://localhost:5005";
+const API_URL = "https://found-foliage-server.onrender.com";
 const iconClasses =
   "text-xl text-default-500 pointer-events-none flex-shrink-0";
 

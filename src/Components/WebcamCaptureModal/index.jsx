@@ -13,7 +13,7 @@ import axios from "axios";
 import { useState,useCallback, useRef } from "react";
 import Webcam from "react-webcam";
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://found-foliage-server.onrender.com";
 
 
 function WebcamCaptureModal({ isOpen, onClose, handlePhotoSubmit}) {

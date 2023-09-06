@@ -6,7 +6,7 @@ import { Input, Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 
 function EditPlantPage() {
-  const API_URL = "http://localhost:5005";
+  const API_URL = "https://found-foliage-server.onrender.com";
   const { plantId } = useParams();
   const [plant, setPlant] = useState(null);
   const [commonName, setCommonName] = useState("");

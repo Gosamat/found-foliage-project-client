@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../Context/Auth.Context"
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://found-foliage-server.onrender.com";
 
 function LoginPage() {
   const [email, setEmail] = useState("");

@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://found-foliage-server.onrender.com";
 
 function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
   const { onOpen, onOpenChange } = useDisclosure();

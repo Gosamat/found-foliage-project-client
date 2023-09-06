@@ -16,7 +16,7 @@ function makeText() {
   return textOptions[randomIndex];
 }
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://found-foliage-server.onrender.com";
 
 const Card = () => {
   const initialText = localStorage.getItem('cardText') || makeText();
