@@ -27,7 +27,7 @@ function AddPlantPage() {
   const [cycle, setCycle] = useState("");
   const [sunlight, setSunlight] = useState("");
   const [watering, setWatering] = useState("");
-  const [edible, setEdible] = useState("");
+  const [edible, setEdible] = useState(false);
   const [maintenance, setMaintenance] = useState("");
   const [poisonous, setPoisonous] = useState(false);
   const [indoor, setIndoor] = useState(false);

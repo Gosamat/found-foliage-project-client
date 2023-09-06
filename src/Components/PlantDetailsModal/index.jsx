@@ -13,7 +13,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile } from '@fortawesome/free-solid-svg-icons'
+import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons'
+import { faUtensils } from '@fortawesome/free-solid-svg-icons'
+import { faHandHoldingHand } from '@fortawesome/free-solid-svg-icons'
+import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import { faPrescriptionBottleMedical } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 
 
 const API_URL = "https://found-foliage-server.onrender.com";
@@ -28,32 +33,19 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
   React.useEffect(() => {
     if (isOpen) {
       onOpen();
+      console.log(selectedPlant)
     } else {
       onOpenChange();
     }
   }, [isOpen]);
 
-  const UpdatePlantName = () => {
-    const storedToken = localStorage.getItem("authToken");
-    const updatedPlant = { commonName: plantName };
 
-    axios
-      .put(`${API_URL}/garden/${selectedPlant._id}/edit`, updatedPlant, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
-      .then(() => {
-        onClose();
-        fetchPlants();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   return (
     <>
       {/* No need to use onOpen from useDisclosure, use isOpen from props */}
       <Modal
+       className="z-100"
         backdrop="blur"
         size="4xl"
         isOpen={isOpen}
@@ -124,14 +116,14 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                   
                     <div>{selectedPlant.watering ? <img/> : <img/>}</div>
                     <div>{selectedPlant.sunlight ? <img/> : <img/>}</div>
-                    <div>{selectedPlant.poisonous_to_humans ? <FontAwesomeIcon icon={faSkullCrossbones} style={{color: "#454545",}} className=" opacity-80" />: <FontAwesomeIcon icon={faSkullCrossbones} />}</div>
-                    <div>{selectedPlant.cuisine ? <img/> : <img/>}</div>
+                    <div>{selectedPlant.poisonous_to_humans ?  <FontAwesomeIcon icon={faSkullCrossbones} style={{color: "#00d64b",}}/> : <FontAwesomeIcon icon={faSkullCrossbones} style={{color: "#454545",}} className=" opacity-80" />}</div>
+                    <div>{selectedPlant.edible ? <FontAwesomeIcon icon={faUtensils} style={{color: "#00d64b",}} /> : <FontAwesomeIcon icon={faUtensils} style={{color: "#454545",}} className=" opacity-80" /> }</div>
                     </div>
                     <div className="flex flex-row">
-                    <div>{selectedPlant.maintenance ? <img src=""/> : <img src=""/>}</div>
-                    <div>{selectedPlant.indoor ? <img src=""/> : <img src=""/>}</div>
-                    <div>{selectedPlant.medicinal ? <img src=""/> : <img src=""/>}</div>
-                    <div>{selectedPlant.flowering_season ? <img src=""/> : <img src=""/>}</div>
+                    <div>{selectedPlant.maintenance ? <FontAwesomeIcon icon={faHandHoldingHand} /> : <FontAwesomeIcon icon={faHandHoldingHand} />}</div>
+                    <div>{selectedPlant.indoor ? <FontAwesomeIcon icon={faHouse} /> : <FontAwesomeIcon icon={faHouse} />}</div>
+                    <div>{selectedPlant.medicinal ? <FontAwesomeIcon icon={faPrescriptionBottleMedical} /> : <FontAwesomeIcon icon={faPrescriptionBottleMedical} />}</div>
+                    <div>{selectedPlant.flowering_season ? <FontAwesomeIcon icon={faCalendarDays} /> : <FontAwesomeIcon icon={faCalendarDays} />}</div>
                     </div>
                   </div>
                 </div>

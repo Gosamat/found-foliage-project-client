@@ -20,6 +20,7 @@ import {
   ModalFooter, 
   DropdownSection
 } from "@nextui-org/react";
+import {Link as RouterLink} from "react-router-dom"
 import { AuthContext } from "../../Context/Auth.Context";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -100,18 +101,24 @@ useEffect(() => {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive>
-          <Link color="foreground" href="/about" aria-current="page">
+          <Link color="foreground" aria-current="page">
+          <RouterLink to="/about">
             About
+          </RouterLink>
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href={"/garden"}>
+          <Link color="foreground">
+           <RouterLink to="/garden">
             Garden
+            </RouterLink>
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href={"/plant/add"}>
+          <Link color="foreground" >
+          <RouterLink to="/plant/add">
             Add Plant
+            </RouterLink>
           </Link>
         </NavbarItem>
         <NavbarItem>
