@@ -25,6 +25,9 @@ import { AuthContext } from "../../Context/Auth.Context";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import SignInModal from "../Sign-LogInModal/signup";
+import LogInModal from "../Sign-LogInModal/LogIn";
+import LogInModalNoBut from "../Sign-LogInModal/LogIn-noButton";
 
 const API_URL = "https://found-foliage-server.onrender.com";
 
@@ -174,18 +177,18 @@ function TopNavbar() {
       ) : (
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Link>
-              <RouterLink to="/auth/login">Login </RouterLink>
-            </Link>
+          <LogInModal></LogInModal>
           </NavbarItem>
           <NavbarItem>
-            <Button as={RouterLink} color="primary" variant="flat">
-              <RouterLink to="/auth/signup">Sign Up</RouterLink>
-            </Button>
+              <SignInModal></SignInModal>
+           
           </NavbarItem>
         </NavbarContent>
+        
       )}
+       
     </Navbar>
+    
   );
 }
 
