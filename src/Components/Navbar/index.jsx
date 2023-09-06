@@ -70,7 +70,7 @@ useEffect(() => {
 
 
   return (
-    <Navbar className="mt-5 mx-7 w-auto rounded-full" >
+    <Navbar className=" w-auto" >
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (

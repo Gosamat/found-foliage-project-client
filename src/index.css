@@ -26,12 +26,12 @@
 }
 .homepagetop {
   position: relative;
-  /* background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retina-wallpapers/Plants-at-a-botanical-gar-5120x2880/18443-12.jpg"); */
-  background: url("https://img.freepik.com/free-photo/green-leaf-texture-leaf-texture-background_501050-120.jpg?w=1800&t=st=1693825811~exp=1693826411~hmac=7356ae2042890af0f835fa11bc383714336bd24774dd655ca12d96592903d034")
-    rgb(0, 63, 52);
+background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retina-wallpapers/Plants-at-a-botanical-gar-5120x2880/18443-12.jpg");
+/*  background: url("https://img.freepik.com/free-photo/green-leaf-texture-leaf-texture-background_501050-120.jpg?w=1800&t=st=1693825811~exp=1693826411~hmac=7356ae2042890af0f835fa11bc383714336bd24774dd655ca12d96592903d034")
+    rgb(0, 63, 52);*/
   background-size: cover;
   background-position: center;
-  background-blend-mode: soft-light;
+  /* background-blend-mode: soft-light; */
 
   height: 100vh;
   text-align: center;
