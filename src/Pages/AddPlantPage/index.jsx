@@ -34,6 +34,7 @@ function AddPlantPage() {
   const [description, setDescription] = useState("");
   const [medicinal, setMedicinal] = useState(false);
   const [flowering, setFlowering] = useState([]);
+  const [care, setCare] = useState("");
   const [image, setimage] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [fetching, setFetching] = useState(false);
@@ -118,20 +119,34 @@ function AddPlantPage() {
         setValue(100);
         onOpen();
       } else {
-        console.log(plantInfo);
-        setScientificName(plantInfo.scientific_name[0]);
-        setCommonName(plantInfo.common_name);
-        setCycle(plantInfo.cycle);
-        if (typeof plantInfo.sunlight === "string") {
-          setSunlight(plantInfo.sunlight);
-        } else {
-          setSunlight(plantInfo.sunlight[0]);
-        }
-        setWatering(plantInfo.watering);
-        setFetching(false);
-        setValue(100);
-        onOpen();
+        const perenualDetails = await axios.get(
+        `https://perenual.com/api/species/details/${plantInfo.id}?key=${PERENUAL_KEY}`
+      );
+
+      const plantDetails = perenualDetails.data;
+      console.log(plantDetails);
+      setScientificName(plantDetails.scientific_name[0]);
+      setCommonName(plantDetails.common_name);
+      setCycle(plantDetails.cycle);
+      setEdible(plantDetails.cuisine);
+      setMaintenance(plantDetails.maintenance);
+      setPoisonous(plantDetails.poisonous_to_humans);
+      setIndoor(plantDetails.indoor);
+      setDescription(plantDetails.description);
+      setMedicinal(plantDetails.medicinal);
+      setFlowering(plantDetails.flowering_season);
+      setCare(plantDetails.care_level)
+
+      if (typeof plantDetails.sunlight === "string") {
+        setSunlight(plantDetails.sunlight);
+      } else {
+        setSunlight(plantDetails.sunlight[0]);
       }
+      setWatering(plantDetails.watering);
+      setFetching(false);
+      setValue(100);
+      onOpen();
+    }
     } catch (error) {
       console.log("Error while processing the form:", error);
       setNotFoundModalOpen(true);
@@ -216,6 +231,8 @@ function AddPlantPage() {
         setDescription(plantDetails.description);
         setMedicinal(plantDetails.medicinal);
         setFlowering(plantDetails.flowering_season);
+        setCare(plantDetails.care_level)
+
         if (typeof plantDetails.sunlight === "string") {
           setSunlight(plantDetails.sunlight);
         } else {
@@ -247,6 +264,7 @@ function AddPlantPage() {
       description, 
       medicinal, 
       flowering,
+      care,
       imgUrl: image,
     };
     console.log(newPlant); //DELETE LATER
