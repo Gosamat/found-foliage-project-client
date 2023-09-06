@@ -558,3 +558,9 @@ button:focus-visible {
   z-index: 1001;
   color: white;
 }
+
+.details-image {
+  object-fit: cover;
+  width: 23rem;
+  height: 23rem;
+}

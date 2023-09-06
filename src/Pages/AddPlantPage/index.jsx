@@ -14,16 +14,26 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@nextui-org/react";
 import WebcamCaptureModal from "../../Components/WebcamCaptureModal";
 
+
 const PLANTNET_KEY = "2b10VpTk0sBhhNvolJI73EN";
 const PERENUAL_KEY = "sk-LWNZ64d4a282ae0b61825";
 const API_URL = "http://localhost:5005";
 
 function AddPlantPage() {
+  const [scrollBehavior, setScrollBehavior] = useState("inside");
+
   const [commonName, setCommonName] = useState("");
   const [scientificName, setScientificName] = useState("");
   const [cycle, setCycle] = useState("");
   const [sunlight, setSunlight] = useState("");
   const [watering, setWatering] = useState("");
+  const [edible, setEdible] = useState("");
+  const [maintenance, setMaintenance] = useState("");
+  const [poisonous, setPoisonous] = useState(false);
+  const [indoor, setIndoor] = useState(false);
+  const [description, setDescription] = useState("");
+  const [medicinal, setMedicinal] = useState(false);
+  const [flowering, setFlowering] = useState([]);
   const [image, setimage] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [fetching, setFetching] = useState(false);
@@ -158,7 +168,7 @@ function AddPlantPage() {
         `https://my-api.plantnet.org/v2/identify/all?images=${imageUrl}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
       );
 
-      console.log("plant net response: ", plantnetResponse)
+      console.log("plant net response: ", plantnetResponse);
 
       const plantName =
         plantnetResponse.data.results[0].species.scientificNameWithoutAuthor;
@@ -168,7 +178,7 @@ function AddPlantPage() {
         `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
       );
 
-      console.log("perenual response:" , perenualResponse)
+      console.log("perenual response:", perenualResponse);
 
       const plantInfo = perenualResponse.data.data[0];
       if (plantInfo === undefined) {
@@ -190,16 +200,28 @@ function AddPlantPage() {
         setValue(100);
         onOpen();
       } else {
-        console.log(plantInfo);
-        setScientificName(plantInfo.scientific_name[0]);
-        setCommonName(plantInfo.common_name);
-        setCycle(plantInfo.cycle);
-        if (typeof plantInfo.sunlight === "string") {
-          setSunlight(plantInfo.sunlight);
+        const perenualDetails = await axios.get(
+          `https://perenual.com/api/species/details/${plantInfo.id}?key=${PERENUAL_KEY}`
+        );
+
+        const plantDetails = perenualDetails.data;
+        console.log(plantDetails);
+        setScientificName(plantDetails.scientific_name[0]);
+        setCommonName(plantDetails.common_name);
+        setCycle(plantDetails.cycle);
+        setEdible(plantDetails.cuisine);
+        setMaintenance(plantDetails.maintenance);
+        setPoisonous(plantDetails.poisonous_to_humans);
+        setIndoor(plantDetails.indoor);
+        setDescription(plantDetails.description);
+        setMedicinal(plantDetails.medicinal);
+        setFlowering(plantDetails.flowering_season);
+        if (typeof plantDetails.sunlight === "string") {
+          setSunlight(plantDetails.sunlight);
         } else {
-          setSunlight(plantInfo.sunlight[0]);
+          setSunlight(plantDetails.sunlight[0]);
         }
-        setWatering(plantInfo.watering);
+        setWatering(plantDetails.watering);
         setFetching(false);
         setValue(100);
         onOpen();
@@ -218,6 +240,13 @@ function AddPlantPage() {
       cycle,
       sunlight,
       watering,
+      edible, 
+      maintenance, 
+      poisonous, 
+      indoor, 
+      description, 
+      medicinal, 
+      flowering,
       imgUrl: image,
     };
     console.log(newPlant); //DELETE LATER
@@ -373,15 +402,17 @@ function AddPlantPage() {
               <ModalContent>
                 {(onClose) => (
                   <>
-
                     <div className="relative">
-                    <img src="https://res.cloudinary.com/foundfoliage/image/upload/v1693993555/skps9kcivjsi6rkfmztz.png" className=" z-20 absolute h-56 left-0 right-0 bottom-0 top-0 m-auto"/>
-                    <div className=" blur-lg z-10">
                       <img
-                        className="m-5 rounded-lg object-cover  h-80"
-                        src={image}
+                        src="https://res.cloudinary.com/foundfoliage/image/upload/v1693993555/skps9kcivjsi6rkfmztz.png"
+                        className=" z-20 absolute h-56 left-0 right-0 bottom-0 top-0 m-auto"
                       />
-                    </div>
+                      <div className=" blur-lg z-10">
+                        <img
+                          className="m-5 rounded-lg object-cover  h-80"
+                          src={image}
+                        />
+                      </div>
                     </div>
 
                     <ModalBody className="pt-2 pb-5">
@@ -409,6 +440,9 @@ function AddPlantPage() {
             backdrop="opaque"
             isOpen={isOpen}
             onOpenChange={onOpenChange}
+            scrollBehavior={scrollBehavior}
+            size="md"
+
             motionProps={{
               variants: {
                 enter: {
@@ -450,19 +484,20 @@ function AddPlantPage() {
                       src={image}
                     />
                   )}
-                  <ModalBody className="py-0 pb-5">
+                  <ModalBody className="py-0 pb-5 h-24">
                     {commonName && (
                       <div>
-                        <h2>
-                          <b>Scientific name:</b> {scientificName}
-                        </h2>
-                        <h3>
-                          <b>sunlight level:</b> {sunlight}
-                        </h3>
-                        <h3>
-                          {" "}
-                          <b>Watering frequency:</b> {watering}
-                        </h3>
+                        <div>
+                          <h2>
+                            <b>Scientific name</b>
+                          </h2>
+                          <h2 className="text-sm">{scientificName}</h2>
+                        </div>
+                        <hr className="my-3 opacity-50	"/>
+                        <div>
+                          <h2> <b> Description: </b></h2>
+                          <h2 className="text-sm">{description}</h2>
+                        </div>
                       </div>
                     )}
                   </ModalBody>
@@ -522,12 +557,7 @@ function AddPlantPage() {
           >
             Take a Photo
           </Button>
-          {/*  <WebcamImage
-          onImageCapture={handleImageCapture}
-          onChange={(e) => {
-            handleFormSubmit(e);
-          }}
-        /> */}
+     
         </div>
       </div>
       <img
