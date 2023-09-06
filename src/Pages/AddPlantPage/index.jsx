@@ -33,7 +33,7 @@ function AddPlantPage() {
   const [premiumPlant, setPremiumPlant] = useState(false);
   const [openModal, setOpenModal] = useState(null); // State to track the open modal
   const [premiumPlantModalOpen, setPremiumPlantModalOpen] = useState(false);
-const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
+  const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
 
   /*   // Callback function to receive the captured image from WebcamImage
   const handleImageCapture = (imageSrc) => {
@@ -57,6 +57,8 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handlePhotoSubmit = async (img) => {
+    setNotFoundModalOpen(false);
+    setPremiumPlantModalOpen(false);
     setFetching(true);
     setValue(0);
 
@@ -89,21 +91,22 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
 
       const plantInfo = perenualResponse.data.data[0];
       if (plantInfo === undefined) {
+        setNotFoundModalOpen(true);
         setNotFound(true);
-        console.log("Plant not found");
-        setNotFound(true);
+        console.log("Plant not found via name");
         setFetching(false);
         setValue(100);
+        onOpen();
       } else if (
         plantInfo.watering ===
         "Upgrade Plans To Premium/Supreme - https://perenual.com/subscription-api-pricing. I'm sorry"
       ) {
-        setPremiumPlant(true);
         setPremiumPlantModalOpen(true);
-
+        setPremiumPlant(true);
         console.log("Premium plant");
         setFetching(false);
         setValue(100);
+        onOpen();
       } else {
         console.log(plantInfo);
         setScientificName(plantInfo.scientific_name[0]);
@@ -121,10 +124,12 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
       }
     } catch (error) {
       console.log("Error while processing the form:", error);
+      setNotFoundModalOpen(true);
       setNotFound(true);
-      console.log("Plant not found");
+      console.log("Plant not found via name");
       setFetching(false);
       setValue(100);
+      onOpen();
       return;
     }
   };
@@ -133,6 +138,8 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
     e.preventDefault();
     setFetching(true);
     setValue(0);
+    setNotFoundModalOpen(false);
+    setPremiumPlantModalOpen(false);
 
     try {
       const formData = new FormData();
@@ -151,6 +158,8 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
         `https://my-api.plantnet.org/v2/identify/all?images=${imageUrl}&include-related-images=false&no-reject=false&lang=en&api-key=${PLANTNET_KEY}`
       );
 
+      console.log("plant net response: ", plantnetResponse)
+
       const plantName =
         plantnetResponse.data.results[0].species.scientificNameWithoutAuthor;
       const firstWord = plantName.split(" ")[0];
@@ -158,6 +167,8 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
       const perenualResponse = await axios.get(
         `https://perenual.com/api/species-list?key=${PERENUAL_KEY}&q=${firstWord}`
       );
+
+      console.log("perenual response:" , perenualResponse)
 
       const plantInfo = perenualResponse.data.data[0];
       if (plantInfo === undefined) {
@@ -168,7 +179,6 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
         setFetching(false);
         setValue(100);
         onOpen();
-
       } else if (
         plantInfo.watering ===
         "Upgrade Plans To Premium/Supreme - https://perenual.com/subscription-api-pricing. I'm sorry"
@@ -179,7 +189,6 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
         setFetching(false);
         setValue(100);
         onOpen();
-
       } else {
         console.log(plantInfo);
         setScientificName(plantInfo.scientific_name[0]);
@@ -254,7 +263,7 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
             garden!
           </p>
         </div>
-        
+
         {fetching && image ? (
           <div className=" h-full ">
             <div className="darkened-background h-full"></div>
@@ -298,18 +307,16 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
               closeButton: "hover:bg-white/5 active:bg-white/10",
             }}
           >
-          <div className="blurred-plant ">
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  {commonName && (
+            <div className="blurred-plant ">
+              <ModalContent>
+                {(onClose) => (
+                  <>
                     <img
                       className="m-5 rounded-lg object-cover  h-80"
                       src={image}
                     />
-                  )}
-                  <ModalBody className="py-0 pb-5">
-                    {commonName && (
+
+                    <ModalBody className="pt-2 pb-5">
                       <div>
                         <h2>Seems like no plant was found</h2>
                         <h5>
@@ -317,16 +324,15 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
                           do 😔
                         </h5>
                       </div>
-                    )}
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="primary" onPress={onClose}>
-                      Try Again?
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="primary" onPress={onClose}>
+                        Try Again?
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
             </div>
           </Modal>
         ) : premiumPlantModalOpen ? (
@@ -363,19 +369,22 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
               closeButton: "hover:bg-white/5 active:bg-white/10",
             }}
           >
-                    <div className="blurred-plant">
+            <div className="blurred-plant">
+              <ModalContent>
+                {(onClose) => (
+                  <>
 
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  {commonName && (
-                    <img
-                      className="m-5 rounded-lg object-cover  h-80"
-                      src={image}
-                    />
-                  )}
-                  <ModalBody className="py-0 pb-5">
-                    {commonName && (
+                    <div className="relative">
+                    <img src="https://res.cloudinary.com/foundfoliage/image/upload/v1693993555/skps9kcivjsi6rkfmztz.png" className=" z-20 absolute h-56 left-0 right-0 bottom-0 top-0 m-auto"/>
+                    <div className=" blur-lg z-10">
+                      <img
+                        className="m-5 rounded-lg object-cover  h-80"
+                        src={image}
+                      />
+                    </div>
+                    </div>
+
+                    <ModalBody className="pt-2 pb-5">
                       <div>
                         <h2>Oops, that's a Premium Plant</h2>
                         <h5>
@@ -384,16 +393,15 @@ const [notFoundModalOpen, setNotFoundModalOpen] = useState(false);
                         </h5>
                         <h5>Try a different plant!</h5>
                       </div>
-                    )}
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="primary" onPress={onClose}>
-                      Try Again?
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="primary" onPress={onClose}>
+                        Try Again?
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
             </div>
           </Modal>
         ) : (
