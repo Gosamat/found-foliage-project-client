@@ -45,7 +45,7 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
     <>
       {/* No need to use onOpen from useDisclosure, use isOpen from props */}
       <Modal
-        className="z-100"
+        className="z-100 bg-primary"
         backdrop="blur"
         scrollBehavior={scrollBehavior}
         size="xl"

@@ -18,7 +18,7 @@ function App() {
 
 
   return (
-    <div className= "page-container text-foreground bg-background">
+    <div className= "page-container text-foreground bg-background noise">
      <TopNavbar/>
       <Routes>
         <Route path="/" element={<HomePage />} />

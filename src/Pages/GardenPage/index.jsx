@@ -56,6 +56,7 @@ function GardenPage() {
   const [user, setUser] = useState(null);
   const inputRef = useRef(null);
   const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [closeTooltip, setCloseTooltip] = useState(false);
 
   const navigate = useNavigate();
   const [values, setValues] = useState(new Set([]));
@@ -68,60 +69,61 @@ function GardenPage() {
     setValues(new Set(e.target.value.split(",")));
   };
 
+  // Card centered position
+  let cardList = null; // Initialize cardList as null
 
-// Card centered position
-let cardList = null; // Initialize cardList as null
-
-if (garden && garden.plants && Array.isArray(garden.plants) && garden.plants.length > 0) {
-  // If garden and garden.plants are defined and not empty, create cardList
-  cardList = garden.plants.map((plant) => (
-    <Tooltip
-      key={plant._id}
-      color="success"
-      showArrow={true}
-      content={plant.notes}
-    >
-      <Card
-        className="border-none me-5 mb-5 w-52"
+  if (
+    garden &&
+    garden.plants &&
+    Array.isArray(garden.plants) &&
+    garden.plants.length > 0
+  ) {
+    // If garden and garden.plants are defined and not empty, create cardList
+    cardList = garden.plants.map((plant) => (
+      <Tooltip
         key={plant._id}
-        isFooterBlurred
-        radius="lg"
+        color="success"
+        showArrow={true}
+        content={plant.notes}
       >
-        <div
-          className="rounded-xl h-52 bg-cover bg-center"
-          style={{ backgroundImage: `url(${plant.imgUrl})` }}
-        ></div>
-        <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-          <p className="text-tiny text-white/80">
-            {plant.commonName}
-          </p>
-        </CardFooter>
-      </Card>
-    </Tooltip>
-  ));
-}
+        <Card
+          className="border-none me-5 mb-5 w-52"
+          key={plant._id}
+          isFooterBlurred
+          radius="lg"
+        >
+          <div
+            className="rounded-xl h-52 bg-cover bg-center"
+            style={{ backgroundImage: `url(${plant.imgUrl})` }}
+          ></div>
+          <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
+            <p className="text-tiny text-white/80">{plant.commonName}</p>
+          </CardFooter>
+        </Card>
+      </Tooltip>
+    ));
+  }
 
-let containerClassName = 'flex-wrap flex flex-row p-10 bg-slate-600 bg-opacity-10 mx-5 mb-5 rounded-2xl shadow-lg';
+  let containerClassName =
+    "flex-wrap flex flex-row p-10 bg-slate-600 bg-opacity-10 mx-5 mb-5 rounded-2xl shadow-lg";
 
-if (cardList && cardList.length === 1) {
-  containerClassName += ' justify-start'; // Align to the left for a single card
-} else {
-  containerClassName += ' justify-center'; // Center the cards when there are multiple or none
-}
-
-
-
-
+  if (cardList && cardList.length === 1) {
+    containerClassName += " justify-start"; // Align to the left for a single card
+  } else {
+    containerClassName += " justify-center"; // Center the cards when there are multiple or none
+  }
 
   // Function to open a specific modal
   const openSpecificModal = (modalIdentifier, plant) => {
     setOpenModal(modalIdentifier);
     setSelectedPlant(plant); // Set selectedPlant
+    setCloseTooltip(true)
   };
 
   // Function to close the currently open modal
   const closeCurrentModal = () => {
     setOpenModal(null);
+    setCloseTooltip(false)
   };
 
   const fetchPlants = () => {
@@ -205,7 +207,7 @@ if (cardList && cardList.length === 1) {
   }
 
   return (
-    <div className="garden-page">
+    <div className="garden-page noise">
       <div className="noise-texture"></div>
       {user && (
         <>
@@ -218,29 +220,29 @@ if (cardList && cardList.length === 1) {
             }}
           />
           <div>
-          <div className="flex items-start">
-  <Link onPress={handleClick}>
-    <User
-      className="w-96 text-lg" // Adjust the width and font size as needed
-      name={user.username}
-      description={user.email}
-      avatarProps={{
-        src: profilePicUrl,
-        size: "2xl", // Increase the avatar size as needed
-      }}
-        />
-      </Link>
-    </div>
+            <div className="flex items-start">
+              <Link onPress={handleClick}>
+                <User
+                  className="w-96 text-lg" // Adjust the width and font size as needed
+                  name={user.username}
+                  description={user.email}
+                  avatarProps={{
+                    src: profilePicUrl,
+                    size: "2xl", // Increase the avatar size as needed
+                  }}
+                />
+              </Link>
+            </div>
             <div>
-              
-              
               <DeleteGardenModal
+              className="z-10"
                 isOpen={openModal === "deleteGardenModal"} // Check if this modal should be open
                 onClose={closeCurrentModal} // Close the current modal
                 identifier="deleteGardenModal" // Unique identifier/key for this modal
                 fetchPlants={fetchPlants}
               />
               <ChangePlantNameModal
+              className=" z-50"
                 isOpen={openModal === "ChangePlantNameModal"} // Check if this modal should be open
                 onClose={closeCurrentModal} // Close the current modal
                 identifier="ChangePlantNameModal" // Unique identifier/key for this modal
@@ -289,7 +291,7 @@ if (cardList && cardList.length === 1) {
                             required="true"
                             variant="bordered"
                           />
-                          
+
                           {garden && (
                             <div className="flex w-full max-w-xs flex-col gap-2">
                               <Select
@@ -325,7 +327,7 @@ if (cardList && cardList.length === 1) {
                               </p>
                             </div>
                           )}
-                                </ModalBody>
+                        </ModalBody>
                         <ModalFooter>
                           <Button color="primary" onPress={onClose}>
                             Sign in
@@ -341,16 +343,38 @@ if (cardList && cardList.length === 1) {
               <h1>My Garden</h1>
               <h3>{garden.description}</h3>
             </div>
-            
-              <div className={containerClassName}>
+
+            <div className={containerClassName}>
               {garden &&
                 garden.plants.map((plant) => {
                   return (
                     <Tooltip
+                     className="z-1"
                       key={plant._id}
                       color="success"
                       showArrow={true}
+                      shadow ="md"
                       content={plant.notes}
+                      offset={15}
+                      isDisabled = {closeTooltip || !plant.notes ? true : false}
+                      motionProps={{
+                        variants: {
+                          exit: {
+                            opacity: 0,
+                            transition: {
+                              duration: 0.1,
+                              ease: "easeIn",
+                            },
+                          },
+                          enter: {
+                            opacity: 1,
+                            transition: {
+                              duration: 0.15,
+                              ease: "easeOut",
+                            },
+                          },
+                        },
+                      }}
                     >
                       <Card
                         className="border-none me-5 mb-5 w-52"
@@ -444,7 +468,7 @@ if (cardList && cardList.length === 1) {
                                   Change Image
                                 </DropdownItem>
                               </DropdownSection>
-                              <DropdownSection title="Danger zone">
+                              <DropdownSection>
                                 <DropdownItem
                                   onPress={() => deletePlant(plant._id)}
                                   key="delete"
@@ -457,35 +481,31 @@ if (cardList && cardList.length === 1) {
                                     />
                                   }
                                 >
-                                  Delete file
+                                  Delete plant
                                 </DropdownItem>
                               </DropdownSection>
                             </DropdownMenu>
                           </Dropdown>
                         </CardFooter>
                       </Card>
-                      
                     </Tooltip>
-                    
-                    
                   );
                 })}
-                
             </div>
-            <div> <Button onPress={() => openSpecificModal("deleteGardenModal")}>
+            <div>
+              {" "}
+              <Button onPress={() => openSpecificModal("deleteGardenModal")}>
                 Delete Garden
               </Button>
-              </div>
-              <Button onPress={onOpen} color="primary">
-                Add a section
-              </Button>
+            </div>
+            <Button onPress={onOpen} color="primary">
+              Add a section
+            </Button>
           </div>
         </>
       )}
     </div>
-    
   );
-  
 }
 
 export default GardenPage;

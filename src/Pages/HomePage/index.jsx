@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import{ Card, CardFooter, } from "@nextui-org/react";
-import CardContainer from '../../Components/CardContainer';
-
+/* import Carousel from "../../Components/";
+ */
 function HomePage() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,7 +22,6 @@ function HomePage() {
 
   return (
     <section>
-          <div className="noise-texture" style={{height: "120rem"}}></div>
 
       <div className="homepagebox">
         <div className={`homepagetop ${scrolled ? "scroll-active" : ""}`}>
@@ -33,39 +31,60 @@ function HomePage() {
         </div>
       </div>
 
-      <CardContainer>
-
-
-      </CardContainer>  
- 
- 
- 
- 
- 
- 
-  <section className='process'>
-    <h2>The Process</h2>
-    <div className="process-section">
-      <div className="process-step">
-        <img src="https://img.icons8.com/?size=512&id=113801&format=png" alt="Upload" />
-        <h3>Upload</h3>
-        <p>Choose and upload your picture.</p>
+      <div className="process-container">
+      
+        <section className="process shadow-xl">
+          <h2>The Process</h2>
+          <div className="process-section">
+            <div className="process-step">
+              <h3>Nature's Enigma</h3>
+              <p>
+                Discover the magic of plant recognition through the lens of your
+                camera.
+              </p>
+            </div>
+            <div className="process-step">
+{/*               <Carousel />
+ */}            </div>
+            <div className="process-step">
+              <h3>Portal to the World of Plant Identification</h3>
+              <p>Our system processes your image.</p>
+            </div>
+          </div>
+        </section>
       </div>
-      <div className="process-step">
-        <img src="https://img.icons8.com/?size=512&id=2v9II0Gxz9Js&format=png" alt="Wait" />
-        <h3>Wait</h3>
-        <p>Our system processes your image.</p>
-      </div>
-      <div className="process-step">
-        <img src="https://img.icons8.com/?size=512&id=112163&format=png" alt="Result" />
-        <h3>Get Plant Identification</h3>
-        <p>View the result.</p>
-      </div>
-    </div>
-  </section>
 
-
-     
+      <div className="process-container">
+        <section className="process shadow-lg" >
+          <h2>The Process</h2>
+          <div className="process-section">
+            <div className="process-step">
+              <img
+                src="https://img.icons8.com/?size=512&id=113801&format=png"
+                alt="Upload"
+              />
+              <h3>Upload</h3>
+              <p>Choose and upload your picture.</p>
+            </div>
+            <div className="process-step">
+              <img
+                src="https://img.icons8.com/?size=512&id=2v9II0Gxz9Js&format=png"
+                alt="Wait"
+              />
+              <h3>Wait</h3>
+              <p>Our system processes your image.</p>
+            </div>
+            <div className="process-step">
+              <img
+                src="https://img.icons8.com/?size=512&id=112163&format=png"
+                alt="Result"
+              />
+              <h3>Get Plant Identification</h3>
+              <p>View the result.</p>
+            </div>
+          </div>
+        </section>
+      </div>
     </section>
   );
 }

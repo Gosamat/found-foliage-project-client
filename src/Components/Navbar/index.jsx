@@ -35,6 +35,18 @@ function TopNavbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [loggedUser, setLoggedUser] = useState(null);
+  const [scrolledNavbar, setScrolledNavbar] = useState(false)
+
+
+
+  const changeBackground = () => {
+    console.log(window.scrollY)
+    if (window.scrollY >= 1) {
+      setScrolledNavbar(true)
+    } else {
+      setScrolledNavbar(false)
+    }
+  }
 
   const navigate = useNavigate();
 
@@ -73,8 +85,14 @@ function TopNavbar() {
     }
   }, [user]);
 
+  useEffect(() => {
+    changeBackground()
+    // adding the event when scroll change background
+    window.addEventListener("scroll", changeBackground)
+  })
+
   return (
-    <Navbar className=" w-auto">
+    <Navbar className={scrolledNavbar ? "" : " bg-transparent"} isBordered={scrolledNavbar ? "true" : "false"}  maxWidth ="full" height = "5rem">
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -95,9 +113,9 @@ function TopNavbar() {
           )}
         </ModalContent>
       </Modal>
-      <NavbarBrand>
-          <Link color="foreground">
-          <RouterLink to="/">
+      <NavbarBrand className=" left-0">
+          <Link>
+          <RouterLink to="/" className="flex flex-row items-center text-foreground" >
 
             <img
               src="https://res.cloudinary.com/ghostly/image/upload/v1693570491/FoundFoliage/icon_ekml2z.png"
@@ -108,21 +126,20 @@ function TopNavbar() {
 
           </Link>
       </NavbarBrand>
-
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive>
-          <Link color="foreground" aria-current="page">
-            <RouterLink to="/about">About</RouterLink>
+          <Link aria-current="page">
+            <RouterLink to="/about" className="text-foreground">About</RouterLink>
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link >
+            <RouterLink to="/garden" className="text-foreground">Garden</RouterLink>
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground">
-            <RouterLink to="/garden">Garden</RouterLink>
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground">
-            <RouterLink to="/plant/add">Add Plant</RouterLink>
+            <RouterLink to="/plant/add" className="text-foreground">Add Plant</RouterLink>
           </Link>
         </NavbarItem>
         <NavbarItem></NavbarItem>

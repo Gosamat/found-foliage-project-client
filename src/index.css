@@ -41,7 +41,7 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 5%;
+  border-radius: 25px;
 }
 .homepage-background-color {
   background: rgba(0, 40, 25, 0.626);
@@ -501,7 +501,7 @@ button:focus-visible {
   font-weight: 200;
 }
 
-.noise-texture {
+/* .noise-texture {
   position: absolute;
   top:0px;
   right:0px;
@@ -515,7 +515,7 @@ button:focus-visible {
   background-attachment: scroll;
   opacity: 0.4;
   z-index: -1;
-} 
+}  */
 
 .add-page-img {
   position: fixed;
@@ -563,4 +563,14 @@ button:focus-visible {
   object-fit: cover;
   width: 23rem;
   height: 23rem;
+}
+
+.noise{
+  /* background: rgb(84, 177, 103); */
+    background: #eae0cf;
+    /* #ebdbbf */
+  background-image: url("https://res.cloudinary.com/foundfoliage/image/upload/v1693820460/vnrcmkqoigwujljdgleg.jpg");
+  background-size: 300px 300px;
+  background-position: center;
+  background-blend-mode:overlay;
 }

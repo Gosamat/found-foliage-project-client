@@ -290,7 +290,7 @@ function AddPlantPage() {
   return (
     <section
       className={
-        fetching && image ? "cursor-wait add-plant-page " : "add-plant-page"
+        fetching && image ? "cursor-wait add-plant-page noise " : "add-plant-page noise"
       }
     >
       <WebcamCaptureModal
@@ -347,40 +347,38 @@ function AddPlantPage() {
             }}
             classNames={{
               body: "py-6",
-              backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-              base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
-              header: "border-b-[1px] border-[#292f46]",
-              footer: "border-t-[1px] border-[#292f46]",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-40",
+              base: "border-[#ebdbbf] bg-[#eae0cf]/90 dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
               closeButton: "hover:bg-white/5 active:bg-white/10",
             }}
           >
-            <div className="blurred-plant ">
               <ModalContent>
                 {(onClose) => (
                   <>
+                  <ModalHeader></ModalHeader>
                     <img
-                      className="m-5 rounded-lg object-cover  h-80"
+                      className="m-5 rounded-xl object-cover h-80"
                       src={image}
                     />
-
                     <ModalBody className="pt-2 pb-5">
                       <div>
-                        <h2>Seems like no plant was found</h2>
-                        <h5>
+                        <h2 className="text-lg mb-1"><b>😔 No plant was found 😔</b></h2>
+                        <h5 className="text-sm">
                           Try using a different photo and we'll see what we can
-                          do 😔
+                          do!
                         </h5>
                       </div>
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="primary" onPress={onClose}>
+                      <Button color="success" onPress={onClose}>
                         Try Again?
                       </Button>
                     </ModalFooter>
                   </>
                 )}
               </ModalContent>
-            </div>
           </Modal>
         ) : premiumPlantModalOpen ? (
           <Modal
@@ -420,27 +418,24 @@ function AddPlantPage() {
               <ModalContent>
                 {(onClose) => (
                   <>
-                    <div className="relative">
                       <img
                         src="https://res.cloudinary.com/foundfoliage/image/upload/v1693993555/skps9kcivjsi6rkfmztz.png"
-                        className=" z-20 absolute h-56 left-0 right-0 bottom-0 top-0 m-auto"
+                        className=" z-20 absolute h-56 left-0 right-0  bottom-56 top-0 m-auto"
                       />
-                      <div className=" blur-lg z-10">
-                        <img
-                          className="m-5 rounded-lg object-cover  h-80"
+
+                      <img
+                        className="m-5 z-10 relative rounded-xl object-cover h-80  blur"
                           src={image}
                         />
-                      </div>
-                    </div>
+                                       
 
                     <ModalBody className="pt-2 pb-5">
                       <div>
-                        <h2>Oops, that's a Premium Plant</h2>
-                        <h5>
+                        <h2 className="text-lg mb-1"> <b>🔒 Oops, that's a Premium Plant 🔒</b></h2>
+                        <h5 className="text-sm">
                           Those aren't available as this is simply a project for
-                          Ironhack
+                          Ironhack, why not try a different plant?
                         </h5>
-                        <h5>Try a different plant!</h5>
                       </div>
                     </ModalBody>
                     <ModalFooter>
