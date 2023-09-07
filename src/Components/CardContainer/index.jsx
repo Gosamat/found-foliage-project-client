@@ -82,10 +82,10 @@ const Card = () => {
         aria-label={`Read more about ${cardData.cardTitle}`}
         href="#"
       >
-        <img
+        {/* <img
           src="https://cdn-icons-png.flaticon.com/512/4147/4147953.png"
           alt=""
-        />
+        /> */}
       </a>
     </div>
   </div>

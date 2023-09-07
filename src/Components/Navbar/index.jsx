@@ -19,6 +19,7 @@ import {
   ModalBody,
   ModalFooter,
   DropdownSection,
+  Input
 } from "@nextui-org/react";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth.Context";
@@ -28,6 +29,8 @@ import axios from "axios";
 import SignInModal from "../Sign-LogInModal/signup";
 import LogInModal from "../Sign-LogInModal/LogIn";
 import LogInModalNoBut from "../Sign-LogInModal/LogIn-noButton";
+import { SearchIcon } from "./SearchIcon";
+
 
 const API_URL = "https://found-foliage-server.onrender.com";
 
@@ -36,8 +39,14 @@ function TopNavbar() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [loggedUser, setLoggedUser] = useState(null);
   const [scrolledNavbar, setScrolledNavbar] = useState(false)
+  const [search, setSearch] = useState("");
+const navigate = useNavigate();
 
+const handleSearch = (e) => {
+  setSearch(e.target.value)
+  navigate(`/search?query=${search}`)
 
+}
 
   const changeBackground = () => {
     console.log(window.scrollY)
@@ -48,7 +57,6 @@ function TopNavbar() {
     }
   }
 
-  const navigate = useNavigate();
 
   const deleteProfile = (onClose) => {
     const storedToken = localStorage.getItem("authToken");
@@ -146,6 +154,21 @@ function TopNavbar() {
       </NavbarContent>
       {isLoggedIn ? (
         <NavbarContent justify="end">
+        <Input
+        onChange={(e) => {
+          handleSearch(e)
+        }}
+          classNames={{
+            base: "max-w-full sm:max-w-[10rem] h-10",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
+          placeholder="Type to search..."
+          size="sm"
+          startContent={<SearchIcon size={18} />}
+          type="search"
+        />
           <NavbarItem className="hidden lg:flex">
             <Dropdown>
               <DropdownTrigger>
@@ -193,6 +216,21 @@ function TopNavbar() {
         </NavbarContent>
       ) : (
         <NavbarContent justify="end">
+        <Input
+        onChange={(e) => {
+          handleSearch(e)
+        }}
+          classNames={{
+            base: "max-w-full sm:max-w-[10rem] h-10",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
+          placeholder="Type to search..."
+          size="sm"
+          startContent={<SearchIcon size={18} />}
+          type="search"
+        />
           <NavbarItem className="hidden lg:flex">
           <LogInModal></LogInModal>
           </NavbarItem>
@@ -208,5 +246,6 @@ function TopNavbar() {
     
   );
 }
+
 
 export default TopNavbar;

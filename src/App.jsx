@@ -12,6 +12,7 @@ import AboutPage from './Pages/AboutPage'
 import IsAnon from "./Components/IsAnon"
 import IsPrivate from "./Components/IsPrivate"
 import EditPlantPage from './Pages/EditPlantPage'
+import SearchPage from './Pages/SearchPage'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
      <TopNavbar/>
       <Routes >
         <Route path="/" element={<HomePage />} />
+        <Route path="/search" element={<SearchPage/>}/>
         <Route path="/auth/signup" element={<IsAnon><SignUpPage /></IsAnon>} />
         <Route path="/auth/login" element={<IsAnon><LoginPage /></IsAnon>} />
         <Route path="/plant/add" element={<IsPrivate><AddPlantPage /></IsPrivate>} />

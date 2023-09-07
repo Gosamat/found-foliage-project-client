@@ -24,7 +24,7 @@ import {
 } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
 const boxShadowStyle = {
-  boxShadow: '15px 15px 0px rgba(0, 0, 0, 0.05)',
+  boxShadow: "15px 15px 0px rgba(0, 0, 0, 0.05)",
 };
 
 import {
@@ -212,344 +212,354 @@ function GardenPage() {
 
   return (
     <div className="garden-page-container noise h-full">
-    <div className="garden-page noise h-full">
-      {user && (
-        <>
-        <div className="garden-container">
-          <input
-            style={{ display: "none" }}
-            ref={inputRef}
-            type="file"
-            onChange={(e) => {
-              changeProfilePic(e);
-            }}
-          />
-          <div>
-            <div className="flex items-start">
-              
-            </div>
-            </div>
-            <div>
-              <DeleteGardenModal
-                className="z-10"
-                isOpen={openModal === "deleteGardenModal"} // Check if this modal should be open
-                onClose={closeCurrentModal} // Close the current modal
-                identifier="deleteGardenModal" // Unique identifier/key for this modal
-                fetchPlants={fetchPlants}
+      <div className="garden-page noise h-full">
+        {user && (
+          <>
+            <div className="garden-container">
+              <input
+                style={{ display: "none" }}
+                ref={inputRef}
+                type="file"
+                onChange={(e) => {
+                  changeProfilePic(e);
+                }}
               />
-              <ChangePlantNameModal
-                className=" z-50"
-                isOpen={openModal === "ChangePlantNameModal"} // Check if this modal should be open
-                onClose={closeCurrentModal} // Close the current modal
-                identifier="ChangePlantNameModal" // Unique identifier/key for this modal
-                fetchPlants={fetchPlants}
-                selectedPlant={selectedPlant} // Pass selectedPlant
-              />
-              <ChangePlantImageModal
-                isOpen={openModal === "ChangePlantImageModal"} // Check if this modal should be open
-                onClose={closeCurrentModal} // Close the current modal
-                identifier="ChangePlantImageModal" // Unique identifier/key for this modal
-                fetchPlants={fetchPlants}
-                selectedPlant={selectedPlant} // Pass selectedPlant
-              />
-              <PlantDetailsModal
-                isOpen={openModal === "PlantDetailsModal"} // Check if this modal should be open
-                onClose={closeCurrentModal} // Close the current modal
-                identifier="PlantDetailsModal" // Unique identifier/key for this modal
-                fetchPlants={fetchPlants}
-                selectedPlant={selectedPlant} // Pass selectedPlant
-              />
-              <EditNotesModal
-                isOpen={openModal === "EditNotesModal"} // Check if this modal should be open
-                onClose={closeCurrentModal} // Close the current modal
-                identifier="EditNotesModal" // Unique identifier/key for this modal
-                fetchPlants={fetchPlants}
-                selectedPlant={selectedPlant} // Pass selectedPlant
-              />
-              <Modal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement="top-center"
-              >
-                <form onSubmit={() => createSection()}>
-                  <ModalContent>
-                    {(onClose) => (
-                      <>
-                        <ModalHeader className="flex flex-col gap-1">
-                          Log in
-                        </ModalHeader>
-                        <ModalBody>
-                          <Input
-                            autoFocus
-                            type="text"
-                            name="sectionTitle"
-                            placeholder="Section Name"
-                            required="true"
-                            variant="bordered"
-                          />
+              <div>
+                <div className="flex items-start"></div>
+              </div>
+              <div>
+                <DeleteGardenModal
+                  className="z-10"
+                  isOpen={openModal === "deleteGardenModal"} // Check if this modal should be open
+                  onClose={closeCurrentModal} // Close the current modal
+                  identifier="deleteGardenModal" // Unique identifier/key for this modal
+                  fetchPlants={fetchPlants}
+                />
+                <ChangePlantNameModal
+                  className=" z-50"
+                  isOpen={openModal === "ChangePlantNameModal"} // Check if this modal should be open
+                  onClose={closeCurrentModal} // Close the current modal
+                  identifier="ChangePlantNameModal" // Unique identifier/key for this modal
+                  fetchPlants={fetchPlants}
+                  selectedPlant={selectedPlant} // Pass selectedPlant
+                />
+                <ChangePlantImageModal
+                  isOpen={openModal === "ChangePlantImageModal"} // Check if this modal should be open
+                  onClose={closeCurrentModal} // Close the current modal
+                  identifier="ChangePlantImageModal" // Unique identifier/key for this modal
+                  fetchPlants={fetchPlants}
+                  selectedPlant={selectedPlant} // Pass selectedPlant
+                />
+                <PlantDetailsModal
+                  isOpen={openModal === "PlantDetailsModal"} // Check if this modal should be open
+                  onClose={closeCurrentModal} // Close the current modal
+                  identifier="PlantDetailsModal" // Unique identifier/key for this modal
+                  fetchPlants={fetchPlants}
+                  selectedPlant={selectedPlant} // Pass selectedPlant
+                />
+                <EditNotesModal
+                  isOpen={openModal === "EditNotesModal"} // Check if this modal should be open
+                  onClose={closeCurrentModal} // Close the current modal
+                  identifier="EditNotesModal" // Unique identifier/key for this modal
+                  fetchPlants={fetchPlants}
+                  selectedPlant={selectedPlant} // Pass selectedPlant
+                />
+                <Modal
+                  isOpen={isOpen}
+                  onOpenChange={onOpenChange}
+                  placement="top-center"
+                >
+                  <form onSubmit={() => createSection()}>
+                    <ModalContent>
+                      {(onClose) => (
+                        <>
+                          <ModalHeader className="flex flex-col gap-1">
+                            Log in
+                          </ModalHeader>
+                          <ModalBody>
+                            <Input
+                              autoFocus
+                              type="text"
+                              name="sectionTitle"
+                              placeholder="Section Name"
+                              required="true"
+                              variant="bordered"
+                            />
 
-                          {garden && (
-                            <div className="flex w-full max-w-xs flex-col gap-2">
-                              <Select
-                                selectionMode="multiple"
-                                name="sectionPlants"
-                                placeholder="Select plants to add"
-                                selectedKeys={values}
-                                className="max-w-xs"
-                                onChange={handleSelectionChange}
-                              >
-                                {garden.plants.map((plant) => (
-                                  <SelectItem
-                                    key={plant._id}
-                                    value={plant.commonName}
-                                  >
-                                    <div className="flex gap-2 items-center">
-                                      <Avatar
-                                        className="flex-shrink-0"
-                                        size="sm"
-                                        src={plant.imgUrl}
-                                      />
-                                      <div className="flex flex-col">
-                                        <span className="text-small">
-                                          {plant.commonName}
-                                        </span>
+                            {garden && (
+                              <div className="flex w-full max-w-xs flex-col gap-2">
+                                <Select
+                                  selectionMode="multiple"
+                                  name="sectionPlants"
+                                  placeholder="Select plants to add"
+                                  selectedKeys={values}
+                                  className="max-w-xs"
+                                  onChange={handleSelectionChange}
+                                >
+                                  {garden.plants.map((plant) => (
+                                    <SelectItem
+                                      key={plant._id}
+                                      value={plant.commonName}
+                                    >
+                                      <div className="flex gap-2 items-center">
+                                        <Avatar
+                                          className="flex-shrink-0"
+                                          size="sm"
+                                          src={plant.imgUrl}
+                                        />
+                                        <div className="flex flex-col">
+                                          <span className="text-small">
+                                            {plant.commonName}
+                                          </span>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </SelectItem>
-                                ))}
-                              </Select>
-                              <p className="text-small text-default-500">
-                                Selected: {Array.from(values).join(", ")}
-                              </p>
-                            </div>
-                          )}
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button color="success" onPress={onClose}>
-                            Add Section
-                          </Button>
-                        </ModalFooter>
-                      </>
-                    )}
-                  </ModalContent>
-                </form>
-              </Modal>
+                                    </SelectItem>
+                                  ))}
+                                </Select>
+                                <p className="text-small text-default-500">
+                                  Selected: {Array.from(values).join(", ")}
+                                </p>
+                              </div>
+                            )}
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button color="success" onPress={onClose}>
+                              Add Section
+                            </Button>
+                          </ModalFooter>
+                        </>
+                      )}
+                    </ModalContent>
+                  </form>
+                </Modal>
+              </div>
+              <div className="garden-text-container mx-5"></div>
             </div>
-            <div className="garden-text-container mx-5">
-             
-            
-              
-</div>
-            </div>
-            
-            
+
             <div className="boxes">
- 
-  
-            <div className="user-details">
-  <div className="title-container">
-    <h1> My Garden</h1>
-  </div>
-  <div className="user-card flex justify-end mr-10">
-    <div className="w-1/3 p-2 flex justify-end items-center">
-      <Card className="py-2 flex-col shadow-squared" style={boxShadowStyle}>
-        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-          <p className="text-tiny uppercase font-bold">{user.username}</p>
-          <small className="text-default-500">{user.email}</small>
-          <h4 className="font-bold text-medium">{user.fullName}</h4>
-        </CardHeader>
-        <CardBody className="overflow-visible py-2">
-          <Link onPress={handleClick}>
-            <div className="flex justify-center">
-              <Image
-                alt="User Profile"
-                className="object-cover rounded-lg image-hover"
-                src={profilePicUrl}
-                width={100}
-              />
-            </div>
-          </Link>
-        </CardBody>
-      </Card>
-    </div>
-  </div>
-</div>
-
-
-           <div className="plants-container">
-            <div className={containerClassName}>
-              {garden &&
-                garden.plants.map((plant) => {
-                  return (
-                    <Tooltip
-                      classNames={{
-                        base: "py-2 px-4 shadow-md text-black bg-[#ebdbbf]",
-                        arrow: "bg-[#ebdbbf]",
-                      }}
-                      key={plant._id}
-                      color="success"
-                      variant="flat"
-                      showArrow={true}
-                      shadow="md"
-                      content={plant.notes}
-                      offset={15}
-                      isDisabled={closeTooltip || !plant.notes ? true : false}
-                      motionProps={{
-                        variants: {
-                          exit: {
-                            opacity: 0,
-                            transition: {
-                              duration: 0.1,
-                              ease: "easeIn",
-                            },
-                          },
-                          enter: {
-                            opacity: 1,
-                            transition: {
-                              duration: 0.15,
-                              ease: "easeOut",
-                            },
-                          },
-                        },
-                      }}
+              <div className="user-details mx-10 flex ">
+                <div className="title-container w-full">
+                  <h1 className=" text-left h-full">🪴 My Garden</h1>
+                </div>
+                <div className="user-card flex justify-end">
+                  <div className="w-1/3 p-2 flex justify-end items-center">
+                    <Card
+                      className="py-2 flex-col shadow-squared"
+                      style={boxShadowStyle}
                     >
-                      <Card
-                        className="border-none me-5 mb-5 w-52"
-                        key={plant._id}
-                        isFooterBlurred
-                        radius="lg"
-                      >
-                        <div
-                          className="rounded-xl h-52 bg-cover bg-center"
-                          style={{ backgroundImage: `url(${plant.imgUrl})` }}
-                        ></div>
-                        <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                          <p className="text-tiny text-white/80">
-                            {plant.commonName}
-                          </p>
+                      <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                        <p className="text-tiny uppercase font-bold">
+                          {user.username}
+                        </p>
+                        <small className="text-default-500">{user.email}</small>
+                        <h4 className="font-bold text-medium">
+                          {user.fullName}
+                        </h4>
+                      </CardHeader>
+                      <CardBody className="overflow-visible py-2">
+                        <Link onPress={handleClick}>
+                          <div className="flex justify-center">
+                            <Image
+                              alt="User Profile"
+                              className="object-cover rounded-lg image-hover"
+                              src={profilePicUrl}
+                              width={100}
+                            />
+                          </div>
+                        </Link>
+                      </CardBody>
+                    </Card>
+                  </div>
+                </div>
+              </div>
 
-                          {/* drop menu */}
-                          <Dropdown>
-                            <DropdownTrigger>
-                              <Button
-                                className="bg-black/10 hover:bg-black/30 outline: none text-white/100 hover:border-transparent"
-                                variant="flat"
-                                radius="lg"
-                                size="sm"
-                              >
-                                Open
-                              </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                              variant="flat"
-                              aria-label="Dropdown menu with description"
-                              color="success"
-                              style={{ background: "#ebdbbf" }}
-                            >
-                              <DropdownSection title="Actions" showDivider>
-                                <DropdownItem
-                                  onPress={() =>
-                                    openSpecificModal(
-                                      "PlantDetailsModal",
-                                      plant
-                                    )
-                                  }
-                                  key="details"
-                                  description="Details"
-                                  startContent={
-                                    <CopyDocumentIcon className={iconClasses} />
-                                  }
+              <div className="plants-container">
+                <div className={containerClassName}>
+                  {garden &&
+                    garden.plants.map((plant) => {
+                      return (
+                        <Tooltip
+                          classNames={{
+                            base: "py-2 px-4 shadow-md text-black bg-[#ebdbbf]",
+                            arrow: "bg-[#ebdbbf]",
+                          }}
+                          key={plant._id}
+                          color="success"
+                          variant="flat"
+                          showArrow={true}
+                          shadow="md"
+                          content={plant.notes}
+                          offset={15}
+                          isDisabled={
+                            closeTooltip || !plant.notes ? true : false
+                          }
+                          motionProps={{
+                            variants: {
+                              exit: {
+                                opacity: 0,
+                                transition: {
+                                  duration: 0.1,
+                                  ease: "easeIn",
+                                },
+                              },
+                              enter: {
+                                opacity: 1,
+                                transition: {
+                                  duration: 0.15,
+                                  ease: "easeOut",
+                                },
+                              },
+                            },
+                          }}
+                        >
+                          <Card
+                            className="border-none me-5 mb-5 w-52"
+                            key={plant._id}
+                            isFooterBlurred
+                            radius="lg"
+                          >
+                            <div
+                              className="rounded-xl h-52 bg-cover bg-center"
+                              style={{
+                                backgroundImage: `url(${plant.imgUrl})`,
+                              }}
+                            ></div>
+                            <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-2 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
+                              <p className="text-tiny text-white/80">
+                                {plant.commonName}
+                              </p>
+
+                              {/* drop menu */}
+                              <Dropdown>
+                                <DropdownTrigger>
+                                  <Button
+                                    className="bg-black/10 hover:bg-black/30 outline: none text-white/100 hover:border-transparent"
+                                    variant="flat"
+                                    radius="lg"
+                                    size="sm"
+                                  >
+                                    Open
+                                  </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                  variant="flat"
+                                  aria-label="Dropdown menu with description"
+                                  color="success"
+                                  style={{ background: "#ebdbbf" }}
                                 >
-                                  View Details
-                                </DropdownItem>
-                                <DropdownItem
-                                  onPress={() =>
-                                    openSpecificModal("EditNotesModal", plant)
-                                  }
-                                  key="note"
-                                  description="Create a note"
-                                  startContent={
-                                    <AddNoteIcon className={iconClasses} />
-                                  }
-                                >
-                                  {plant.notes === ""
-                                    ? "New note"
-                                    : "Change note"}
-                                </DropdownItem>
-                                <DropdownItem
-                                  onPress={() =>
-                                    openSpecificModal(
-                                      "ChangePlantNameModal",
-                                      plant
-                                    )
-                                  }
-                                  key="name"
-                                  description="Edit plant name"
-                                  startContent={
-                                    <EditDocumentIcon className={iconClasses} />
-                                  }
-                                >
-                                  Change Name
-                                </DropdownItem>
-                                <DropdownItem
-                                  onPress={() =>
-                                    openSpecificModal(
-                                      "ChangePlantImageModal",
-                                      plant
-                                    )
-                                  }
-                                  key="image"
-                                  description="Edit plant image"
-                                  startContent={
-                                    <EditDocumentIcon className={iconClasses} />
-                                  }
-                                >
-                                  Change Image
-                                </DropdownItem>
-                              </DropdownSection>
-                              <DropdownSection>
-                                <DropdownItem
-                                  onPress={() => deletePlant(plant._id)}
-                                  key="delete"
-                                  className="text-danger"
-                                  color="danger"
-                                  description="Permanently delete this plant"
-                                  startContent={
-                                    <DeleteDocumentIcon
-                                      className={cn(iconClasses, "text-danger")}
-                                    />
-                                  }
-                                >
-                                  Delete plant
-                                </DropdownItem>
-                              </DropdownSection>
-                            </DropdownMenu>
-                          </Dropdown>
-                        </CardFooter>
-                      </Card>
-                    </Tooltip>
-                  );
-                })}
+                                  <DropdownSection title="Actions" showDivider>
+                                    <DropdownItem
+                                      onPress={() =>
+                                        openSpecificModal(
+                                          "PlantDetailsModal",
+                                          plant
+                                        )
+                                      }
+                                      key="details"
+                                      description="Details"
+                                      startContent={
+                                        <CopyDocumentIcon
+                                          className={iconClasses}
+                                        />
+                                      }
+                                    >
+                                      View Details
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      onPress={() =>
+                                        openSpecificModal(
+                                          "EditNotesModal",
+                                          plant
+                                        )
+                                      }
+                                      key="note"
+                                      description="Create a note"
+                                      startContent={
+                                        <AddNoteIcon className={iconClasses} />
+                                      }
+                                    >
+                                      {plant.notes === ""
+                                        ? "New note"
+                                        : "Change note"}
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      onPress={() =>
+                                        openSpecificModal(
+                                          "ChangePlantNameModal",
+                                          plant
+                                        )
+                                      }
+                                      key="name"
+                                      description="Edit plant name"
+                                      startContent={
+                                        <EditDocumentIcon
+                                          className={iconClasses}
+                                        />
+                                      }
+                                    >
+                                      Change Name
+                                    </DropdownItem>
+                                    <DropdownItem
+                                      onPress={() =>
+                                        openSpecificModal(
+                                          "ChangePlantImageModal",
+                                          plant
+                                        )
+                                      }
+                                      key="image"
+                                      description="Edit plant image"
+                                      startContent={
+                                        <EditDocumentIcon
+                                          className={iconClasses}
+                                        />
+                                      }
+                                    >
+                                      Change Image
+                                    </DropdownItem>
+                                  </DropdownSection>
+                                  <DropdownSection>
+                                    <DropdownItem
+                                      onPress={() => deletePlant(plant._id)}
+                                      key="delete"
+                                      className="text-danger"
+                                      color="danger"
+                                      description="Permanently delete this plant"
+                                      startContent={
+                                        <DeleteDocumentIcon
+                                          className={cn(
+                                            iconClasses,
+                                            "text-danger"
+                                          )}
+                                        />
+                                      }
+                                    >
+                                      Delete plant
+                                    </DropdownItem>
+                                  </DropdownSection>
+                                </DropdownMenu>
+                              </Dropdown>
+                            </CardFooter>
+                          </Card>
+                        </Tooltip>
+                      );
+                    })}
+                </div>
+              </div>
+
+              <div> </div>
             </div>
-            </div>
-            
-            
-            <div>
-              {" "}
-              
-            </div>
-            
-          </div>
-          <div className="delete-but mb-5">
-              <Button onPress={() => openSpecificModal("deleteGardenModal")}
-              color="danger"
-              variant="flat">
+            <div className="delete-but mb-5">
+              <Button
+                onPress={() => openSpecificModal("deleteGardenModal")}
+                color="danger"
+                variant="flat"
+              >
                 Delete Garden
               </Button>
-              </div>
-        </>
-      )}
-    </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
