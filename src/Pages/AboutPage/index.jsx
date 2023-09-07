@@ -13,8 +13,8 @@ import {
   DropdownItem,
   cn,
   useDisclosure,
+  Link
 } from "@nextui-org/react";
-import { Link } from 'react-router-dom';
 const boxShadowStyle = {
   boxShadow: '15px 15px 0px rgba(0, 0, 0, 0.05)',
 };

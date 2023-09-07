@@ -553,20 +553,76 @@ button:focus-visible {
   filter: contrast(150%);
 }
 
+.garden-page-container {
+  background-image: url("https://i.ibb.co/Qp0hFPJ/600834-7e356.png");
+background: black;
+}
+
+.garden-container{
+  padding: 20px;
+}
+.delete-but{
+  display: flex;
+  justify-content: end;
+  margin-right: 25px;
+}
+
 .garden-text-container {
   display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: flex-start;
-  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
+
 .garden-text-container h1 {
-  font-size: 4.5rem;
-  margin: 1rem 0;
-  margin-right: 10rem;
-  font-weight: 900;
+ 
+}
+
+
+.boxes {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */  
+}
+
+.user-details {
+  display: flex;
+  justify-content: space-between; /* Space elements apart horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.title-container {
+  width: 80%; /* Adjust the width as needed */
+  margin-right: 200px; /* Adjust the margin to increase the separation */
+}
+
+.user-card {
+  width: 80%; /* Adjust the width as needed */
+  margin-bottom: 20px; /* Adjust the margin to separate it from other elements */
+}
+
+.plants-container {
+  width: 100%;
+}
+
+
+
+
+/* Selector */
+.next-ui-selector{
+  display: flex;
+  justify-content:end;
+  margin-right: 30px;
+  margin-bottom: 20px;
+
+}
+.selector-container{
+  height: 100vh; /* 100% of the viewport height */
+  display: flex;
+  justify-content: flex-end; /* Align content to the right */
+  align-items: center; 
+
 }
 
 .darkened-background {
