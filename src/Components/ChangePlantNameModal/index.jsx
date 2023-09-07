@@ -88,7 +88,7 @@ function ChangePlantNameModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
         <ModalContent>
           {(onClose) => (
             <>
-            <ModalHeader className="flex flex-col gap-1">Edit Plant Name</ModalHeader>
+            <ModalHeader className="flex flex-col">Edit Plant Name</ModalHeader>
             <ModalBody>
               {/* Add input fields and logic for editing the plant name */}
               {/* You can use useState to manage the input value */}
@@ -96,7 +96,6 @@ function ChangePlantNameModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                 label="Plant Name"
                 placeholder={selectedPlant.commonName}
                 type="text"
-                variant="bordered"
                 name="name"
                 onChange={(e) => setPlantName(e.target.value)}
               />

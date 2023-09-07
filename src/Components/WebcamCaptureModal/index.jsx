@@ -50,6 +50,14 @@ return (
   <>
     {/* No need to use onOpen from useDisclosure, use isOpen from props */}
     <Modal
+       classNames={{
+              body: "py-6",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-90",
+              base: "border-[#ebdbbf] bg-[#eae0cf] dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
       backdrop="opaque"
       isOpen={isOpen}
       onOpenChange={() => {
@@ -95,7 +103,7 @@ return (
                   />
                 </ModalBody>
                 <ModalFooter>
-                  <Button onClick={capture} color="primary">Capture photo</Button>
+                  <Button onClick={capture} color="success">Capture photo</Button>
                 </ModalFooter>
               </>
             ) : (
@@ -105,7 +113,7 @@ return (
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onClick={() => setImg(null)}>Retake</Button>
-                  <Button color="primary" onClick={ ()=>handlePhotoSubmit(img)}>Submit photo</Button>
+                  <Button color="success" onClick={ ()=>handlePhotoSubmit(img)}>Submit photo</Button>
                   
                 </ModalFooter>
               </>

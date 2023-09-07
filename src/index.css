@@ -350,14 +350,13 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   position: relative;
   height: 100vh;
   overflow: scroll;
-  margin-top: -80px;
 }
 
 .about-page h1 {
   font-size: 4.5em;
   max-width: 90rem; /* Use max-width instead of width */
   margin: 0 auto; /* Center the element horizontally */
-  padding-top: 9rem;
+  padding-top: 1rem;
   padding-bottom: 2rem;
   line-height: 1.1;
   text-align: center;

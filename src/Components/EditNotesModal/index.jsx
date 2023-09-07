@@ -89,16 +89,13 @@ function EditNotesModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
         <ModalContent>
           {(onClose) => (
             <>
-            <ModalHeader className="flex flex-col gap-1">Edit Plant Name</ModalHeader>
+            <ModalHeader className="flex flex-col m-0">Edit Notes</ModalHeader>
             <ModalBody>
-    
               <Textarea
-      label="Description"
       labelPlacement="outside"
-      placeholder= {selectedPlant.notes === "" ? "Add a description" : selectedPlant.notes}
-      className="max-w-xs"
+      placeholder= {selectedPlant.notes === "" ? "Add a note" : selectedPlant.notes}
+      className="max-w pt-0"
       onChange={(e) => setPlantNotes(e.target.value)}
-
     />
             </ModalBody>
             <ModalFooter>

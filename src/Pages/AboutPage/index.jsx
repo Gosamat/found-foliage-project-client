@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -14,22 +14,35 @@ import {
   cn,
   useDisclosure,
 } from "@nextui-org/react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 const boxShadowStyle = {
-  boxShadow: '15px 15px 0px rgba(0, 0, 0, 0.05)',
+  boxShadow: "15px 15px 0px rgba(0, 0, 0, 0.05)",
 };
-
 
 function AboutPage() {
   return (
-    <div className='about-page'>
+    <div className="about-page">
       <h1>About Page</h1>
-      <div className="noise-texture" ></div>
+      <div className="noise-texture"></div>
 
-      <div className="text-container">
-        {/* Lorem Ipsum text */}
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <div className="text-container flex items-center justify-center">
+        <p className=" w-9/12 text-justify mb-5  text-sm">
+          We are the creators of <b>Found Foliage</b>, the culmination of our journey
+          during Ironhack's Web Development bootcamp.
+          <br /> <br />
+          Our passion for nature and
+          our newfound skills in technology converged in this project. Our
+          journey began with the desire to simplify plant identification using
+          photos and to provide you with a virtual garden — a personal digital
+          collection of your favorite plants. 
+          <br /> <br />
+          In the process, we challenged
+          ourselves to learn technologies such as <b>Tailwind CSS</b> and <b>NextUI</b>. These tools allowed us to elevate the user experience,
+          making plant exploration smoother and more engaging. 
+          
+          <br /> <br />Found Foliage is
+          not just a project; it's living proof of the learning we received during the bootcamp and the skills we developed and acquired. 
+          We hope you enjoy this project as much as we enjoyed creating it.
         </p>
       </div>
       <div className="card-container">

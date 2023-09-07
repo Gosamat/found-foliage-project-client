@@ -414,10 +414,10 @@ function AddPlantPage() {
             }}
             classNames={{
               body: "py-6",
-              backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-              base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
-              header: "border-b-[1px] border-[#292f46]",
-              footer: "border-t-[1px] border-[#292f46]",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-40",
+              base: "border-[#ebdbbf] bg-[#eae0cf]/90 dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
               closeButton: "hover:bg-white/5 active:bg-white/10",
             }}
           >
@@ -427,7 +427,7 @@ function AddPlantPage() {
                   <>
                       <img
                         src="https://res.cloudinary.com/foundfoliage/image/upload/v1693993555/skps9kcivjsi6rkfmztz.png"
-                        className=" z-20 absolute h-56 left-0 right-0  bottom-56 top-0 m-auto"
+                        className=" z-20 absolute h-56 left-0 right-0  bottom-56 top-0 m-auto opacity-80"
                       />
 
                       <img
@@ -446,7 +446,7 @@ function AddPlantPage() {
                       </div>
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="primary" onPress={onClose}>
+                      <Button color="success" onPress={onClose}>
                         Try Again?
                       </Button>
                     </ModalFooter>
@@ -457,6 +457,7 @@ function AddPlantPage() {
           </Modal>
         ) : (
           <Modal
+          
             backdrop="opaque"
             isOpen={isOpen}
             onOpenChange={onOpenChange}
@@ -485,10 +486,10 @@ function AddPlantPage() {
             }}
             classNames={{
               body: "py-6",
-              backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-              base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
-              header: "border-b-[1px] border-[#292f46]",
-              footer: "border-t-[1px] border-[#292f46]",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-40",
+              base: "border-[#ebdbbf] bg-[#eae0cf] dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
               closeButton: "hover:bg-white/5 active:bg-white/10",
             }}
           >
@@ -525,7 +526,7 @@ function AddPlantPage() {
                     <Button color="danger" variant="light" onPress={onClose}>
                       Cancel
                     </Button>
-                    <Button color="primary" onPress={handlePlantSubmit}>
+                    <Button color="success" onPress={handlePlantSubmit}>
                       Add to Garden?
                     </Button>
                   </ModalFooter>
