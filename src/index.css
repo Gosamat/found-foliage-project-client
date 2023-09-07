@@ -433,6 +433,13 @@ body {
   display: flex;
   place-items: center;
   min-width: 20rem;
+  background: #e9dbc1;
+  /* background: #eae0cf; */
+
+background-image: url("https://res.cloudinary.com/foundfoliage/image/upload/v1693820460/vnrcmkqoigwujljdgleg.jpg");
+background-size: 300px 300px;
+background-position: center;
+background-blend-mode:overlay;
 }
 
 h1 {
@@ -567,7 +574,7 @@ background: black;
 }
 .delete-but{
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin-right: 25px;
 }
 
@@ -616,7 +623,7 @@ background: black;
 /* Selector */
 .next-ui-selector{
   display: flex;
-  justify-content:end;
+  justify-content:flex-end;
   margin-right: 30px;
   margin-bottom: 20px;
 
