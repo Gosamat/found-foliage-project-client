@@ -26,11 +26,9 @@ function HomePage() {
 
      <div className="homepagebox">
         <div className={`homepagetop ${scrolled ? "scroll-active" : ""}`}>
-          <div className="background-overlay z-10">
-          <h1 className="z-100">Found</h1>
-          <h1 className="z-100">Foliage</h1>
-          </div>
-          
+          <div className="background-overlay z-1"></div>
+          <h1>Found</h1>
+          <h1> Foliage</h1>
         </div>
       </div> 
 

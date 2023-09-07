@@ -44,7 +44,7 @@ const navigate = useNavigate();
 
 const handleSearch = (e) => {
   setSearch(e.target.value)
-  navigate(`/search?query=${search}`)
+  navigate(`/search?query=${e.target.value}`)
 
 }
 
