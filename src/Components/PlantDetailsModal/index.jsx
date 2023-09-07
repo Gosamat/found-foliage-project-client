@@ -13,12 +13,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
+import { faCapsules, faSkullCrossbones, faShieldDog } from "@fortawesome/free-solid-svg-icons";
 import { faUtensils } from "@fortawesome/free-solid-svg-icons";
-import { faHandHoldingHand } from "@fortawesome/free-solid-svg-icons";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { faPrescriptionBottleMedical } from "@fortawesome/free-solid-svg-icons";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { faSun } from "@fortawesome/free-solid-svg-icons";
 import { faDroplet } from "@fortawesome/free-solid-svg-icons";
 
@@ -45,7 +42,14 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
     <>
       {/* No need to use onOpen from useDisclosure, use isOpen from props */}
       <Modal
-        className="z-100 bg-primary"
+         classNames={{
+              body: "py-6",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-90",
+              base: "border-[#ebdbbf] bg-[#eae0cf] dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
         backdrop="blur"
         scrollBehavior={scrollBehavior}
         size="xl"
@@ -147,12 +151,12 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <h1>{selectedPlant.commonName}</h1>
-                <h5>{selectedPlant.scientificName}</h5>
+                <h1 className=" text-3xl">{selectedPlant.commonName}</h1>
+                <h5 className=" font-light">{selectedPlant.scientificName}</h5>
               </ModalHeader>
               <img
                 alt="Card background"
-                className="object-cover rounded-xl  h-80 shadow-sm m-5"
+                className="object-cover rounded-xl  h-80 shadow-sm mb-5 mx-5"
                 src={selectedPlant.imgUrl}
               />
 
@@ -191,11 +195,11 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                       </div>
                     )}
                     <div>
-                      {selectedPlant.poisonous ? (
+                      {selectedPlant.petPoisonous ? (
                         <div className=" flex flex-col items-center">
                           <FontAwesomeIcon
-                            icon={faSkullCrossbones}
-                            style={{ color: "#00d64b" }}
+                            icon={faShieldDog}
+                            style={{ color: "#454545" }}
                             className="w-6 h-6"
                           />
                           <h5>Poisonous</h5>
@@ -203,8 +207,8 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                       ) : (
                         <div className=" flex flex-col items-center">
                           <FontAwesomeIcon
-                            icon={faSkullCrossbones}
-                            style={{ color: "#454545" }}
+                            icon={faShieldDog}
+                            style={{ color: "#00d64b" }}
                             className=" opacity-80 w-6 h-6"
                           />
                           <h5>Safe</h5>
@@ -254,23 +258,23 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                       )}
                     </div>
                     <div>
-                      {selectedPlant.care ? (
+                      {selectedPlant.medicinal ? (
                         <div className=" flex flex-col items-center">
                           <FontAwesomeIcon
-                            icon={faHandHoldingHand}
+                            icon={faCapsules}
                             style={{ color: "#00d64b" }}
                             className="w-6 h-6"
                           />
-                          <h5>{selectedPlant.care}</h5>
+                          <h5>Medicinal</h5>
                         </div>
                       ) : (
                         <div className=" flex flex-col items-center">
                           <FontAwesomeIcon
-                            icon={faHandHoldingHand}
+                            icon={faCapsules}
                             style={{ color: "#454545" }}
                             className=" opacity-80 w-6 h-6"
                           />
-                          <h5>{selectedPlant.care}</h5>
+                          <h5>Not Medicinal</h5>
                         </div>
                       )}
                     </div>
@@ -292,7 +296,7 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" onPress={onClose}>
+                <Button color="success" onPress={onClose}>
                   close
                 </Button>
               </ModalFooter>

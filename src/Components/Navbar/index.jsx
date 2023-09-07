@@ -92,7 +92,7 @@ function TopNavbar() {
   })
 
   return (
-    <Navbar className={scrolledNavbar ? "" : " bg-transparent"} isBordered={scrolledNavbar ? "true" : "false"}  maxWidth ="full" height = "5rem">
+    <Navbar className={scrolledNavbar ? "" : " bg-transparent"} isBordered={scrolledNavbar ? "true" : "false"} isBlurred={scrolledNavbar ? "true" : "false"}  maxWidth ="full" height = "5rem">
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -102,10 +102,10 @@ function TopNavbar() {
                 back.
               </ModalHeader>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="success" variant="flat" onPress={onClose}>
                   No, go back
                 </Button>
-                <Button color="primary" onPress={() => deleteProfile(onClose)}>
+                <Button color="danger" variant="flat" onPress={() => deleteProfile(onClose)}>
                   Yes, delete my profile
                 </Button>
               </ModalFooter>

@@ -6,6 +6,8 @@ import { useContext, useState } from "react";
 import {useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../Context/Auth.Context"
+import {UserIcon} from './UserIcon';
+
 
 const API_URL = "https://found-foliage-server.onrender.com";
 
@@ -34,7 +36,8 @@ export default function SignInModal() {
 
   return (
     <>
-      <Button onPress={onOpen} color="primary">Sign In</Button>
+      <Button onPress={onOpen} color="success"                               variant="flat"
+>Sign up</Button>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -43,12 +46,12 @@ export default function SignInModal() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 ">Sign In</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1 ">Sign up</ModalHeader>
               <ModalBody>
               <Input
                   autoFocus
                   endContent={
-                    <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    <UserIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                   }
                   label="Username"
                   type = "username"
@@ -87,7 +90,7 @@ export default function SignInModal() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary"  onPress={() => handleSubmit(onClose)}>
+                <Button color="success"  variant="flat" onPress={() => handleSubmit(onClose)}>
                   Sign Up
                 </Button>
               </ModalFooter>

@@ -22,21 +22,22 @@ function HomePage() {
   }, []);
 
   return (
-    <section>
+    <section className="noise h-full overflow-hidden">
 
-      <div className="homepagebox">
+     <div className="homepagebox">
         <div className={`homepagetop ${scrolled ? "scroll-active" : ""}`}>
-          <div className="background-overlay"></div> {/* Add this overlay */}
+          <div className="background-overlay"></div>
           <h1>Found</h1>
           <h1>Foliage</h1>
+          
         </div>
-      </div>
+      </div> 
 
      
       <Card>
       </Card>  
 
-      <div className="process-container">
+      <div className="process-container mb-5">
         <section className="process shadow-lg" >
           <h2>The Process</h2>
           <div className="process-section">
@@ -66,7 +67,7 @@ function HomePage() {
             </div>
           </div>
         </section>
-      </div>
+      </div> 
     </section>
   );
 }

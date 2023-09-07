@@ -44,7 +44,7 @@ export default function LogInModal() {
 
   return (
     <>
-    <Button onPress={onOpen} color="primary">
+    <Button onPress={onOpen} color="success"                               variant="flat">
       Log In
     </Button>
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
@@ -78,16 +78,16 @@ export default function LogInModal() {
                 <div className="flex py-2 px-1 justify-between">
                 {errorMessage && <p className="text-danger">{errorMessage}</p>}
                 </div>
-                <div className="flex py-2 px-1 justify-between">
+                {/* <div className="flex py-2 px-1 justify-between">
                   <p>Do not have an account yet?</p>
-                </div>
+                </div> */}
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={() => handleSubmit()}>
-                  Sign in
+                <Button color="success" variant="flat" onPress={() => handleSubmit()}>
+                  Log in
                 </Button>
               </ModalFooter>
             </>

@@ -51,7 +51,15 @@ function ChangePlantNameModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
     <>
       {/* No need to use onOpen from useDisclosure, use isOpen from props */}
       <Modal
-        backdrop="opaque"
+        classNames={{
+              body: "py-6",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-90",
+              base: "border-[#ebdbbf] bg-[#eae0cf] dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
+        backdrop="blur"
         isOpen={isOpen}
         onOpenChange={() => {
           onClose(); // Call the onClose function passed from the parent
@@ -80,7 +88,7 @@ function ChangePlantNameModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
         <ModalContent>
           {(onClose) => (
             <>
-            <ModalHeader className="flex flex-col gap-1">Edit Plant Name</ModalHeader>
+            <ModalHeader className="flex flex-col">Edit Plant Name</ModalHeader>
             <ModalBody>
               {/* Add input fields and logic for editing the plant name */}
               {/* You can use useState to manage the input value */}
@@ -88,7 +96,6 @@ function ChangePlantNameModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                 label="Plant Name"
                 placeholder={selectedPlant.commonName}
                 type="text"
-                variant="bordered"
                 name="name"
                 onChange={(e) => setPlantName(e.target.value)}
               />
@@ -97,7 +104,7 @@ function ChangePlantNameModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
               <Button color="danger" variant="flat" onPress={onClose}>
                 Close
               </Button>
-              <Button color="primary" onPress={UpdatePlantName}>
+              <Button color="success" onPress={UpdatePlantName}>
                 Change
               </Button>
             </ModalFooter>

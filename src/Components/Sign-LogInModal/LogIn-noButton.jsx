@@ -83,8 +83,8 @@ export default function LogInModalNoBut() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={() => handleSubmit()}>
-                  Sign in
+                <Button color="success" variant="flat" onPress={() => handleSubmit()}>
+                  Log in
                 </Button>
               </ModalFooter>
             </>

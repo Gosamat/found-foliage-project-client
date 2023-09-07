@@ -121,13 +121,13 @@ function GardenPage() {
   const openSpecificModal = (modalIdentifier, plant) => {
     setOpenModal(modalIdentifier);
     setSelectedPlant(plant); // Set selectedPlant
-    setCloseTooltip(true)
+    setCloseTooltip(true);
   };
 
   // Function to close the currently open modal
   const closeCurrentModal = () => {
     setOpenModal(null);
-    setCloseTooltip(false)
+    setCloseTooltip(false);
   };
 
   const fetchPlants = () => {
@@ -211,9 +211,8 @@ function GardenPage() {
   }
 
   return (
-    <div className="garden-page-container">
+    <div className="garden-page-container noise">
     <div className="garden-page noise">
-      <div className="noise-texture"></div>
       {user && (
         <>
         <div className="garden-container">
@@ -232,14 +231,14 @@ function GardenPage() {
             </div>
             <div>
               <DeleteGardenModal
-              className="z-10"
+                className="z-10"
                 isOpen={openModal === "deleteGardenModal"} // Check if this modal should be open
                 onClose={closeCurrentModal} // Close the current modal
                 identifier="deleteGardenModal" // Unique identifier/key for this modal
                 fetchPlants={fetchPlants}
               />
               <ChangePlantNameModal
-              className=" z-50"
+                className=" z-50"
                 isOpen={openModal === "ChangePlantNameModal"} // Check if this modal should be open
                 onClose={closeCurrentModal} // Close the current modal
                 identifier="ChangePlantNameModal" // Unique identifier/key for this modal
@@ -326,8 +325,8 @@ function GardenPage() {
                           )}
                         </ModalBody>
                         <ModalFooter>
-                          <Button color="primary" onPress={onClose}>
-                            Sign in
+                          <Button color="success" onPress={onClose}>
+                            Add Section
                           </Button>
                         </ModalFooter>
                       </>
@@ -383,14 +382,18 @@ function GardenPage() {
                 garden.plants.map((plant) => {
                   return (
                     <Tooltip
-                     className="z-1"
+                      classNames={{
+                        base: "py-2 px-4 shadow-md text-black bg-[#ebdbbf]",
+                        arrow: "bg-[#ebdbbf]",
+                      }}
                       key={plant._id}
                       color="success"
+                      variant="flat"
                       showArrow={true}
-                      shadow ="md"
+                      shadow="md"
                       content={plant.notes}
                       offset={15}
-                      isDisabled = {closeTooltip || !plant.notes ? true : false}
+                      isDisabled={closeTooltip || !plant.notes ? true : false}
                       motionProps={{
                         variants: {
                           exit: {
@@ -438,8 +441,10 @@ function GardenPage() {
                               </Button>
                             </DropdownTrigger>
                             <DropdownMenu
-                              variant="faded"
+                              variant="flat"
                               aria-label="Dropdown menu with description"
+                              color="success"
+                              style={{ background: "#ebdbbf" }}
                             >
                               <DropdownSection title="Actions" showDivider>
                                 <DropdownItem
