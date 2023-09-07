@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Card from '../../Components/CardContainer';
 /* import Carousel from "../../Components/";
  */
 function HomePage() {
@@ -32,27 +33,9 @@ function HomePage() {
         </div>
       </div> 
 
-      <div className="process-container">
-      
-        <section className="process shadow-xl">
-          <h2>The Process</h2>
-          <div className="process-section">
-            <div className="process-step">
-              <h3>Nature's Enigma</h3>
-              <p>
-                Discover the magic of plant recognition through the lens of your
-                camera.
-              </p>
-            </div>
-            <div className="process-step">
-            </div>
-            <div className="process-step">
-              <h3>Portal to the World of Plant Identification</h3>
-              <p>Our system processes your image.</p>
-            </div>
-          </div>
-        </section>
-      </div>
+     
+      <Card>
+      </Card>  
 
       <div className="process-container mb-5">
         <section className="process shadow-lg" >

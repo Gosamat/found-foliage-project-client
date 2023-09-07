@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState, useRef } from "react";
+import Selecting from "../../Components/SelectingModal";
 import axios from "axios";
 import { AuthContext } from "../../Context/Auth.Context";
 import {
@@ -22,6 +23,9 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
+const boxShadowStyle = {
+  boxShadow: '15px 15px 0px rgba(0, 0, 0, 0.05)',
+};
 
 import {
   Modal,
@@ -105,7 +109,7 @@ function GardenPage() {
   }
 
   let containerClassName =
-    "flex-wrap flex flex-row p-10 bg-slate-600 bg-opacity-10 mx-5 mb-5 rounded-2xl shadow-lg";
+    "flex-wrap flex flex-row p-10 bg-slate-400 bg-opacity-10 mx-10 mb-5 rounded-2xl shadow-lg";
 
   if (cardList && cardList.length === 1) {
     containerClassName += " justify-start"; // Align to the left for a single card
@@ -207,9 +211,11 @@ function GardenPage() {
   }
 
   return (
-    <div className="noise">
+    <div className="garden-page-container noise h-full">
+    <div className="garden-page noise h-full">
       {user && (
         <>
+        <div className="garden-container">
           <input
             style={{ display: "none" }}
             ref={inputRef}
@@ -220,17 +226,8 @@ function GardenPage() {
           />
           <div>
             <div className="flex items-start">
-              <Link onPress={handleClick}>
-                <User
-                  className="w-96 text-lg" // Adjust the width and font size as needed
-                  name={user.username}
-                  description={user.email}
-                  avatarProps={{
-                    src: profilePicUrl,
-                    size: "2xl", // Increase the avatar size as needed
-                  }}
-                />
-              </Link>
+              
+            </div>
             </div>
             <div>
               <DeleteGardenModal
@@ -339,10 +336,47 @@ function GardenPage() {
               </Modal>
             </div>
             <div className="garden-text-container mx-5">
-              <h1>My Garden</h1>
-              <h3>{garden.description}</h3>
+             
+            
+              
+</div>
             </div>
+            
+            
+            <div className="boxes">
+ 
+  
+            <div className="user-details">
+  <div className="title-container">
+    <h1> My Garden</h1>
+  </div>
+  <div className="user-card flex justify-end mr-10">
+    <div className="w-1/3 p-2 flex justify-end items-center">
+      <Card className="py-2 flex-col shadow-squared" style={boxShadowStyle}>
+        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+          <p className="text-tiny uppercase font-bold">{user.username}</p>
+          <small className="text-default-500">{user.email}</small>
+          <h4 className="font-bold text-medium">{user.fullName}</h4>
+        </CardHeader>
+        <CardBody className="overflow-visible py-2">
+          <Link onPress={handleClick}>
+            <div className="flex justify-center">
+              <Image
+                alt="User Profile"
+                className="object-cover rounded-lg image-hover"
+                src={profilePicUrl}
+                width={100}
+              />
+            </div>
+          </Link>
+        </CardBody>
+      </Card>
+    </div>
+  </div>
+</div>
 
+
+           <div className="plants-container">
             <div className={containerClassName}>
               {garden &&
                 garden.plants.map((plant) => {
@@ -497,18 +531,25 @@ function GardenPage() {
                   );
                 })}
             </div>
+            </div>
+            
+            
             <div>
               {" "}
-              <Button onPress={() => openSpecificModal("deleteGardenModal")}>
+              
+            </div>
+            
+          </div>
+          <div className="delete-but mb-5">
+              <Button onPress={() => openSpecificModal("deleteGardenModal")}
+              color="danger"
+              variant="flat">
                 Delete Garden
               </Button>
-            </div>
-            <Button onPress={onOpen} color="success">
-              Add a section
-            </Button>
-          </div>
+              </div>
         </>
       )}
+    </div>
     </div>
   );
 }

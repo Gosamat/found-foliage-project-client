@@ -8,6 +8,7 @@
   font-family: "Lexend Deca", sans-serif;
   line-height: 1.5;
   font-weight: 300;
+  overflow-y: scroll;
 
   color-scheme: light dark;
   color: #292929;
@@ -65,15 +66,15 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   filter: blur(5px); /* Add the blur effect here */
   opacity: 1; /* Adjust opacity as desired */
   z-index: -1; /* Place it behind the content */
-  border-radius: 5px;
+  border-radius: 0.313rem;
 }
 .homepagetop h1 {
-  font-size: 250px;
+  font-size: 15.625rem;
   line-height: 1.1;
 }
 
 .homepagetop.scroll-active {
-  filter: blur(1px); /* Example: Applying a blur effect */
+  filter: blur(0.063rem); /* Example: Applying a blur effect */
 }
 
 .info {
@@ -82,13 +83,13 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   justify-content: center;
   padding: 0px;
   background-color: #f5f5f5;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   text-align: center;
   max-width: 97%;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-  height: 300px;
+  height: 18.75rem;
   margin-bottom: 20px;
 }
 /*card in homepage*/
@@ -112,7 +113,7 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
 .text-container-home {
   display: flex;
   margin-right: 1rem;
-  width: 450px;
+  width: 28.125rem;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -120,31 +121,30 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
 }
 
 .text-container-home h1 {
-  font-size: 24px; /* Adjust font size as needed */
+  font-size: 1.5rem; /* Adjust font size as needed */
   margin: 0; /* Remove any margin */
 }
 
 .card {
   display: grid;
   grid-template-columns: 1fr;
-  width: 100%;
-  margin: 30px;
+  width: 110rem;
+  padding: 50px;
+  position: relative;
 }
 
 .card__thumb {
-  overflow: hidden;
   background-color: #6a6a6a;
   border-radius: 20px;
   height: 300px;
-  width: 400px;
+  width: 900px;
 }
 
 .card__thumb img {
   transition: all 0.3s ease;
   border-radius: 20px;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+  height: 300px;
+  width: 500px;
 }
 
 .card__thumb:hover img {
@@ -237,6 +237,18 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
     grid-area: 2 / 1 / -2 / 3;
   }
 }
+.random-quote{
+
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  padding: 10px;
+  
+}
+.quote-background {
+  position: relative;
+  background: url("https://i.ibb.co/xGtgW0Z/splash-2.png") center/cover;
+}
 
 /* Adjust the margin-top to bring the info closer to the carousel */
 .info-section {
@@ -275,23 +287,23 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   padding: 40px;
   position: relative; /* Add this to establish a stacking context */
   overflow: hidden; /* Hide any overflowing content */
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .process {
   padding: 0px;
   background-color: #f5f5f5;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   text-align: center;
   max-width: 97%;
   margin: 0 auto;
-  padding: 30px;
+  padding: 1.875rem;
   position: relative; /* Add this to establish a stacking context */
   overflow: hidden; /* Hide any overflowing content */
 }
 .process h2 {
   font-size: 2rem;
-  margin: 10px 0;
+  margin: 0.625rem 0;
   font-weight: 600;
 }
 
@@ -300,26 +312,26 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  border-radius: 20px;
+  border-radius: 1.25rem;
 }
 
 .process-step {
   text-align: center;
   flex: 1;
-  max-width: 250px;
-  margin: 20px;
+  max-width: 15.625rem;
+  margin: 1.25;
 }
 
 .process-step img {
-  width: 100px;
-  height: 100px;
+  width: 6.25rem;
+  height: 6.25rem;
   margin: 0 auto;
   display: block;
 }
 
 .process-step h3 {
   font-size: 1.5rem;
-  margin: 10px 0;
+  margin: 0.625rem 0;
   font-weight: 600;
 }
 
@@ -339,11 +351,12 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   width: 100%;
   height: 100vh;
   background-size: cover;
-  -webkit-filter: blur(10px);
-  -moz-filter: blur(10px);
-  -o-filter: blur(10px);
-  -ms-filter: blur(10px);
-  filter: blur(10px);
+
+  -webkit-filter: blur(0.625rem);
+  -moz-filter: blur(0.625rem);
+  -o-filter: blur(0.625rem);
+  -ms-filter: blur(0.625rem);
+  filter: blur(0.625rem);
 }
 
 .about-page {
@@ -373,13 +386,28 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   /* Add some padding for spacing */
   /* Add any other styling you want for the text container */
 }
-.card-container {
-  max-width: 1000px; /* Adjust the maximum width as needed */
+.home-container {
+  max-width: 125rem; /* Adjust the maximum width as needed */
   width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  box-shadow: #d60c0c 1000px;
+  box-shadow: #d60c0c 62.5rem;
+}
+.components-container {
+  display: flex;
+  justify-content: space-between; /* Creates space between components */
+  align-items: stretch; /* Makes both components the same height */
+}
+.card-container {
+  max-width: 100%;
+  width: 18.75rem; /* Adjust the maximum width as needed */
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  box-shadow: #d60c0c 62.5rem;
+  
 }
 .home-page-text {
   justify-content: center;
@@ -404,7 +432,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  min-width: 20rem;
 }
 
 h1 {
@@ -413,7 +441,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -428,7 +456,7 @@ button:hover {
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 0.25rem auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -529,20 +557,76 @@ button:focus-visible {
   filter: contrast(150%);
 }
 
+.garden-page-container {
+  background-image: url("https://i.ibb.co/Qp0hFPJ/600834-7e356.png");
+background: black;
+}
+
+.garden-container{
+  padding: 20px;
+}
+.delete-but{
+  display: flex;
+  justify-content: end;
+  margin-right: 25px;
+}
+
 .garden-text-container {
   display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: flex-start;
-  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
+
 .garden-text-container h1 {
-  font-size: 4.5rem;
-  margin: 1rem 0;
-  margin-right: 10rem;
-  font-weight: 900;
+ 
+}
+
+
+.boxes {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */  
+}
+
+.user-details {
+  display: flex;
+  justify-content: space-between; /* Space elements apart horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.title-container {
+  width: 80%; /* Adjust the width as needed */
+  margin-right: 200px; /* Adjust the margin to increase the separation */
+}
+
+.user-card {
+  width: 80%; /* Adjust the width as needed */
+  margin-bottom: 20px; /* Adjust the margin to separate it from other elements */
+}
+
+.plants-container {
+  width: 100%;
+}
+
+
+
+
+/* Selector */
+.next-ui-selector{
+  display: flex;
+  justify-content:end;
+  margin-right: 30px;
+  margin-bottom: 20px;
+
+}
+.selector-container{
+  height: 100vh; /* 100% of the viewport height */
+  display: flex;
+  justify-content: flex-end; /* Align content to the right */
+  align-items: center; 
+
 }
 
 .darkened-background {
