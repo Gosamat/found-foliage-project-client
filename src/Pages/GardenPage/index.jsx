@@ -207,8 +207,7 @@ function GardenPage() {
   }
 
   return (
-    <div className="garden-page noise">
-      <div className="noise-texture"></div>
+    <div className="noise">
       {user && (
         <>
           <input

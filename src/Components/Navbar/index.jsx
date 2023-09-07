@@ -92,7 +92,7 @@ function TopNavbar() {
   })
 
   return (
-    <Navbar className={scrolledNavbar ? "" : " bg-transparent"} isBordered={scrolledNavbar ? "true" : "false"}  maxWidth ="full" height = "5rem">
+    <Navbar className={scrolledNavbar ? "" : " bg-transparent"} isBordered={scrolledNavbar ? "true" : "false"} isBlurred={scrolledNavbar ? "true" : "false"}  maxWidth ="full" height = "5rem">
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (

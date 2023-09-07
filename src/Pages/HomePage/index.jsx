@@ -21,15 +21,16 @@ function HomePage() {
   }, []);
 
   return (
-    <section>
+    <section className="noise h-full overflow-hidden">
 
-      <div className="homepagebox">
+     <div className="homepagebox">
         <div className={`homepagetop ${scrolled ? "scroll-active" : ""}`}>
-          <div className="background-overlay"></div> {/* Add this overlay */}
+          <div className="background-overlay"></div>
           <h1>Found</h1>
           <h1>Foliage</h1>
+          
         </div>
-      </div>
+      </div> 
 
       <div className="process-container">
       
@@ -44,8 +45,7 @@ function HomePage() {
               </p>
             </div>
             <div className="process-step">
-{/*               <Carousel />
- */}            </div>
+            </div>
             <div className="process-step">
               <h3>Portal to the World of Plant Identification</h3>
               <p>Our system processes your image.</p>
@@ -54,7 +54,7 @@ function HomePage() {
         </section>
       </div>
 
-      <div className="process-container">
+      <div className="process-container mb-5">
         <section className="process shadow-lg" >
           <h2>The Process</h2>
           <div className="process-section">
@@ -84,7 +84,7 @@ function HomePage() {
             </div>
           </div>
         </section>
-      </div>
+      </div> 
     </section>
   );
 }

@@ -29,7 +29,8 @@ function AddPlantPage() {
   const [watering, setWatering] = useState("");
   const [edible, setEdible] = useState(false);
   const [maintenance, setMaintenance] = useState("");
-  const [poisonous, setPoisonous] = useState(false);
+  const [humanPoisonous, setHumanPoisonous] = useState(false);
+  const [petPoisonous, setPetPoisonous] = useState(false);
   const [indoor, setIndoor] = useState(false);
   const [description, setDescription] = useState("");
   const [medicinal, setMedicinal] = useState(false);
@@ -130,7 +131,8 @@ function AddPlantPage() {
       setCycle(plantDetails.cycle);
       setEdible(plantDetails.cuisine);
       setMaintenance(plantDetails.maintenance);
-      setPoisonous(plantDetails.poisonous_to_humans);
+      setHumanPoisonous(plantDetails.poisonous_to_humans);
+      setPetPoisonous(plantDetails.poisonous_to_pets);
       setIndoor(plantDetails.indoor);
       setDescription(plantDetails.description);
       setMedicinal(plantDetails.medicinal);
@@ -226,7 +228,8 @@ function AddPlantPage() {
         setCycle(plantDetails.cycle);
         setEdible(plantDetails.cuisine);
         setMaintenance(plantDetails.maintenance);
-        setPoisonous(plantDetails.poisonous_to_humans);
+        setHumanPoisonous(plantDetails.poisonous_to_humans);
+        setPetPoisonous(plantDetails.poisonous_to_pets)
         setIndoor(plantDetails.indoor);
         setDescription(plantDetails.description);
         setMedicinal(plantDetails.medicinal);
@@ -259,7 +262,8 @@ function AddPlantPage() {
       watering,
       edible, 
       maintenance, 
-      poisonous, 
+      humanPoisonous,
+      petPoisonous, 
       indoor, 
       description, 
       medicinal, 
@@ -290,9 +294,13 @@ function AddPlantPage() {
   return (
     <section
       className={
-        fetching && image ? "cursor-wait add-plant-page noise " : "add-plant-page noise"
+        fetching && image ? "cursor-wait add-plant-page noise relative" : "add-plant-page noise relative"
       }
     >
+      <img
+        className="add-page-img"
+        src="https://res.cloudinary.com/foundfoliage/image/upload/v1693818615/k9pbxax87yunrgrbeejp.png"
+      />
       <WebcamCaptureModal
         isOpen={openModal === "WebcamCaptureModal"} // Check if this modal should be open
         onClose={closeCurrentModal} // Close the current modal
@@ -300,7 +308,6 @@ function AddPlantPage() {
         handlePhotoSubmit={handlePhotoSubmit}
       />
 
-      <div className="noise-texture"></div>
       <div className="add-plant-container">
         <div className="add-plant-text">
           <h1>Find your new plant and add it to your garden</h1>
@@ -527,7 +534,7 @@ function AddPlantPage() {
             </ModalContent>
           </Modal>
         )}
-        <div className="add-plant-buttons flex flex-row align-middle">
+        <div className="add-plant-buttons flex flex-row align-middle mb-10">
           <input
             style={{ display: "none" }}
             ref={inputRef}
@@ -573,10 +580,7 @@ function AddPlantPage() {
      
         </div>
       </div>
-      <img
-        className="add-page-img"
-        src="https://res.cloudinary.com/foundfoliage/image/upload/v1693818615/k9pbxax87yunrgrbeejp.png"
-      />
+    
     </section>
   );
 }
