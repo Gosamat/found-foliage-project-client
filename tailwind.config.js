@@ -30,7 +30,7 @@ export default {
               700: "#FCADF9",
               800: "#FDD5F9",
               900: "#FEECFE",
-              DEFAULT: "#016b06",
+              DEFAULT: "#ebdbbf",
               foreground: "#1f1f1f",
             },
             focus: "#016b06",
@@ -46,6 +46,14 @@ export default {
               small: "1px",
               medium: "2px",
               large: "3px",
+            },
+          },
+        },
+        "plant-light": {
+          extend:"light",
+          colors: {
+            primary: {
+              DEFAULT: "#ebdbbf",
             },
           },
         },

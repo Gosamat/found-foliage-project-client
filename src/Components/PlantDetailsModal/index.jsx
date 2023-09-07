@@ -44,8 +44,8 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
       <Modal
          classNames={{
               body: "py-6",
-              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-40",
-              base: "border-[#ebdbbf] bg-[#eae0cf]/90 dark:bg-[#ebdbbf] text-[#000000]",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-90",
+              base: "border-[#ebdbbf] bg-[#eae0cf] dark:bg-[#ebdbbf] text-[#000000]",
               header: "border-b-[1px] border-[#ebdbbf]",
               footer: "border-t-[1px] border-[#ebdbbf]",
               closeButton: "hover:bg-white/5 active:bg-white/10",
@@ -199,7 +199,7 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                         <div className=" flex flex-col items-center">
                           <FontAwesomeIcon
                             icon={faShieldDog}
-                            style={{ color: "#00d64b" }}
+                            style={{ color: "#454545" }}
                             className="w-6 h-6"
                           />
                           <h5>Poisonous</h5>
@@ -208,7 +208,7 @@ function PlantDetailsModal({ isOpen, onClose, fetchPlants, selectedPlant }) {
                         <div className=" flex flex-col items-center">
                           <FontAwesomeIcon
                             icon={faShieldDog}
-                            style={{ color: "#454545" }}
+                            style={{ color: "#00d64b" }}
                             className=" opacity-80 w-6 h-6"
                           />
                           <h5>Safe</h5>

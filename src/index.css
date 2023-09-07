@@ -553,9 +553,9 @@ button:focus-visible {
 
 .noise{
   /* background: rgb(84, 177, 103); */
-    background: #eecd94;
-    /*     background: #eae0cf;
- */
+       background: #e9dbc1;
+     /* background: #eae0cf; */
+ 
   background-image: url("https://res.cloudinary.com/foundfoliage/image/upload/v1693820460/vnrcmkqoigwujljdgleg.jpg");
   background-size: 300px 300px;
   background-position: center;

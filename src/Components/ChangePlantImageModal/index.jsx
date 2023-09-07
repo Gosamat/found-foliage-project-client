@@ -76,7 +76,15 @@ function ChangePlantImageModal({ isOpen, onClose, fetchPlants, selectedPlant }) 
     <>
       {/* No need to use onOpen from useDisclosure, use isOpen from props */}
       <Modal
-        backdrop="opaque"
+        classNames={{
+              body: "py-6",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-90",
+              base: "border-[#ebdbbf] bg-[#eae0cf] dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
+        backdrop="blur"
         isOpen={isOpen}
         onOpenChange={() => {
           onClose(); // Call the onClose function passed from the parent
@@ -139,7 +147,7 @@ function ChangePlantImageModal({ isOpen, onClose, fetchPlants, selectedPlant }) 
               <Button color="danger" variant="flat" onPress={onClose}>
                 Close
               </Button>
-              <Button color="primary" onPress={handleClick}>
+              <Button color="success" onPress={handleClick}>
                 Change
               </Button>
             </ModalFooter>

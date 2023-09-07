@@ -48,6 +48,14 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
     <>
       {/* No need to use onOpen from useDisclosure, use isOpen from props */}
       <Modal
+        classNames={{
+              body: "py-6",
+              backdrop: "bg-[#ebdbbf]/50 backdrop-opacity-90",
+              base: "border-[#ebdbbf] bg-[#eae0cf] dark:bg-[#ebdbbf] text-[#000000]",
+              header: "border-b-[1px] border-[#ebdbbf]",
+              footer: "border-t-[1px] border-[#ebdbbf]",
+              closeButton: "hover:bg-white/5 active:bg-white/10",
+            }}
         backdrop="opaque"
         isOpen={isOpen}
         onOpenChange={() => {
@@ -80,10 +88,10 @@ function DeleteGardenModal({ isOpen, onClose, fetchPlants }) {
               <ModalHeader className="flex flex-col gap-1">Are you sure you want to delete your garden?</ModalHeader>
            
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="success" variant="flat" onPress={onClose}>
                   No
                 </Button>
-                <Button color="primary" onPress={
+                <Button color="danger" onPress={
                 deleteGarden}>
                   Yes
                 </Button>

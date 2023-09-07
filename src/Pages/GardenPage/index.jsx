@@ -403,8 +403,10 @@ function GardenPage() {
                               </Button>
                             </DropdownTrigger>
                             <DropdownMenu
-                              variant="faded"
+                              variant="flat"
                               aria-label="Dropdown menu with description"
+                              color="success"
+                              style={{background : "#ebdbbf"}}
                             >
                               <DropdownSection title="Actions" showDivider>
                                 <DropdownItem
