@@ -8,6 +8,7 @@
   font-family: "Lexend Deca", sans-serif;
   line-height: 1.5;
   font-weight: 300;
+  overflow-y: scroll;
 
   color-scheme: light dark;
   color: #292929;
@@ -362,7 +363,6 @@ background-image: url("https://res.allmacwallpaper.com/get/iMac-27-inch-4K-Retin
   position: relative;
   height: 100vh;
   overflow: scroll;
-  margin-top: -5rem;
 }
 
 .about-page h1 {
@@ -497,7 +497,6 @@ button:focus-visible {
 .add-plant-page {
   position: relative;
   height: 100vh;
-  margin-top: -5rem;
 }
 
 .add-plant-page h1 {

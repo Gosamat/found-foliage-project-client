@@ -211,8 +211,8 @@ function GardenPage() {
   }
 
   return (
-    <div className="garden-page-container noise">
-    <div className="garden-page noise">
+    <div className="garden-page-container noise h-full">
+    <div className="garden-page noise h-full">
       {user && (
         <>
         <div className="garden-container">
