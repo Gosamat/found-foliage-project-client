@@ -441,6 +441,7 @@ background-image: url("https://res.cloudinary.com/foundfoliage/image/upload/v169
 background-size: 300px 300px;
 background-position: center;
 background-blend-mode:overlay;
+overflow-y: hidden;
 }
 
 h1 {

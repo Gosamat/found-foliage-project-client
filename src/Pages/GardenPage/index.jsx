@@ -339,7 +339,7 @@ function GardenPage() {
             <div className="boxes">
               <div className="user-details mx-10 flex ">
                 <div className="title-container w-full">
-                  <h1 className=" text-left h-full">🪴 My Garden</h1>
+                  <h1 className=" text-left h-full"> My Garden</h1>
                 </div>
                 <div className="user-card flex justify-end">
                   <div className="w-1/3 p-2 flex justify-end items-center">
