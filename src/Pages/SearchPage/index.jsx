@@ -102,8 +102,8 @@ function SearchPage() {
   };
 
   return (
-    <div className="garden-page-container noise h-full">
-      <div className="garden-page noise h-full">
+    <div className="garden-page-container noise h-screen">
+      <div className="garden-page noise h-screen">
         <div className="garden-container">
           <div>
             <div className="flex items-start"></div>
